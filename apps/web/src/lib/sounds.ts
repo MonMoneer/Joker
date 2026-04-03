@@ -1,48 +1,38 @@
 "use client";
 
-import { Howl } from "howler";
-
-// Sound effect definitions — paths relative to /public/sounds/
-// These will be created as simple synth sounds or loaded from files
-const SOUNDS = {
-  cardPlay: { src: "/sounds/card-play.mp3", volume: 0.5 },
-  cardFlip: { src: "/sounds/card-flip.mp3", volume: 0.4 },
-  cardShuffle: { src: "/sounds/card-shuffle.mp3", volume: 0.3 },
-  bidPlace: { src: "/sounds/bid-place.mp3", volume: 0.5 },
-  trickWin: { src: "/sounds/trick-win.mp3", volume: 0.6 },
-  handComplete: { src: "/sounds/hand-complete.mp3", volume: 0.5 },
-  gameWin: { src: "/sounds/game-win.mp3", volume: 0.7 },
-  kingCrown: { src: "/sounds/king-crown.mp3", volume: 0.8 },
-  error: { src: "/sounds/error.mp3", volume: 0.4 },
-  turn: { src: "/sounds/your-turn.mp3", volume: 0.5 },
-} as const;
-
-type SoundName = keyof typeof SOUNDS;
-
-const howlCache = new Map<SoundName, Howl>();
 let soundEnabled = true;
 
-function getHowl(name: SoundName): Howl {
-  if (!howlCache.has(name)) {
-    const config = SOUNDS[name];
-    const howl = new Howl({
-      src: [config.src],
-      volume: config.volume,
-      preload: false, // Lazy load
-    });
-    howlCache.set(name, howl);
+const audioCache = new Map<string, HTMLAudioElement>();
+
+function getAudio(path: string): HTMLAudioElement {
+  if (!audioCache.has(path)) {
+    const audio = new Audio(path);
+    audioCache.set(path, audio);
   }
-  return howlCache.get(name)!;
+  return audioCache.get(path)!;
 }
 
-export function playSound(name: SoundName): void {
+export function playSound(name: string, volume = 0.5): void {
   if (!soundEnabled) return;
   try {
-    const howl = getHowl(name);
-    howl.play();
-  } catch {
-    // Silently fail if sound not available
-  }
+    const paths: Record<string, string> = {
+      cardPlay: "/sounds/card-play.mp3",
+      cardFlip: "/sounds/card-flip.mp3",
+      cardShuffle: "/sounds/card-shuffle.mp3",
+      bidPlace: "/sounds/bid-place.mp3",
+      trickWin: "/sounds/trick-win.mp3",
+      gameWin: "/sounds/game-win.mp3",
+      histPenalty: "/sounds/hist-penalty.mp3",
+      yourTurn: "/sounds/your-turn.mp3",
+    };
+    const path = paths[name];
+    if (!path) return;
+
+    const audio = getAudio(path);
+    audio.volume = volume;
+    audio.currentTime = 0;
+    audio.play().catch(() => {});
+  } catch {}
 }
 
 export function setSoundEnabled(enabled: boolean): void {
@@ -51,12 +41,4 @@ export function setSoundEnabled(enabled: boolean): void {
 
 export function isSoundEnabled(): boolean {
   return soundEnabled;
-}
-
-export function preloadSounds(): void {
-  // Preload commonly used sounds
-  const common: SoundName[] = ["cardPlay", "bidPlace", "trickWin", "turn"];
-  for (const name of common) {
-    getHowl(name).load();
-  }
 }

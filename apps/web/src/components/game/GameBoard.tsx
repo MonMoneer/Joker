@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef } from "react";
+import { useState, useCallback, useRef, useEffect } from "react";
 import { AnimatePresence } from "framer-motion";
 import type { GameState, PlayerIndex, Suit, JokerMode, TrickPlay } from "@joker/engine";
 import { getLegalCardIndices, isJokerCard } from "@joker/engine";
@@ -16,6 +16,9 @@ import { HandResultOverlay } from "./HandResultOverlay";
 import { GameOverOverlay } from "./GameOverOverlay";
 import { TavernChatter } from "./TavernChatter";
 import { LastTrickPopover } from "./LastTrickPopover";
+import { HistPenaltyEffect } from "./HistPenaltyEffect";
+import { BidAllWonAllEffect } from "./BidAllWonAllEffect";
+import { playSound } from "@/lib/sounds";
 
 interface GameBoardProps {
   gameState: GameState;
@@ -43,6 +46,48 @@ export function GameBoard({
 
   const isMyTurn = gameState.currentTurn === myPlayerIndex;
   const myHand = gameState.hands[myPlayerIndex] || [];
+
+  // Special effects state
+  const [histPenaltyEffect, setHistPenaltyEffect] = useState<{
+    playerName: string;
+    amount: number;
+  } | null>(null);
+  const [bidAllEffect, setBidAllEffect] = useState<{
+    playerName: string;
+    score: number;
+  } | null>(null);
+  const prevHandCountRef = useRef(0);
+
+  // Detect special scoring events when hand results appear
+  useEffect(() => {
+    const currentHandCount = gameState.handScores.length;
+    if (currentHandCount > prevHandCountRef.current && currentHandCount > 0) {
+      const lastScores = gameState.handScores[currentHandCount - 1];
+
+      // Check for hist penalty
+      const histPlayer = lastScores.find((s) => s.isHistPenalty);
+      if (histPlayer) {
+        const name = gameState.players[histPlayer.playerIndex]?.name || "Player";
+        setHistPenaltyEffect({ playerName: name, amount: histPlayer.score });
+        playSound("histPenalty", 0.7);
+      }
+
+      // Check for bid-all-won-all
+      const bidAllPlayer = lastScores.find((s) => s.isBidAllWonAll);
+      if (bidAllPlayer) {
+        const name = gameState.players[bidAllPlayer.playerIndex]?.name || "Player";
+        setBidAllEffect({ playerName: name, score: bidAllPlayer.score });
+      }
+    }
+    prevHandCountRef.current = currentHandCount;
+  }, [gameState.handScores.length, gameState.handScores, gameState.players]);
+
+  // Play sounds for game events
+  useEffect(() => {
+    if (gameState.phase === "playing" && isMyTurn) {
+      playSound("yourTurn", 0.4);
+    }
+  }, [gameState.phase, isMyTurn, gameState.currentTurn]);
 
   const legalIndices =
     gameState.phase === "playing" && isMyTurn
@@ -78,6 +123,7 @@ export function GameBoard({
         setShowJokerDialog(true);
         return;
       }
+      playSound("cardPlay", 0.5);
       onPlayCard(cardIndex);
     },
     [isMyTurn, gameState.phase, legalIndices, myHand, onPlayCard]
@@ -306,6 +352,22 @@ export function GameBoard({
           />
         )}
       </AnimatePresence>
+
+      {/* Hist Penalty Effect — sad emoji rain */}
+      <HistPenaltyEffect
+        playerName={histPenaltyEffect?.playerName || ""}
+        amount={histPenaltyEffect?.amount || -200}
+        isVisible={!!histPenaltyEffect}
+        onComplete={() => setHistPenaltyEffect(null)}
+      />
+
+      {/* Bid All Won All Effect — winner video */}
+      <BidAllWonAllEffect
+        playerName={bidAllEffect?.playerName || ""}
+        score={bidAllEffect?.score || 0}
+        isVisible={!!bidAllEffect}
+        onComplete={() => setBidAllEffect(null)}
+      />
     </div>
   );
 }
