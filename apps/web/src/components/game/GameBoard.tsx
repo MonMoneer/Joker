@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useCallback, useRef, useEffect } from "react";
+import { useState, useCallback, useRef, useEffect, useMemo } from "react";
 import { AnimatePresence } from "framer-motion";
 import type { GameState, PlayerIndex, Suit, JokerMode, TrickPlay } from "@joker/engine";
 import { getLegalCardIndices, isJokerCard } from "@joker/engine";
@@ -58,25 +58,30 @@ export function GameBoard({
   } | null>(null);
   const prevHandCountRef = useRef(0);
 
+  // Queued hist penalty (waits for bid-all video to finish)
+  const pendingHistRef = useRef<{ playerName: string; amount: number } | null>(null);
+
   // Detect special scoring events when hand results appear
   useEffect(() => {
     const currentHandCount = gameState.handScores.length;
     if (currentHandCount > prevHandCountRef.current && currentHandCount > 0) {
       const lastScores = gameState.handScores[currentHandCount - 1];
 
-      // Check for hist penalty
-      const histPlayer = lastScores.find((s) => s.isHistPenalty);
-      if (histPlayer) {
-        const name = gameState.players[histPlayer.playerIndex]?.name || "Player";
-        setHistPenaltyEffect({ playerName: name, amount: histPlayer.score });
-        playSound("histPenalty", 0.7);
-      }
-
-      // Check for bid-all-won-all
       const bidAllPlayer = lastScores.find((s) => s.isBidAllWonAll);
-      if (bidAllPlayer) {
+      const histPlayer = lastScores.find((s) => s.isHistPenalty);
+
+      if (bidAllPlayer && histPlayer) {
+        // BOTH happened: play video FIRST, queue hist penalty for after
+        const bidName = gameState.players[bidAllPlayer.playerIndex]?.name || "Player";
+        setBidAllEffect({ playerName: bidName, score: bidAllPlayer.score });
+        const histName = gameState.players[histPlayer.playerIndex]?.name || "Player";
+        pendingHistRef.current = { playerName: histName, amount: histPlayer.score };
+      } else if (bidAllPlayer) {
         const name = gameState.players[bidAllPlayer.playerIndex]?.name || "Player";
         setBidAllEffect({ playerName: name, score: bidAllPlayer.score });
+      } else if (histPlayer) {
+        const name = gameState.players[histPlayer.playerIndex]?.name || "Player";
+        setHistPenaltyEffect({ playerName: name, amount: histPlayer.score });
       }
     }
     prevHandCountRef.current = currentHandCount;
@@ -146,6 +151,30 @@ export function GameBoard({
     gameState.handScores.length > 0
       ? gameState.handScores[gameState.handScores.length - 1]
       : null;
+
+  // Compute kings by set for score table crown icons
+  const kingsBySet = useMemo(() => {
+    const result: Record<number, number[]> = {};
+    // Check each completed set for kings (players who succeeded ALL bids)
+    const handSeq = gameState.handScores;
+    const setBounds = [
+      { set: 1, start: 0, end: 8 },
+      { set: 2, start: 8, end: 12 },
+      { set: 3, start: 12, end: 20 },
+      { set: 4, start: 20, end: 24 },
+    ];
+    for (const { set, start, end } of setBounds) {
+      if (handSeq.length < end) continue; // Set not complete
+      const setHands = handSeq.slice(start, end);
+      const kings: number[] = [];
+      for (let p = 0; p < 4; p++) {
+        const allSuccess = setHands.every((hand) => hand[p]?.isSuccess);
+        if (allSuccess) kings.push(p);
+      }
+      if (kings.length > 0) result[set] = kings;
+    }
+    return result;
+  }, [gameState.handScores]);
 
   const isResultPhase =
     gameState.phase === "hand-result" || gameState.phase === "set-result";
@@ -263,6 +292,7 @@ export function GameBoard({
             scores={gameState.scores}
             handScores={gameState.handScores}
             currentHand={gameState.handNumber}
+            kingsBySet={kingsBySet}
           />
         </div>
       )}
@@ -366,7 +396,16 @@ export function GameBoard({
         playerName={bidAllEffect?.playerName || ""}
         score={bidAllEffect?.score || 0}
         isVisible={!!bidAllEffect}
-        onComplete={() => setBidAllEffect(null)}
+        onComplete={() => {
+          setBidAllEffect(null);
+          // If there's a queued hist penalty, play it now
+          if (pendingHistRef.current) {
+            setTimeout(() => {
+              setHistPenaltyEffect(pendingHistRef.current);
+              pendingHistRef.current = null;
+            }, 500);
+          }
+        }}
       />
     </div>
   );

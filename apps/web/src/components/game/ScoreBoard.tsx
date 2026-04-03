@@ -1,12 +1,22 @@
 "use client";
 
-import type { HandScore, Player } from "@joker/engine";
+import type { HandScore, Player, SetNumber } from "@joker/engine";
+import { getHandSequence } from "@joker/engine";
 
 interface ScoreBoardProps {
   players: Player[];
   scores: number[];
   handScores: HandScore[][];
   currentHand: number;
+  kingsBySet?: Record<number, number[]>; // setNumber → player indices who are kings
+}
+
+// Detect which hands are set boundaries (last hand of each set)
+const HAND_SEQUENCE = getHandSequence();
+const SET_LAST_HANDS = new Set([8, 12, 20, 24]); // last hand numbers of each set
+
+function getSetForHand(handIdx: number): number {
+  return HAND_SEQUENCE[handIdx]?.setNumber || 1;
 }
 
 export function ScoreBoard({
@@ -14,7 +24,20 @@ export function ScoreBoard({
   scores,
   handScores,
   currentHand,
+  kingsBySet = {},
 }: ScoreBoardProps) {
+  // Build a map of which players are king in which set-end row
+  const kingAtRow: Record<number, number[]> = {};
+  for (const [setNum, playerIndices] of Object.entries(kingsBySet)) {
+    // Find the last hand index for this set
+    const lastHandIdx = HAND_SEQUENCE.findIndex(
+      (h) => h.setNumber === Number(setNum) && SET_LAST_HANDS.has(h.handNumber)
+    );
+    if (lastHandIdx >= 0) {
+      kingAtRow[lastHandIdx] = playerIndices;
+    }
+  }
+
   return (
     <div className="score-panel p-5 max-h-[70vh] overflow-y-auto min-w-[300px] shadow-2xl">
       {/* Header */}
@@ -39,24 +62,48 @@ export function ScoreBoard({
           </tr>
         </thead>
         <tbody>
-          {handScores.map((hand, idx) => (
-            <tr
-              key={idx}
-              className={`border-b border-white/5 transition-colors hover:bg-white/5 ${
-                idx + 1 === currentHand ? "score-row-current" : ""
-              }`}
-            >
-              <td className="py-1.5 text-gold-600/60 font-mono text-[10px]">{idx + 1}</td>
-              {hand.map((score, pIdx) => (
-                <td key={pIdx} className="py-1.5 text-center font-mono">
-                  <span className="text-marble-500/40 text-[8px]">{score.bid} </span>
-                  <span className={score.isSuccess ? "text-gold-300" : "text-error-500"}>
-                    {score.score > 0 ? "+" : ""}{score.score}
-                  </span>
-                </td>
-              ))}
-            </tr>
-          ))}
+          {handScores.map((hand, idx) => {
+            const isSetEnd = SET_LAST_HANDS.has(idx + 1);
+            const kingsHere = kingAtRow[idx] || [];
+
+            return (
+              <tr
+                key={idx}
+                className={`transition-colors hover:bg-white/5 ${
+                  idx + 1 === currentHand ? "score-row-current" : ""
+                } ${isSetEnd ? "border-b-2 border-b-gold-600/20" : "border-b border-white/5"}`}
+              >
+                <td className="py-1.5 text-gold-600/60 font-mono text-[10px]">{idx + 1}</td>
+                {hand.map((score, pIdx) => {
+                  const isKing = kingsHere.includes(pIdx);
+                  return (
+                    <td key={pIdx} className="py-1.5 text-center font-mono relative">
+                      {/* Crown for King */}
+                      {isKing && (
+                        <span
+                          className="absolute -top-1 -left-0.5 text-[10px] select-none"
+                          style={{ transform: "rotate(-45deg)" }}
+                          title="King of the Set!"
+                        >
+                          👑
+                        </span>
+                      )}
+                      <span className="text-marble-500/40 text-[8px]">{score.bid} </span>
+                      <span className={
+                        score.isHistPenalty
+                          ? "text-error-500 font-bold"
+                          : score.isSuccess
+                            ? "text-gold-300"
+                            : "text-error-500"
+                      }>
+                        {score.score > 0 ? "+" : ""}{score.score}
+                      </span>
+                    </td>
+                  );
+                })}
+              </tr>
+            );
+          })}
           {/* Empty future rows */}
           {Array.from({ length: Math.max(0, 24 - handScores.length) }, (_, i) => (
             <tr key={`future-${i}`} className="border-b border-white/3" style={{ opacity: Math.max(0.15, 0.4 - i * 0.02) }}>

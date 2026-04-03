@@ -132,7 +132,7 @@ export function useLocalGame() {
     const currentPlayer = players[currentTurn];
     const isAI = currentPlayer?.isAI;
 
-    // Phase: trick-result → auto-advance to playing after brief pause
+    // Phase: trick-result → show all 4 cards for 1.5s, then clear and continue
     if (phase === "trick-result") {
       const trickState = gameState as GameState & { _trickWinner?: PlayerIndex };
       const winner = trickState._trickWinner ?? currentTurn;
@@ -141,9 +141,15 @@ export function useLocalGame() {
       timerRef.current = setTimeout(() => {
         setGameState((prev) => {
           if (!prev || prev.phase !== "trick-result") return prev;
-          return { ...prev, phase: "playing" as const, currentTurn: winner };
+          // NOW clear the trick and advance
+          return {
+            ...prev,
+            phase: "playing" as const,
+            currentTurn: winner,
+            currentTrick: { plays: [], leadSuit: null },
+          };
         });
-      }, 1200);
+      }, 1500); // 1.5s to see all 4 cards on table
       return () => clearTimer();
     }
 

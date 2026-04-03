@@ -245,11 +245,11 @@ function executeCardPlay(
       return resolveHand(state, newHands, newTricksWon, winner);
     }
 
-    // More tricks to play
+    // More tricks to play — keep completed trick visible during trick-result
     return {
       ...state,
       hands: newHands,
-      currentTrick: createTrick(),
+      currentTrick: newTrick, // Keep the 4 cards visible
       currentTurn: winner,
       tricksWon: newTricksWon,
       trickNumber: state.trickNumber + 1,
