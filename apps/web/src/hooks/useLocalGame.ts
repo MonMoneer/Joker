@@ -42,13 +42,35 @@ export function useLocalGame() {
   };
 
   const initGame = useCallback(
-    (playerName: string, settings: GameSettings = DEFAULT_SETTINGS, aiDifficulty: 'easy' | 'medium' | 'hard' = 'medium') => {
+    (
+      playerName: string,
+      settings: GameSettings = DEFAULT_SETTINGS,
+      aiDifficulty: 'easy' | 'medium' | 'hard' = 'medium',
+      friendNames: string[] = []
+    ) => {
+      const botNames = ["Bot Alpha", "Bot Beta", "Bot Gamma"];
       const players: Player[] = [
         { id: "p0", name: playerName, isAI: false },
-        { id: "p1", name: "Bot Alpha", isAI: true, aiDifficulty },
-        { id: "p2", name: "Bot Beta", isAI: true, aiDifficulty },
-        { id: "p3", name: "Bot Gamma", isAI: true, aiDifficulty },
       ];
+
+      // Fill slots: invited friends first (still AI-controlled), then bots
+      for (let i = 0; i < 3; i++) {
+        if (i < friendNames.length) {
+          players.push({
+            id: `friend-${i}`,
+            name: friendNames[i],
+            isAI: true,
+            aiDifficulty,
+          });
+        } else {
+          players.push({
+            id: `bot-${i}`,
+            name: botNames[i - friendNames.length] || `Bot ${i + 1}`,
+            isAI: true,
+            aiDifficulty,
+          });
+        }
+      }
 
       try {
         const state = createGameState("local-game", players, settings, 0);

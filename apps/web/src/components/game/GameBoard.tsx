@@ -317,45 +317,39 @@ export function GameBoard({
         onClose={() => setShowLastTrick(false)}
       />
 
-      {/* BIDDING MODAL — centered overlay, not blocking cards */}
-      <AnimatePresence>
-        {gameState.phase === "bidding" && isMyTurn && (
-          <motion.div
-            className="absolute inset-0 z-30 flex items-center justify-center bg-navy-900/40 backdrop-blur-sm"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-          >
-            <BidPanel
-              playerName={gameState.players[myPlayerIndex]?.name || "You"}
-              cardsPerPlayer={gameState.currentHandConfig.cardsPerPlayer}
-              restrictedBid={gameState.bidState.restrictedBid}
-              isDealer={gameState.dealerIndex === myPlayerIndex}
-              existingBids={gameState.bidState.bids}
-              playerNames={gameState.players.map((p) => p.name)}
-              onBid={onBid}
-            />
-          </motion.div>
-        )}
-      </AnimatePresence>
-
-      {/* BOTTOM: My player info + hand */}
+      {/* BOTTOM: player info + bid strip + cards */}
       <div className="absolute bottom-0 left-0 right-0 z-10 safe-bottom">
         {/* Compact player info */}
-        <div className="flex items-center justify-center gap-2 mb-1 px-3">
-          <div className="avatar-ring !w-9 !h-9 !border-2">
-            <span className="text-sm font-bold text-gold-200/60">
-              {gameState.players[myPlayerIndex]?.name?.[0]?.toUpperCase() || "?"}
-            </span>
-          </div>
+        <div className="flex items-center justify-center gap-2 px-3">
           <div className="text-[10px] font-body text-marble-400/50">
             <span className="text-gold-300 font-bold">{gameState.players[myPlayerIndex]?.name}</span>
-            <span className="mx-1.5 text-marble-500/20">|</span>
+            <span className="mx-1 text-marble-500/20">·</span>
             <span>bid: <strong className="text-gold-300">{gameState.bidState.bids[myPlayerIndex] ?? "-"}</strong></span>
-            <span className="mx-1.5 text-marble-500/20">|</span>
+            <span className="mx-1 text-marble-500/20">·</span>
             <span>won: <strong className="text-gold-300">{gameState.tricksWon[myPlayerIndex]}</strong></span>
           </div>
         </div>
+
+        {/* BID STRIP — small buttons right above cards */}
+        <AnimatePresence>
+          {gameState.phase === "bidding" && isMyTurn && (
+            <motion.div
+              initial={{ opacity: 0, y: 10 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 10 }}
+            >
+              <BidPanel
+                playerName={gameState.players[myPlayerIndex]?.name || "You"}
+                cardsPerPlayer={gameState.currentHandConfig.cardsPerPlayer}
+                restrictedBid={gameState.bidState.restrictedBid}
+                isDealer={gameState.dealerIndex === myPlayerIndex}
+                existingBids={gameState.bidState.bids}
+                playerNames={gameState.players.map((p) => p.name)}
+                onBid={onBid}
+              />
+            </motion.div>
+          )}
+        </AnimatePresence>
 
         {/* Cards — always visible */}
         <div className="pb-2">

@@ -44,7 +44,8 @@ export default function VsAIPage() {
       histPenaltyAmount: histAmount,
       couplesMode: false,
     };
-    initGame(nickname, settings, botLevel);
+    const friendNicknames = invitedFriends.map((f) => f.nickname);
+    initGame(nickname, settings, botLevel, friendNicknames);
   };
 
   if (gameState) {
