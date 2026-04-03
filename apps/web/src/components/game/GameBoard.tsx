@@ -68,20 +68,22 @@ export function GameBoard({
       const lastScores = gameState.handScores[currentHandCount - 1];
 
       const bidAllPlayer = lastScores.find((s) => s.isBidAllWonAll);
-      const histPlayer = lastScores.find((s) => s.isHistPenalty);
+      // Find ALL players who got hist penalty (could be multiple)
+      const histPlayers = lastScores.filter((s) => s.isHistPenalty);
 
-      if (bidAllPlayer && histPlayer) {
+      if (bidAllPlayer && histPlayers.length > 0) {
         // BOTH happened: play video FIRST, queue hist penalty for after
         const bidName = gameState.players[bidAllPlayer.playerIndex]?.name || "Player";
         setBidAllEffect({ playerName: bidName, score: bidAllPlayer.score });
-        const histName = gameState.players[histPlayer.playerIndex]?.name || "Player";
-        pendingHistRef.current = { playerName: histName, amount: histPlayer.score };
+        const names = histPlayers.map((h) => gameState.players[h.playerIndex]?.name || "Player").join(" & ");
+        pendingHistRef.current = { playerName: names, amount: histPlayers[0].score };
       } else if (bidAllPlayer) {
         const name = gameState.players[bidAllPlayer.playerIndex]?.name || "Player";
         setBidAllEffect({ playerName: name, score: bidAllPlayer.score });
-      } else if (histPlayer) {
-        const name = gameState.players[histPlayer.playerIndex]?.name || "Player";
-        setHistPenaltyEffect({ playerName: name, amount: histPlayer.score });
+      } else if (histPlayers.length > 0) {
+        // Show effect for all penalized players
+        const names = histPlayers.map((h) => gameState.players[h.playerIndex]?.name || "Player").join(" & ");
+        setHistPenaltyEffect({ playerName: names, amount: histPlayers[0].score });
       }
     }
     prevHandCountRef.current = currentHandCount;
