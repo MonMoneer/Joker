@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&amp;family=Manrope:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#a9c7ff",
+                    "tertiary-fixed-dim": "#ffb4a8",
+                    "surface-container-highest": "#e1e2e4",
+                    "surface": "#f8f9fb",
+                    "tertiary-container": "#5a0000",
+                    "on-surface-variant": "#444650",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#ffdad4",
+                    "surface-variant": "#e1e2e4",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#330000",
+                    "surface-container-low": "#f3f4f6",
+                    "secondary-container": "#fdc34d",
+                    "inverse-primary": "#a9c7ff",
+                    "secondary-fixed-dim": "#f7bd48",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#5d4200",
+                    "outline": "#757682",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#d6e3ff",
+                    "on-primary-fixed-variant": "#264778",
+                    "secondary-fixed": "#ffdea6",
+                    "primary-container": "#002855",
+                    "outline-variant": "#c5c6d2",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-high": "#e7e8ea",
+                    "inverse-on-surface": "#f0f1f3",
+                    "surface-container": "#edeef0",
+                    "on-primary-container": "#7290c6",
+                    "on-tertiary-fixed-variant": "#920703",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#271900",
+                    "on-tertiary-fixed": "#410000",
+                    "on-primary-fixed": "#001b3d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#405f91",
+                    "surface-bright": "#f8f9fb",
+                    "surface-dim": "#d9dadc",
+                    "on-secondary-container": "#715000",
+                    "secondary": "#7b5800",
+                    "primary": "#001430",
+                    "background": "#f8f9fb",
+                    "on-tertiary-container": "#fa5844",
+                    "on-background": "#191c1e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.royal-gradient {
+    background: linear-gradient(135deg, #001430 0%, #002855 100%)
+    }
+.marble-overlay {
+    background-image: url(https://lh3.googleusercontent.com/aida-public/AB6AXuBYekHW3kvZvFiGFnBFAO3mdyPlz0BXBY15kHcAVuhRw8LnFhxmjs2SA-pVgrwWV_UAE8t32pFuw-2sucGY-qFsjTUedKQJ1jLNxKP4SZzaMjbxT3gVzV-UfmE-r2QWr6d2xsx_qinzbrRCRtHPZRBNKE_Qp1ikzWdNAFjDo2DitvIejYCvGa0P7VKudYKJK-O-4JAfAnOQKikHp6Al4yGIUQ0HK53fUse3NOWwpVd_q1gnSmLPaJUr21EA-rAWXIRxIaqh2-7AH7A);
+    opacity: 0.05
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-on-background min-h-screen overflow-x-hidden">
+<!-- TopAppBar -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-3 bg-[#001430]/80 backdrop-blur-md dark:bg-[#001430]/90 border-b border-[#7b5800]/20 shadow-xl shadow-black/20">
+<div class="flex items-center gap-3">
+<div class="w-10 h-10 rounded-full border-2 border-[#7b5800] overflow-hidden">
+<img alt="Player Profile" class="w-full h-full object-cover" data-alt="close-up portrait of a sophisticated man in a dark velvet suit with warm cinematic lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBsKsqnWi0dSWP1PX5rvBcczWa-Ff3qbIfAmokNKtWuyXftOBbbl6UhPYrHjkod0MxUboANTLPBI1XMLnFrLwtp1TRTasIC0ZtP0e18KnXhSB8ucnnknu4JuU6IVtVWNcD-IjMySyyH0KtuWb4WVh_GiiE6n58wmNsKu_DE-by6n9RoZU1lHL7xj9hmVQzi_Gpf4AhsMA7hCp_k8ctSJcB3pZR8ILw8rEgRzWxGVScAU39l6qwLeKrpTF_tkMgW71IVSShREUK_qTE"/>
+</div>
+<h1 class="font-headline text-xl font-black text-[#7b5800] dark:text-[#ffd700] tracking-tight">Joker: Monarch Suite</h1>
+</div>
+<div class="flex items-center gap-4">
+<button class="text-[#ffd700] hover:bg-white/10 transition-colors p-2 rounded-full active:scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<main class="relative pt-24 pb-32 px-4 flex flex-col items-center min-h-screen">
+<!-- Environmental Background (The Sovereign Table) -->
+<div class="fixed inset-0 z-0 pointer-events-none">
+<div class="absolute inset-0 bg-[#001430]" data-alt="deep dark mahogany wood texture with subtle grain and rich polished finish"></div>
+<div class="absolute inset-0 royal-gradient opacity-60"></div>
+<div class="absolute inset-0 marble-overlay"></div>
+</div>
+<!-- Trump & Game Status Indicator -->
+<div class="relative z-10 w-full max-w-4xl mb-8">
+<div class="flex flex-col items-center text-center space-y-2">
+<div class="bg-primary/40 backdrop-blur-xl px-8 py-4 rounded-full border border-secondary/30 shadow-2xl">
+<p class="font-headline font-bold text-lg tracking-tight text-[#ffd700]">
+                        distribution by: 5 | stuffing: <span class="text-error">♥</span>
+</p>
+</div>
+</div>
+</div>
+<!-- The Table Surface (Central Action Area) -->
+<div class="relative z-10 flex flex-col items-center justify-center w-full max-w-5xl aspect-video bg-black/20 rounded-[100px] border border-white/5 shadow-inner">
+<!-- Trump Indicator Card (Floating) -->
+<div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 group">
+<div class="relative w-48 h-64 bg-surface-container-lowest rounded-xl shadow-[0_20px_50px_rgba(0,0,0,0.5)] transform -rotate-3 hover:rotate-0 transition-transform duration-500 flex flex-col items-center justify-between p-4 border border-secondary/20">
+<div class="w-full flex justify-start">
+<span class="text-4xl font-headline font-bold text-error">A</span>
+</div>
+<span class="material-symbols-outlined text-8xl text-error" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="w-full flex justify-end transform rotate-180">
+<span class="text-4xl font-headline font-bold text-error">A</span>
+</div>
+<!-- Glow effect -->
+<div class="absolute inset-0 rounded-xl bg-secondary/5 group-hover:bg-secondary/10 transition-colors"></div>
+</div>
+</div>
+<!-- Last Trick Popover (Asymmetric Layout) -->
+<div class="absolute top-10 right-10 z-20">
+<div class="bg-primary-container/90 backdrop-blur-2xl p-6 rounded-2xl shadow-2xl border border-secondary/20 max-w-xs transform hover:scale-[1.02] transition-transform">
+<div class="flex items-center gap-2 mb-4">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">history</span>
+<h3 class="font-headline text-on-primary-container font-bold text-sm uppercase tracking-widest">Last Trick</h3>
+</div>
+<div class="flex -space-x-12 pb-2">
+<!-- Card 1 -->
+<div class="w-20 h-28 bg-white rounded-lg shadow-lg border border-outline/10 flex flex-col items-center justify-between p-2 transform -rotate-12 hover:-translate-y-4 transition-transform">
+<span class="text-sm font-bold text-on-surface">K</span>
+<span class="material-symbols-outlined text-2xl text-on-surface" style="font-variation-settings: 'FILL' 1;">stat_0</span>
+<span class="text-sm font-bold text-on-surface self-end rotate-180">K</span>
+</div>
+<!-- Card 2 -->
+<div class="w-20 h-28 bg-white rounded-lg shadow-lg border border-outline/10 flex flex-col items-center justify-between p-2 z-10 transform rotate-2 hover:-translate-y-4 transition-transform">
+<span class="text-sm font-bold text-error">10</span>
+<span class="material-symbols-outlined text-2xl text-error" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<span class="text-sm font-bold text-error self-end rotate-180">10</span>
+</div>
+<!-- Card 3 -->
+<div class="w-20 h-28 bg-white rounded-lg shadow-lg border border-outline/10 flex flex-col items-center justify-between p-2 z-20 transform rotate-12 hover:-translate-y-4 transition-transform">
+<span class="text-sm font-bold text-on-surface">J</span>
+<span class="material-symbols-outlined text-2xl text-on-surface" style="font-variation-settings: 'FILL' 1;">stat_0</span>
+<span class="text-sm font-bold text-on-surface self-end rotate-180">J</span>
+</div>
+</div>
+<div class="mt-4 pt-3 border-t border-white/10">
+<p class="text-on-primary-container/60 text-[10px] uppercase font-bold tracking-tighter">Winner: Duke of Hearts</p>
+</div>
+</div>
+</div>
+<!-- Trick Analysis (Bento-style Grid) -->
+<div class="absolute bottom-10 left-10 z-20 grid grid-cols-2 gap-4">
+<div class="bg-white/5 backdrop-blur-md p-4 rounded-xl border border-white/10 shadow-lg col-span-2">
+<p class="text-white/50 text-[10px] uppercase tracking-widest font-bold mb-1">Trick Analysis</p>
+<div class="flex items-end gap-2 h-12">
+<div class="w-full bg-secondary/20 rounded-t-sm h-[40%]"></div>
+<div class="w-full bg-secondary/60 rounded-t-sm h-[75%]"></div>
+<div class="w-full bg-secondary rounded-t-sm h-[90%]"></div>
+<div class="w-full bg-secondary/40 rounded-t-sm h-[55%]"></div>
+</div>
+</div>
+</div>
+</div>
+<!-- Tavern Chatter Chat Bubble -->
+<div class="fixed bottom-24 left-1/2 -translate-x-1/2 z-30 w-full max-w-lg px-6">
+<div class="bg-surface-container-lowest/95 backdrop-blur-xl p-4 rounded-full shadow-2xl border border-secondary/10 flex items-center gap-4">
+<div class="w-8 h-8 rounded-full bg-primary-container flex items-center justify-center shrink-0">
+<span class="material-symbols-outlined text-secondary text-lg">chat_bubble</span>
+</div>
+<div class="flex-1 overflow-hidden">
+<p class="text-xs font-bold text-secondary uppercase tracking-tighter mb-0.5">Tavern Chatter</p>
+<p class="text-sm text-on-surface-variant truncate italic">"A bold move with that Ace of Hearts, sire..."</p>
+</div>
+<button class="w-8 h-8 rounded-full bg-surface-container-high flex items-center justify-center hover:bg-surface-container-highest transition-colors">
+<span class="material-symbols-outlined text-sm">keyboard_arrow_up</span>
+</button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#001430]/80 backdrop-blur-xl dark:bg-[#001430]/95 rounded-t-3xl shadow-[0_-4px_20px_rgba(0,0,0,0.4)]">
+<a class="flex flex-col items-center justify-center text-[#ffd700] bg-gradient-to-b from-[#7b5800]/20 to-transparent rounded-xl px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined text-2xl" style="font-variation-settings: 'FILL' 1;">style</span>
+<span class="font-['Manrope'] text-xs uppercase tracking-widest font-semibold mt-1">Play</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/50 hover:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined text-2xl">history</span>
+<span class="font-['Manrope'] text-xs uppercase tracking-widest font-semibold mt-1">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/50 hover:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined text-2xl">person</span>
+<span class="font-['Manrope'] text-xs uppercase tracking-widest font-semibold mt-1">Profile</span>
+</a>
+</nav>
+</body></html>

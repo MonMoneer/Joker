@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Royal Joker - Player Profile</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#7290c6",
+                        "secondary-fixed-dim": "#f7bd48",
+                        "outline-variant": "#c5c6d2",
+                        "on-secondary-fixed": "#271900",
+                        "on-surface-variant": "#444650",
+                        "surface-container-low": "#f3f4f6",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9fb",
+                        "on-primary-fixed": "#001b3d",
+                        "surface": "#f8f9fb",
+                        "on-tertiary-container": "#fa5844",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "inverse-surface": "#2e3132",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#edeef0",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-fixed": "#ffdea6",
+                        "on-surface": "#191c1e",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#fdc34d",
+                        "on-secondary-container": "#715000",
+                        "tertiary-fixed-dim": "#ffb4a8",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#002855",
+                        "tertiary-container": "#5a0000",
+                        "on-primary-fixed-variant": "#264778",
+                        "surface-dim": "#d9dadc",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#757682",
+                        "tertiary": "#330000",
+                        "surface-tint": "#405f91",
+                        "inverse-on-surface": "#f0f1f3",
+                        "primary-fixed": "#d6e3ff",
+                        "on-tertiary-fixed-variant": "#920703",
+                        "primary": "#001430",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "on-secondary-fixed-variant": "#5d4200",
+                        "surface-variant": "#e1e2e4",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e7e8ea",
+                        "on-tertiary-fixed": "#410000",
+                        "tertiary-fixed": "#ffdad4",
+                        "secondary": "#7b5800"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .royal-gradient {
+            background: linear-gradient(135deg, #001430 0%, #002855 100%);
+        }
+        .glass-dark {
+            background: rgba(0, 20, 48, 0.85);
+            backdrop-filter: blur(12px);
+        }
+        .gold-glow:focus {
+            box-shadow: 0 0 15px rgba(253, 195, 77, 0.3);
+            border-color: #7b5800;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-surface min-h-screen pb-32">
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-blue-950/80 backdrop-blur-xl shadow-sm dark:shadow-none flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="material-symbols-outlined text-amber-600 dark:text-amber-500 hover:bg-slate-100/50 dark:hover:bg-blue-900/50 transition-colors active:scale-95 duration-200 p-2 rounded-full">
+                menu
+            </button>
+<h1 class="font-serif text-on-surface uppercase tracking-widest text-2xl font-serif font-bold text-amber-600 dark:text-amber-500 italic">Royal Joker</h1>
+</div>
+<div class="w-10 h-10 rounded-full overflow-hidden bg-surface-container-high border-2 border-amber-600">
+<img alt="User Profile" data-alt="Stylized avatar of a regal poker player wearing a crown and dark suit with gold accents" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCSH6rqottKP95KYMjHr45PVMbSaV-K2y3XUkIKOK6XfpGasBk2vQHE9o96ClDdJsGvCQPaps_fw5V2pADoHBsel1l_fo8DdF4121eXhSxrVidebMKz2xLv78rNW-mQ_gx_8Nu5x1eBpJQaJowKVD8KEJRl8tgcf6KVcaKeaz-jQS_HcipgSp2z1AXZFWbnOy2v2oCdg1QLQIqqbrAz4Up2cPhE4fMQUmZ1p-zuE6ACcyZwNrdwCwlnBr9LbHldPekeqvtxRB5w3WM"/>
+</div>
+</header>
+<main class="pt-24 px-6 max-w-4xl mx-auto space-y-8">
+<div class="flex items-center justify-between">
+<h2 class="font-headline text-3xl font-bold text-on-surface">Profile</h2>
+<div class="bg-secondary-container px-4 py-1 rounded-full text-on-secondary-container text-sm font-bold flex items-center gap-2">
+<span class="material-symbols-outlined text-sm" style="font-variation-settings: 'FILL' 1;">stars</span>
+                MONARCH STATUS
+            </div>
+</div>
+<section class="glass-dark rounded-3xl p-8 text-on-primary shadow-2xl relative overflow-hidden">
+<div class="absolute top-0 right-0 p-8 opacity-10 pointer-events-none">
+<span class="material-symbols-outlined text-9xl">workspace_premium</span>
+</div>
+<div class="relative z-10 space-y-8">
+<div>
+<label class="block font-headline text-lg mb-4 text-secondary-fixed-dim">Select Your Sovereign Avatar</label>
+<div class="grid grid-cols-4 md:grid-cols-6 gap-4">
+<div class="aspect-square bg-white/10 hover:bg-white/20 border-2 border-amber-500/50 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🤴</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">👸</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🃏</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🦁</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🦅</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🏰</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">⚔️</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">💎</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🍷</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🎩</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🎻</div>
+<div class="aspect-square bg-white/5 hover:bg-white/10 rounded-2xl flex items-center justify-center text-3xl cursor-pointer transition-all">🌙</div>
+</div>
+</div>
+<div class="grid md:grid-cols-2 gap-6">
+<div class="space-y-2">
+<label class="block text-sm font-semibold uppercase tracking-wider text-on-primary-container">Display Name</label>
+<input class="w-full bg-primary-container/50 border-none rounded-xl px-4 py-3 text-on-primary placeholder-on-primary-container/50 gold-glow focus:ring-0" type="text" value="RoyalGambit"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold uppercase tracking-wider text-on-primary-container">Georgian Name (ქართული)</label>
+<input class="w-full bg-primary-container/50 border-none rounded-xl px-4 py-3 text-on-primary placeholder-on-primary-container/50 gold-glow focus:ring-0" placeholder="სახელი" type="text"/>
+</div>
+<div class="space-y-2">
+<label class="block text-sm font-semibold uppercase tracking-wider text-on-primary-container">4-Digit Security PIN</label>
+<input class="w-full bg-primary-container/50 border-none rounded-xl px-4 py-3 text-on-primary placeholder-on-primary-container/50 gold-glow focus:ring-0 tracking-widest" maxlength="4" placeholder="••••" type="password"/>
+</div>
+<div class="flex items-end">
+<button class="w-full h-[52px] bg-gradient-to-r from-secondary to-secondary-container text-on-secondary-container font-bold rounded-xl shadow-lg hover:shadow-amber-500/20 active:translate-y-0.5 transition-all uppercase tracking-widest">
+                            Save Profile
+                        </button>
+</div>
+</div>
+</div>
+</section>
+<section class="space-y-6">
+<h3 class="font-headline text-2xl font-bold">Player Statistics</h3>
+<div class="grid grid-cols-2 md:grid-cols-3 gap-6">
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/10 flex flex-col justify-between aspect-square md:aspect-auto md:h-40">
+<span class="material-symbols-outlined text-amber-600 mb-2">casino</span>
+<div>
+<p class="text-4xl font-headline font-bold text-on-surface">1,284</p>
+<p class="text-xs font-semibold text-on-surface-variant uppercase tracking-tighter">Games Played</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/10 flex flex-col justify-between aspect-square md:aspect-auto md:h-40">
+<span class="material-symbols-outlined text-amber-600 mb-2">trending_up</span>
+<div>
+<p class="text-4xl font-headline font-bold text-on-surface">64%</p>
+<p class="text-xs font-semibold text-on-surface-variant uppercase tracking-tighter">Win Rate</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/10 flex flex-col justify-between aspect-square md:aspect-auto md:h-40">
+<span class="material-symbols-outlined text-amber-600 mb-2">military_tech</span>
+<div>
+<p class="text-4xl font-headline font-bold text-on-surface">4,950</p>
+<p class="text-xs font-semibold text-on-surface-variant uppercase tracking-tighter">Best Score</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/10 flex flex-col justify-between aspect-square md:aspect-auto md:h-40">
+<span class="material-symbols-outlined text-amber-600 mb-2" style="font-variation-settings: 'FILL' 1;">crown</span>
+<div>
+<p class="text-4xl font-headline font-bold text-on-surface">112</p>
+<p class="text-xs font-semibold text-on-surface-variant uppercase tracking-tighter">Kings Earned</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/10 flex flex-col justify-between aspect-square md:aspect-auto md:h-40">
+<span class="material-symbols-outlined text-amber-600 mb-2">history_edu</span>
+<div>
+<p class="text-4xl font-headline font-bold text-on-surface">8.2k</p>
+<p class="text-xs font-semibold text-on-surface-variant uppercase tracking-tighter">Hands Dealt</p>
+</div>
+</div>
+<div class="bg-surface-container-lowest p-6 rounded-3xl shadow-sm border border-outline-variant/10 flex flex-col justify-between aspect-square md:aspect-auto md:h-40">
+<span class="material-symbols-outlined text-amber-600 mb-2">timer</span>
+<div>
+<p class="text-4xl font-headline font-bold text-on-surface">142h</p>
+<p class="text-xs font-semibold text-on-surface-variant uppercase tracking-tighter">Time Played</p>
+</div>
+</div>
+</div>
+</section>
+<section class="bg-primary text-on-primary p-8 rounded-3xl relative overflow-hidden">
+<div class="relative z-10 flex flex-col md:flex-row md:items-center justify-between gap-6">
+<div>
+<h3 class="font-headline text-2xl font-bold mb-2">Monarch Suite Access</h3>
+<p class="text-on-primary-container max-w-md">Unlock exclusive table themes, premium card backs, and advanced analytics for the ultimate Joker experience.</p>
+</div>
+<button class="bg-white text-primary font-bold px-8 py-3 rounded-xl hover:bg-amber-50 transition-colors">
+                    Upgrade to Pro
+                </button>
+</div>
+<div class="absolute -right-20 -bottom-20 w-64 h-64 bg-amber-500/10 rounded-full blur-3xl"></div>
+</section>
+</main>
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-6 bg-slate-50/90 dark:bg-blue-950/90 backdrop-blur-2xl z-50 rounded-t-3xl border-t-[0.5px] border-slate-200 dark:border-blue-800/30 shadow-[0_-8px_30px_rgb(0,0,0,0.04)]">
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-blue-300/50 px-6 py-2 hover:text-amber-600 dark:hover:text-amber-400 active:translate-y-0.5 duration-150 cursor-pointer">
+<span class="material-symbols-outlined">style</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase mt-1">Play</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-400 dark:text-blue-300/50 px-6 py-2 hover:text-amber-600 dark:hover:text-amber-400 active:translate-y-0.5 duration-150 cursor-pointer">
+<span class="material-symbols-outlined">history</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase mt-1">History</span>
+</div>
+<div class="flex flex-col items-center justify-center bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-xl px-6 py-2 transition-all active:translate-y-0.5 duration-150 cursor-pointer">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">person</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase mt-1">Profile</span>
+</div>
+</nav>
+</body></html>

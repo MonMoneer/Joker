@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@400;500;600;700;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#7290c6",
+                        "secondary-fixed-dim": "#f7bd48",
+                        "outline-variant": "#c5c6d2",
+                        "on-secondary-fixed": "#271900",
+                        "on-surface-variant": "#444650",
+                        "surface-container-low": "#f3f4f6",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9fb",
+                        "on-primary-fixed": "#001b3d",
+                        "surface": "#f8f9fb",
+                        "on-tertiary-container": "#fa5844",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "inverse-surface": "#2e3132",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#edeef0",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-fixed": "#ffdea6",
+                        "on-surface": "#191c1e",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#fdc34d",
+                        "on-secondary-container": "#715000",
+                        "tertiary-fixed-dim": "#ffb4a8",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#002855",
+                        "tertiary-container": "#5a0000",
+                        "on-primary-fixed-variant": "#264778",
+                        "surface-dim": "#d9dadc",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#757682",
+                        "tertiary": "#330000",
+                        "surface-tint": "#405f91",
+                        "inverse-on-surface": "#f0f1f3",
+                        "primary-fixed": "#d6e3ff",
+                        "on-tertiary-fixed-variant": "#920703",
+                        "primary": "#001430",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "on-secondary-fixed-variant": "#5d4200",
+                        "surface-variant": "#e1e2e4",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e7e8ea",
+                        "on-tertiary-fixed": "#410000",
+                        "tertiary-fixed": "#ffdad4",
+                        "secondary": "#7b5800"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                },
+            },
+        }
+    </script>
+<style>.material-symbols-outlined {
+    font-variation-settings: "FILL" 0, "wght" 400, "GRAD" 0, "opsz" 24
+    }
+.wood-texture {
+    background-image: linear-gradient(to bottom, rgba(0, 20, 48, 0.95), rgba(0, 40, 85, 0.9)), url(https://lh3.googleusercontent.com/aida-public/AB6AXuA7_tDbG0ucahsXTrhH4LUolzjTNwGfmOYTwVF3CpJeZblQn1NvPQsy9jUkZj5FeD7cuBU0ZRm9l1cFdQio9QclRtugcvQsrie3zhTaNjBZCywckJSNtsCrw5hqu0BeKVyvyV_msO6KlnjremseI2Ry1Vjkm-OVwCFaOIChRVqOSzr6VIVDXdlqGxmN12ZTpFpvm0SZc6fhhOMxS3dlmYjGibn1Ft7bk8JKXEz1psfrgaRWOuRQbtP3JL58zRJUbnJZNQt0YWOp0V4);
+    background-size: cover;
+    background-position: center
+    }
+.glass-panel {
+    background: rgba(255, 255, 255, 0.03);
+    backdrop-filter: blur(16px);
+    border: 1px solid rgba(255, 255, 255, 0.05)
+    }
+.royal-glow {
+    box-shadow: 0 0 40px rgba(123, 88, 0, 0.15)
+    }</style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-primary text-on-primary font-body min-h-screen selection:bg-secondary-container selection:text-on-secondary-container">
+<!-- Top Navigation Anchor (Manual Implementation based on JSON Logic) -->
+<header class="fixed top-0 w-full z-50 bg-slate-50/80 dark:bg-blue-950/80 backdrop-blur-xl shadow-sm dark:shadow-none">
+<div class="flex justify-between items-center px-6 py-4 w-full">
+<div class="flex items-center gap-4">
+<button class="p-2 text-amber-600 dark:text-amber-500 hover:bg-slate-100/50 dark:hover:bg-blue-900/50 transition-colors active:scale-95 duration-200">
+<span class="material-symbols-outlined">menu</span>
+</button>
+<h1 class="text-2xl font-serif font-bold text-amber-600 dark:text-amber-500 italic tracking-widest uppercase">Royal Joker</h1>
+</div>
+<div class="flex items-center gap-6">
+<nav class="hidden md:flex gap-8">
+<a class="text-amber-600 dark:text-amber-400 font-bold font-serif uppercase tracking-widest text-sm" href="#">Play</a>
+<a class="text-slate-500 dark:text-slate-400 font-serif uppercase tracking-widest text-sm hover:text-amber-600 transition-colors" href="#">History</a>
+<a class="text-slate-500 dark:text-slate-400 font-serif uppercase tracking-widest text-sm hover:text-amber-600 transition-colors" href="#">Profile</a>
+</nav>
+<div class="w-10 h-10 rounded-full border-2 border-amber-600/30 overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close up portrait of a distinguished middle-aged man with sharp features and professional attire, high-end studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDvgIN-12ZZO2PnheII2nI964ks1L74J-MpWu_8IgMYHkX88F8d3h63WREk4LNnBTdtVS4BpjnCevTOkyxvPeMDtfRglPSTnPdfrum-XOTiVX0BnU4WNvT0YGTumIG9KkAbZg4-6lRIlObHKoACdyI6e1GPDX4ZjTQ6Jq-iI1uWML21097bknQifVIVidN6L9S2DZhmWToyF2o2_swfeGaVesm_L26D1WdrvrNEJgoRqkeqEnkBjrW6zEiZW4h5im-Cbgo9pJsjrDk"/>
+</div>
+</div>
+</div>
+<div class="h-px w-full bg-gradient-to-r from-transparent via-amber-600/20 to-transparent"></div>
+</header>
+<main class="wood-texture min-h-screen pt-24 pb-32 px-6 flex flex-col items-center justify-center">
+<!-- Page Title -->
+<div class="text-center mb-10">
+<h2 class="font-headline text-5xl font-bold text-on-primary mb-2 tracking-tight">Game Lobby</h2>
+<p class="font-body text-primary-fixed-dim/60 tracking-widest uppercase text-xs font-semibold">Waiting for contenders to approach the table</p>
+</div>
+<div class="max-w-5xl w-full grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
+<!-- Left Side: Room Management -->
+<div class="lg:col-span-5 space-y-6">
+<div class="glass-panel p-8 rounded-3xl royal-glow flex flex-col items-center text-center">
+<span class="text-secondary-fixed-dim/60 text-xs font-bold uppercase tracking-widest mb-4">Secret Room Code</span>
+<div class="bg-primary-container/80 px-10 py-6 rounded-2xl border border-white/5 mb-6">
+<span class="font-headline text-6xl font-black text-secondary-container tracking-tighter">XK9P</span>
+</div>
+<button class="flex items-center gap-3 px-8 py-4 bg-white/5 hover:bg-white/10 text-on-primary border border-white/10 rounded-xl transition-all active:scale-95">
+<span class="material-symbols-outlined text-secondary-fixed-dim">content_copy</span>
+<span class="font-bold uppercase tracking-widest text-xs">Copy Invite Link</span>
+</button>
+</div>
+<div class="glass-panel p-6 rounded-3xl flex items-center justify-between">
+<div>
+<p class="text-on-primary font-bold">Monarch Suite</p>
+<p class="text-primary-fixed-dim/50 text-xs">Stakes: 500 Gold Crowns</p>
+</div>
+<div class="flex gap-1">
+<span class="material-symbols-outlined text-secondary-fixed-dim text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed-dim text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+<span class="material-symbols-outlined text-secondary-fixed-dim text-sm" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+</div>
+</div>
+<!-- Right Side: Player List -->
+<div class="lg:col-span-7">
+<div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+<!-- Player 1 (Host) -->
+<div class="glass-panel p-5 rounded-2xl border-l-4 border-l-secondary-container relative overflow-hidden">
+<div class="absolute top-0 right-0 p-2">
+<span class="bg-secondary-container text-on-secondary-container text-[10px] font-black px-2 py-0.5 rounded uppercase">Host</span>
+</div>
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-xl overflow-hidden border border-white/10 ring-2 ring-secondary-container/20">
+<img alt="Host" class="w-full h-full object-cover" data-alt="Sophisticated man in a charcoal suit, high contrast portrait, dark professional background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuA1tLw-kwUCnb_GmgYOxlzTwLnnADUgCM0tJ6yf7HeTpVbz3zjGT63k-tqgniJPpiXX28eUacBMFs1AH8Bqc0fVHx_C27egaoFlZFhNPTq2s6kbNxPobxk0TvPD-5RndMgMPL6DPp2OSrwteE5wx41A06a-_6qDzF5YfOaghGKzbEj1Em61qXPrgj1MTHWCOMerVqlBX0qEnKClw4lPf_q03fc3uclsfkCqCH6kds-2D0A8eiuon1ZbzOu7qrtjQvV79FKX1sBSdnA"/>
+</div>
+<div>
+<h3 class="font-bold text-lg text-on-primary">Lord Sebastian</h3>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-green-500"></div>
+<span class="text-[10px] font-bold text-green-500/80 uppercase">Ready</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Player 2 -->
+<div class="glass-panel p-5 rounded-2xl border-l-4 border-l-primary-fixed-dim/20">
+<div class="flex items-center gap-4">
+<div class="w-14 h-14 rounded-xl overflow-hidden border border-white/10 grayscale">
+<img alt="Player 2" class="w-full h-full object-cover" data-alt="Portrait of an elegant woman with subtle jewelry, soft cinematic lighting, dark moody background" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBhuZ_bMyZylPHHjkbbAngH8JPdtIzo9s9xPLL7NhEEqrG9YvvvyWA4MdIsBraqTH80VGD7GLyn8S-zGPmf4qpyri9yKUBkDqGhn9PsyCAPSQbREKxS6vt5a8otquRwhNQrrHgos-gYdoTmHQUXJ19_4xhijYqW0uPaLmEFzmVzHZwl8jH-7saNAab8ZoGxeVPxrNnWdZubZ4CywgpC3SqTKPTUmML6BvG_G_htyYYGhr5Ibn4v5Ya5vYcA8f2ppAqWGg6yNG0VZpU"/>
+</div>
+<div>
+<h3 class="font-bold text-lg text-on-primary/40 italic">Lady Elena</h3>
+<div class="flex items-center gap-1">
+<div class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></div>
+<span class="text-[10px] font-bold text-amber-500/80 uppercase tracking-tighter">Joining...</span>
+</div>
+</div>
+</div>
+</div>
+<!-- Player 3 (Empty/AI) -->
+<div class="border-2 border-dashed border-white/5 rounded-2xl p-5 flex flex-col items-center justify-center bg-white/2">
+<div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-white/10">person_add</span>
+</div>
+<span class="text-white/20 text-xs font-bold uppercase tracking-widest">Waiting for player</span>
+</div>
+<!-- Player 4 (Empty/AI) -->
+<div class="border-2 border-dashed border-white/5 rounded-2xl p-5 flex flex-col items-center justify-center bg-white/2">
+<div class="w-12 h-12 rounded-full bg-white/5 flex items-center justify-center mb-2">
+<span class="material-symbols-outlined text-white/10">person_add</span>
+</div>
+<span class="text-white/20 text-xs font-bold uppercase tracking-widest">Waiting for player</span>
+</div>
+</div>
+<!-- Actions Container -->
+<div class="mt-8 flex flex-col sm:flex-row gap-4">
+<button class="flex-1 py-5 rounded-2xl bg-primary-container text-on-primary-container border border-on-primary-container/20 flex items-center justify-center gap-3 font-bold uppercase tracking-widest text-sm hover:bg-primary-container/80 transition-all active:scale-95">
+<span class="material-symbols-outlined">smart_toy</span>
+                        + Add AI
+                    </button>
+<button class="flex-[2] py-5 rounded-2xl bg-gradient-to-br from-secondary-container to-secondary text-on-secondary-container flex items-center justify-center gap-3 font-black uppercase tracking-widest text-lg royal-glow hover:brightness-110 transition-all active:translate-y-1">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">play_arrow</span>
+                        Start Game
+                    </button>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (From JSON) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-6 bg-slate-50/90 dark:bg-blue-950/90 backdrop-blur-2xl shadow-[0_-8px_30px_rgb(0,0,0,0.04)] rounded-t-3xl border-t-[0.5px] border-slate-200 dark:border-blue-800/30 z-50">
+<button class="flex flex-col items-center justify-center bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-xl px-6 py-2 transition-all active:translate-y-0.5 duration-150">
+<span class="material-symbols-outlined mb-1" style="font-variation-settings: 'FILL' 1;">style</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase">Play</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-blue-300/50 px-6 py-2 hover:text-amber-600 transition-all active:translate-y-0.5 duration-150">
+<span class="material-symbols-outlined mb-1">history</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase">History</span>
+</button>
+<button class="flex flex-col items-center justify-center text-slate-400 dark:text-blue-300/50 px-6 py-2 hover:text-amber-600 transition-all active:translate-y-0.5 duration-150">
+<span class="material-symbols-outlined mb-1">person</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase">Profile</span>
+</button>
+</nav>
+</body></html>

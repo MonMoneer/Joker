@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Royal Joker - Singleplayer Setup</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:ital,wght@0,400;0,700;1,400;1,700&amp;family=Manrope:wght@300;400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "on-primary-container": "#7290c6",
+                        "secondary-fixed-dim": "#f7bd48",
+                        "outline-variant": "#c5c6d2",
+                        "on-secondary-fixed": "#271900",
+                        "on-surface-variant": "#444650",
+                        "surface-container-low": "#f3f4f6",
+                        "error": "#ba1a1a",
+                        "background": "#f8f9fb",
+                        "on-primary-fixed": "#001b3d",
+                        "surface": "#f8f9fb",
+                        "on-tertiary-container": "#fa5844",
+                        "primary-fixed-dim": "#a9c7ff",
+                        "inverse-surface": "#2e3132",
+                        "on-primary": "#ffffff",
+                        "surface-container": "#edeef0",
+                        "inverse-primary": "#a9c7ff",
+                        "secondary-fixed": "#ffdea6",
+                        "on-surface": "#191c1e",
+                        "on-error": "#ffffff",
+                        "on-error-container": "#93000a",
+                        "surface-container-lowest": "#ffffff",
+                        "secondary-container": "#fdc34d",
+                        "on-secondary-container": "#715000",
+                        "tertiary-fixed-dim": "#ffb4a8",
+                        "error-container": "#ffdad6",
+                        "primary-container": "#002855",
+                        "tertiary-container": "#5a0000",
+                        "on-primary-fixed-variant": "#264778",
+                        "surface-dim": "#d9dadc",
+                        "on-tertiary": "#ffffff",
+                        "outline": "#757682",
+                        "tertiary": "#330000",
+                        "surface-tint": "#405f91",
+                        "inverse-on-surface": "#f0f1f3",
+                        "primary-fixed": "#d6e3ff",
+                        "on-tertiary-fixed-variant": "#920703",
+                        "primary": "#001430",
+                        "on-secondary": "#ffffff",
+                        "surface-bright": "#f8f9fb",
+                        "on-secondary-fixed-variant": "#5d4200",
+                        "surface-variant": "#e1e2e4",
+                        "surface-container-highest": "#e1e2e4",
+                        "on-background": "#191c1e",
+                        "surface-container-high": "#e7e8ea",
+                        "on-tertiary-fixed": "#410000",
+                        "tertiary-fixed": "#ffdad4",
+                        "secondary": "#7b5800"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.125rem",
+                        "lg": "0.25rem",
+                        "xl": "0.5rem",
+                        "full": "0.75rem"
+                    },
+                    "fontFamily": {
+                        "headline": ["Noto Serif"],
+                        "body": ["Manrope"],
+                        "label": ["Manrope"]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body { font-family: 'Manrope', sans-serif; }
+        .serif { font-family: 'Noto Serif', serif; }
+        .material-symbols-outlined { font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24; }
+        .glass-panel {
+            background: rgba(0, 20, 48, 0.85);
+            backdrop-filter: blur(16px);
+            border: 1px solid rgba(247, 189, 72, 0.1);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-primary text-on-surface min-h-screen relative overflow-x-hidden">
+<!-- Background texture: Dark polished mahogany wood -->
+<div class="fixed inset-0 -z-10 bg-primary overflow-hidden">
+<div class="absolute inset-0 opacity-40 mix-blend-overlay" data-alt="Deep polished dark mahogany wood texture with elegant grain patterns and rich warm brown and black tones" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDw-jIMTFJ5Orso7HPYI_H-FK7Oq8U1m1vP2q8_9JMaTqHH_G8J7WkOjgwN6WL_lMHR2VZJwc6ZjAg3oOds6qDL3NDM_xXxHj2fofnxiJpg4ZO_t4ZwkrwJgqMTQe3CWmyWuTgKqOLiKc33az4SVMuiag6tJ0Uv36SMw8jUpQMRPYQnyw9vRZ0aOEoH7IqlABQtJbyqeTu6sjMPrSjqjvUVtuC9klsY6JpW2CL33iQqOdKyHQRf02-d9blEjqgBXV0S7ubVP00olio'); background-size: cover;"></div>
+<div class="absolute inset-0 bg-gradient-to-t from-primary via-transparent to-primary/80"></div>
+</div>
+<!-- Header / Back Navigation -->
+<header class="px-6 py-8 md:px-12 flex items-center justify-between relative z-10">
+<button class="flex items-center gap-2 text-secondary-fixed-dim hover:text-secondary-container transition-colors group">
+<span class="material-symbols-outlined text-lg">chevron_left</span>
+<span class="font-label tracking-wide uppercase text-sm font-bold">Back</span>
+</button>
+<div class="hidden md:block">
+<div class="flex items-center gap-4">
+<div class="w-10 h-10 rounded-full border-2 border-secondary-fixed-dim/30 overflow-hidden">
+<img alt="User profile" class="w-full h-full object-cover" data-alt="Close up portrait of a sophisticated gentleman in a dark velvet suit with subtle warm lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuCa33bvN1nL57RsmqsHjrN8yBxI3hWhTXutYzlVKmQJ5E4EEGIfhFsfzCjrBCn51jqysIjK25a0T393nNHp9V8UgrYvDuTDQQl2J6Od5FTuUDO2cRCvLm0mymVYVS1v0wP8phAT911RV1ZGlgTpubY0XllKq5VJUdy4w7hYMM-pRzAoP9xo02v-AeMASsHwv5iOWKn7atal-mIW5rFLxbwRkLY4WNgZaqSMZpvby-7ETnururbgJgNWwJFMcq2CAqDGeBngLswBdTA"/>
+</div>
+</div>
+</div>
+</header>
+<main class="max-w-4xl mx-auto px-6 pb-24 relative z-10">
+<!-- Page Title -->
+<div class="mb-10 text-center md:text-left">
+<h1 class="serif text-4xl md:text-6xl font-bold text-secondary-fixed-dim mb-2 tracking-tight">Singleplayer</h1>
+<p class="text-on-primary-container text-sm md:text-base font-label uppercase tracking-widest opacity-80">Configure Your Royal Table</p>
+</div>
+<!-- Main Configuration Panel -->
+<div class="glass-panel rounded-3xl p-6 md:p-10 shadow-2xl space-y-10">
+<!-- Player Name Section -->
+<section class="space-y-4">
+<label class="text-secondary-fixed-dim/70 text-xs font-bold uppercase tracking-widest block px-1">Player Identity</label>
+<div class="relative group">
+<div class="absolute -inset-0.5 bg-gradient-to-r from-secondary-fixed-dim/50 to-transparent rounded-xl opacity-20 group-focus-within:opacity-100 transition duration-500"></div>
+<input class="relative w-full bg-primary-container text-on-primary border-none focus:ring-2 focus:ring-secondary-fixed-dim rounded-xl px-6 py-4 text-lg font-headline placeholder:text-on-primary-container/40" placeholder="Enter your name..." type="text"/>
+</div>
+</section>
+<!-- Rules Grid -->
+<section class="space-y-4">
+<label class="text-secondary-fixed-dim/70 text-xs font-bold uppercase tracking-widest block px-1">Game Variation</label>
+<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+<!-- Classic Option -->
+<button class="relative flex items-center gap-4 p-5 rounded-2xl bg-primary border-2 border-secondary-fixed-dim text-left group">
+<div class="bg-secondary-fixed-dim text-primary w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">star</span>
+</div>
+<div>
+<h3 class="font-headline text-lg text-on-primary">Classic</h3>
+<p class="text-xs text-on-primary-container">The standard Joker experience</p>
+</div>
+</button>
+<!-- Full Game Option -->
+<button class="relative flex items-center gap-4 p-5 rounded-2xl bg-primary-container/40 border-2 border-transparent hover:border-secondary-fixed-dim/30 text-left group transition-all">
+<div class="bg-primary-container text-secondary-fixed-dim w-12 h-12 rounded-full flex items-center justify-center">
+<span class="material-symbols-outlined">diamond</span>
+</div>
+<div>
+<h3 class="font-headline text-lg text-on-primary">Full Game</h3>
+<p class="text-xs text-on-primary-container">Extended rules and high stakes</p>
+</div>
+</button>
+</div>
+</section>
+<!-- Bot Difficulty -->
+<section class="space-y-4">
+<label class="text-secondary-fixed-dim/70 text-xs font-bold uppercase tracking-widest block px-1">Opponent Skill</label>
+<div class="grid grid-cols-3 gap-3 md:gap-4">
+<button class="py-4 rounded-xl border border-secondary-fixed-dim/20 bg-primary-container/30 text-on-primary-container hover:bg-secondary-fixed-dim/10 hover:text-secondary-fixed-dim font-bold text-xs md:text-sm uppercase tracking-tighter transition-all">
+                        Newbie
+                    </button>
+<button class="py-4 rounded-xl border-2 border-secondary-fixed-dim bg-secondary-fixed-dim/10 text-secondary-fixed-dim font-extrabold text-xs md:text-sm uppercase tracking-tighter shadow-lg shadow-secondary-fixed-dim/5">
+                        Professional
+                    </button>
+<button class="py-4 rounded-xl border border-secondary-fixed-dim/20 bg-primary-container/30 text-on-primary-container hover:bg-secondary-fixed-dim/10 hover:text-secondary-fixed-dim font-bold text-xs md:text-sm uppercase tracking-tighter transition-all">
+                        Master
+                    </button>
+</div>
+</section>
+<!-- Toggles and Fine-Tuning -->
+<section class="flex items-center justify-between p-5 rounded-2xl bg-primary-container/30 border border-secondary-fixed-dim/10">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined text-secondary-fixed-dim">history_edu</span>
+<div>
+<h4 class="text-on-primary font-headline">Hist Penalty</h4>
+<p class="text-[10px] uppercase tracking-widest text-on-primary-container">Enable legacy point deductions</p>
+</div>
+</div>
+<div class="relative inline-flex items-center cursor-pointer">
+<input checked="" class="sr-only peer" type="checkbox" value=""/>
+<div class="w-11 h-6 bg-primary-container border border-secondary-fixed-dim/20 rounded-full peer peer-checked:after:translate-x-full after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-secondary-fixed-dim after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-secondary-fixed-dim/20"></div>
+</div>
+</section>
+<!-- Start Button -->
+<button class="w-full py-5 rounded-full bg-gradient-to-r from-secondary-container via-secondary-fixed-dim to-secondary-container text-on-secondary-container font-extrabold text-xl uppercase tracking-widest shadow-xl shadow-secondary/20 hover:scale-[1.02] active:scale-95 transition-transform duration-200">
+                Start Match
+            </button>
+</div>
+<!-- Tips Section -->
+<div class="mt-12 grid grid-cols-1 md:grid-cols-2 gap-8 opacity-80">
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary-fixed-dim shrink-0">lightbulb</span>
+<p class="text-on-primary-container text-xs leading-relaxed italic">
+                    "Professional bots are trained on thousands of classic Joker rounds. Keep your trump cards close and your jokers closer."
+                </p>
+</div>
+<div class="flex gap-4">
+<span class="material-symbols-outlined text-secondary-fixed-dim shrink-0">verified_user</span>
+<p class="text-on-primary-container text-xs leading-relaxed italic">
+                    The Hist Penalty toggle ensures a classic high-stakes feel by punishing inaccurate bidding more severely.
+                </p>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Bar (Predicted Shared Component Integration) -->
+<nav class="fixed bottom-0 left-0 w-full flex justify-around items-center px-4 pt-3 pb-6 bg-slate-50/90 dark:bg-blue-950/90 backdrop-blur-2xl z-50 rounded-t-3xl shadow-[0_-8px_30px_rgb(0,0,0,0.04)] border-t-[0.5px] border-slate-200 dark:border-blue-800/30">
+<a class="flex flex-col items-center justify-center bg-amber-50 dark:bg-amber-900/20 text-amber-700 dark:text-amber-400 rounded-xl px-6 py-2 transition-all active:translate-y-0.5 duration-150" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">style</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase mt-1">Play</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-blue-300/50 px-6 py-2 hover:text-amber-600 dark:hover:text-amber-400 active:translate-y-0.5 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase mt-1">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-slate-400 dark:text-blue-300/50 px-6 py-2 hover:text-amber-600 dark:hover:text-amber-400 active:translate-y-0.5 duration-150 transition-all" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-sans text-[11px] font-semibold tracking-tight uppercase mt-1">Profile</span>
+</a>
+</nav>
+<!-- Floating Sparkle Elements for Polish -->
+<div class="fixed top-1/4 right-0 w-64 h-64 bg-secondary-fixed-dim/5 blur-[100px] pointer-events-none"></div>
+<div class="fixed bottom-1/4 left-0 w-64 h-64 bg-primary-container/20 blur-[120px] pointer-events-none"></div>
+</body></html>

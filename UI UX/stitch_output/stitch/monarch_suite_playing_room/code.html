@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+
+<html class="h-full" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>The Sovereign Table - Monarch Suite</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700&amp;family=Manrope:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "outline-variant": "#c5c6d2",
+                    "secondary": "#7b5800",
+                    "surface-variant": "#e1e2e4",
+                    "on-secondary": "#ffffff",
+                    "surface": "#f8f9fb",
+                    "tertiary": "#330000",
+                    "primary": "#001430",
+                    "on-primary-container": "#7290c6",
+                    "inverse-on-surface": "#f0f1f3",
+                    "on-secondary-fixed-variant": "#5d4200",
+                    "primary-container": "#002855",
+                    "on-secondary-container": "#715000",
+                    "surface-container-highest": "#e1e2e4",
+                    "on-primary": "#ffffff",
+                    "surface-container-high": "#e7e8ea",
+                    "tertiary-container": "#5a0000",
+                    "outline": "#757682",
+                    "on-primary-fixed": "#001b3d",
+                    "surface-container": "#edeef0",
+                    "on-error": "#ffffff",
+                    "surface-dim": "#d9dadc",
+                    "on-tertiary-fixed-variant": "#920703",
+                    "on-tertiary-container": "#fa5844",
+                    "on-error-container": "#93000a",
+                    "background": "#f8f9fb",
+                    "secondary-fixed-dim": "#f7bd48",
+                    "error": "#ba1a1a",
+                    "tertiary-fixed": "#ffdad4",
+                    "error-container": "#ffdad6",
+                    "primary-fixed": "#d6e3ff",
+                    "on-tertiary": "#ffffff",
+                    "inverse-surface": "#2e3132",
+                    "tertiary-fixed-dim": "#ffb4a8",
+                    "surface-tint": "#405f91",
+                    "surface-bright": "#f8f9fb",
+                    "on-surface-variant": "#444650",
+                    "on-primary-fixed-variant": "#264778",
+                    "surface-container-lowest": "#ffffff",
+                    "primary-fixed-dim": "#a9c7ff",
+                    "secondary-container": "#fdc34d",
+                    "on-secondary-fixed": "#271900",
+                    "inverse-primary": "#a9c7ff",
+                    "on-tertiary-fixed": "#410000",
+                    "secondary-fixed": "#ffdea6",
+                    "on-background": "#191c1e",
+                    "surface-container-low": "#f3f4f6",
+                    "on-surface": "#191c1e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        }
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .perspective-table {
+            perspective: 1200px;
+        }
+        .table-surface {
+            transform: rotateX(25deg);
+            box-shadow: 0 40px 100px rgba(0,0,0,0.6);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background: rgba(0, 20, 48, 0.7);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-primary h-full font-body overflow-hidden selection:bg-secondary/30">
+<!-- TopAppBar from JSON -->
+<header class="bg-slate-950/80 backdrop-blur-md text-amber-500 font-serif tracking-tight fixed top-0 w-full z-50 border-b border-amber-900/20 shadow-2xl shadow-black/50 flex items-center justify-between px-6 py-3">
+<div class="flex items-center gap-4">
+<span class="material-symbols-outlined cursor-pointer hover:text-amber-200 transition-colors">menu</span>
+<h1 class="text-xl font-bold text-amber-500 uppercase tracking-widest">The Sovereign Table</h1>
+</div>
+<div class="flex items-center gap-3">
+<div class="text-right mr-2 hidden md:block">
+<p class="text-[10px] uppercase font-bold text-slate-400 tracking-tighter">Current Stake</p>
+<p class="text-amber-400 font-bold leading-none">1.2M Gold</p>
+</div>
+<div class="w-10 h-10 rounded-full border-2 border-amber-600/50 overflow-hidden bg-primary-container flex items-center justify-center">
+<img alt="User Profile" class="w-full h-full object-cover" data-alt="Close-up portrait of a sophisticated person with a sharp suit, dramatic side-lighting in a luxury environment" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDIuj_91D0coc7mQqYJxGIPOcQo9N3azM2I-WpbwKIG8KZyE0itfioM-s8WbJ-LLXTeiGTvLXY37nHFzYXjBlOMCiamhOtP7RdKZlLSywJR4XBNnbTMXuTQdYKufiaN_70m6p21Tv8oM9sC93Y2ckfRQbq9-mMb1DNsz5LSaZga4kqU7Em_2l7TII-nhoNad4Hwpf434EUdB58Dr7Djy6wPMzZ6ZwXNYkHKIfUR1B1eusdEN6mSPNOWBAPHaVoIp7kGpbNePUK1-dE"/>
+</div>
+</div>
+</header>
+<!-- Game Room Canvas -->
+<main class="relative w-full h-screen bg-primary overflow-hidden flex items-center justify-center pt-16">
+<!-- Environmental Background Layer -->
+<div class="absolute inset-0 z-0 overflow-hidden">
+<div class="absolute inset-0 bg-gradient-to-b from-primary-container to-primary opacity-80"></div>
+<img alt="Luxury Lounge" class="w-full h-full object-cover mix-blend-overlay" data-alt="Extremely luxurious private casino suite with dark wood paneling, ambient gold lighting, and velvet curtains in soft focus" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDiFPcLuXwm0-cfXs4xuxJiMH2h2seCzDan4tsd8M64TjkBY5FE38GQSP4cm1luxM7lt0SEue9aA9Mo0qk0FOAgqR3lUMj_nMLh7RGA942CC6cHm24j6dUjldJT5ReHd2X2TcD1SwEBbdYDCMLmIgJWfRKVjVt6j3DnhR8gbXRa_XPMfNWLDqDj8zWfUYwNkrKzqwwAsnxw9FaDsZYn00ElC1HusW0hiy7gIdQY5_EPRMMxfv387bboXOyezR_knn6Ee0x_wvL1WMw"/>
+</div>
+<!-- The Sovereign Table (3D Perspective) -->
+<div class="perspective-table relative w-full max-w-6xl h-[618px] flex items-center justify-center z-10 px-4">
+<div class="table-surface relative w-full aspect-[16/9] bg-[#3d2b1f] rounded-[200px] border-[16px] border-[#2a1d15] flex items-center justify-center overflow-hidden">
+<!-- Inner Marble Inlay -->
+<div class="absolute inset-4 rounded-[180px] bg-primary overflow-hidden">
+<!-- Subtle Marble Texture -->
+<div class="absolute inset-0 opacity-20 pointer-events-none" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuDpjdMzB083Z18Lg9Wh6niiNuDFnCJJaieBN0hMRfWeViR1mW4wUgWUSt-m7yV-hTdNXQbi59QEp5kExKWKPLxLX7phXAnGb-6r83LQPw0NbvC-iXjtoqTylxMCHEGG0AwnwP7Zthe4GtxfbjUnzLbbpg--J6rLouZhODHjVD4Lfyhe1kZMtrG90j5cxu773Kyw3eOCVCU8BSGXWtq2VvuxUVWzBWZM4qu0zhaoYbZrTE1Y7gHcATKjspoKOzM3FY22WTufRsF4w2k');"></div>
+<div class="absolute inset-0 bg-gradient-to-tr from-primary via-primary-container/40 to-primary"></div>
+<!-- Felt Center -->
+<div class="absolute inset-20 rounded-full border border-secondary/20 flex items-center justify-center">
+<div class="w-[400px] h-[400px] rounded-full border-[0.5px] border-secondary/10 flex items-center justify-center">
+<span class="text-secondary/10 font-headline text-8xl select-none">JOKER</span>
+</div>
+</div>
+</div>
+<!-- AI Player: Left -->
+<div class="absolute left-12 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded-full border-2 border-slate-700 bg-slate-900 shadow-xl overflow-hidden">
+<img alt="AI Player" class="w-full h-full object-cover grayscale opacity-80" data-alt="Sophisticated woman with piercing eyes, cold professional look, dark lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuBpltKfZrZjb1bNTd9lFIkDAc2VuQeEP0NfiKOVf3eO5LJ8yp-ErqbDdZXNYKluqnayRuDdfvK9XgV7mVMAb6HwQVrGe6vfb9ZLegT8q4eCSVcKqCACDcAHPIFuaUmpXE4LwmjYlDnlLkJQ-Z4cCjG0JA4gbjF6wWSj-ZHyW3gXEHI8ZwnDZ9VrEwJICPGnIqZT4k99k-A8_qTOv0Q2zE6YTkygx4y6N9G0lYD_m2HLQ_bxTkxBFQ5l7tHppIFbPqvaaUK86q0K6y8"/>
+</div>
+<div class="bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-sm">
+<span class="text-white text-[10px] font-bold uppercase tracking-widest">Elena V.</span>
+</div>
+</div>
+<!-- AI Player: Right -->
+<div class="absolute right-12 top-1/2 -translate-y-1/2 flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded-full border-2 border-slate-700 bg-slate-900 shadow-xl overflow-hidden">
+<img alt="AI Player" class="w-full h-full object-cover grayscale opacity-80" data-alt="Distinguished gentleman with silver hair and a tuxedo, smiling slightly, warm interior light" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDqwjP3T9s9ulFgQwCRa0t81c44RLc28lCNlDANozd3U5kpulehLcrzs43zmFHOTen1-7IfE0F7C-1xSC6iDmm-dFSWAGy5NoGjBiu6VAJxZ1-sPAZ-X0sacsblcxh3YcDGVy4H26htSj3duEtfUuiJlG8CXEiCD_birPJ1rVHqGm_MQ7qNfQ-f1aTcsV6XRgMEkVfgOldEJx5S2uKJf7_bcBheNBtqPE24AOPdPPbZwbYxPI5F0byUanxvNu7aVAphMD0YnzFjOjg"/>
+</div>
+<div class="bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-sm">
+<span class="text-white text-[10px] font-bold uppercase tracking-widest">Marcus III</span>
+</div>
+</div>
+<!-- AI Player: Top -->
+<div class="absolute top-10 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+<div class="w-16 h-16 rounded-full border-2 border-slate-700 bg-slate-900 shadow-xl overflow-hidden">
+<img alt="AI Player" class="w-full h-full object-cover grayscale opacity-80" data-alt="Man in a sharp blue suit, neutral expression, high-end professional poker player look" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDcPXO_07Dhj3ZL6QrGsVhOXv9P8MZ71va7vLMHAmCujPBIh2cDM9sLjFraZWIt8sT0Z32hrP7652byVCi1qNaERZ2TCU3NY4-gINB4jbiLhF3lhHylTrhSqjY1YJwsfye0nK6mWzO5dyn_6Oda_gl2D6Zb7jni9TXv4p8BYDO1udn6Mx7rm5pXlpaECE87JUZy02allz6NCDJvDRr5A1BFxAeo_H1GA66eptnbUJHtOy2fiBd89dDTLZPgvsC2iwU42ockzM12eAc"/>
+</div>
+<div class="bg-black/60 px-3 py-1 rounded-full border border-white/10 backdrop-blur-sm">
+<span class="text-white text-[10px] font-bold uppercase tracking-widest">The Duke</span>
+</div>
+</div>
+<!-- Central Trick Area -->
+<div class="absolute inset-0 flex items-center justify-center">
+<!-- Played Cards -->
+<div class="relative w-40 h-40">
+<!-- Top Card -->
+<div class="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-4 rotate-6 w-20 h-28 bg-white rounded-lg shadow-2xl flex flex-col p-2 transform transition-all">
+<span class="text-red-600 font-bold text-xl leading-none">A</span>
+<span class="material-symbols-outlined text-red-600 text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="flex-grow flex items-center justify-center">
+<span class="material-symbols-outlined text-red-600 text-3xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<!-- Left Card -->
+<div class="absolute left-0 top-1/2 -translate-y-1/2 -translate-x-4 -rotate-12 w-20 h-28 bg-white rounded-lg shadow-2xl flex flex-col p-2">
+<span class="text-slate-900 font-bold text-xl leading-none">10</span>
+<span class="material-symbols-outlined text-slate-900 text-sm" style="font-variation-settings: 'FILL' 1;">playing_cards</span>
+<div class="flex-grow flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-900 text-3xl" style="font-variation-settings: 'FILL' 1;">playing_cards</span>
+</div>
+</div>
+<!-- Right Card -->
+<div class="absolute right-0 top-1/2 -translate-y-1/2 translate-x-4 rotate-12 w-20 h-28 bg-white rounded-lg shadow-2xl flex flex-col p-2">
+<span class="text-slate-900 font-bold text-xl leading-none">Q</span>
+<span class="material-symbols-outlined text-slate-900 text-sm" style="font-variation-settings: 'FILL' 1;">stat_3</span>
+<div class="flex-grow flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-900 text-3xl" style="font-variation-settings: 'FILL' 1;">stat_3</span>
+</div>
+</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Bidding Overlay (Active for User) -->
+<div class="absolute inset-0 z-40 bg-black/40 backdrop-blur-sm flex items-center justify-center p-6">
+<div class="w-full max-w-md bg-surface-container-lowest rounded-[2rem] overflow-hidden shadow-[0_30px_90px_rgba(0,0,0,0.8)] border border-secondary/20">
+<div class="bg-primary px-8 py-6 text-center">
+<h2 class="font-headline text-2xl text-on-primary">Make Your Bid</h2>
+<p class="text-on-primary-container text-xs font-bold uppercase tracking-widest mt-1">Monarch Suite • Round 4</p>
+</div>
+<div class="p-8 grid grid-cols-4 gap-3">
+<!-- Bidding Numbers -->
+<button class="aspect-square flex items-center justify-center text-lg font-bold text-primary border-2 border-primary/10 rounded-xl hover:bg-secondary-container hover:border-secondary transition-all active:scale-95">0</button>
+<button class="aspect-square flex items-center justify-center text-lg font-bold text-primary border-2 border-primary/10 rounded-xl hover:bg-secondary-container hover:border-secondary transition-all active:scale-95">1</button>
+<button class="aspect-square flex items-center justify-center text-lg font-bold text-primary border-2 border-primary/10 rounded-xl hover:bg-secondary-container hover:border-secondary transition-all active:scale-95">2</button>
+<button class="aspect-square flex items-center justify-center text-lg font-bold text-primary border-2 border-primary/10 rounded-xl hover:bg-secondary-container hover:border-secondary transition-all active:scale-95">3</button>
+<button class="aspect-square flex items-center justify-center text-lg font-bold text-primary border-2 border-primary/10 rounded-xl hover:bg-secondary-container hover:border-secondary transition-all active:scale-95">4</button>
+<button class="aspect-square flex items-center justify-center text-lg font-bold text-primary border-2 border-primary/10 rounded-xl hover:bg-secondary-container hover:border-secondary transition-all active:scale-95">5</button>
+<button class="aspect-square flex items-center justify-center text-lg font-bold text-primary border-2 border-primary/10 rounded-xl hover:bg-secondary-container hover:border-secondary transition-all active:scale-95">6</button>
+<button class="aspect-square flex items-center justify-center text-lg font-bold text-primary border-2 border-primary/10 rounded-xl hover:bg-secondary-container hover:border-secondary transition-all active:scale-95">7</button>
+</div>
+<div class="px-8 pb-8">
+<button class="w-full py-4 bg-gradient-to-r from-secondary to-on-secondary-container text-white font-black uppercase tracking-[0.2em] rounded-full shadow-lg shadow-secondary/30 active:scale-[0.98] transition-transform">
+                        Confirm Bid
+                    </button>
+</div>
+</div>
+</div>
+<!-- User Area: Bottom -->
+<div class="absolute bottom-20 left-1/2 -translate-x-1/2 z-30 flex flex-col items-center">
+<!-- User Hand (Partial View) -->
+<div class="flex -space-x-8 translate-y-4">
+<div class="w-24 h-36 bg-white rounded-xl shadow-xl border border-slate-200 -rotate-6 flex flex-col p-2">
+<span class="text-slate-900 font-bold text-xl leading-none">J</span>
+<span class="material-symbols-outlined text-slate-900 text-sm" style="font-variation-settings: 'FILL' 1;">token</span>
+<div class="flex-grow flex items-center justify-center">
+<span class="material-symbols-outlined text-secondary text-5xl" style="font-variation-settings: 'FILL' 1;">diamond</span>
+</div>
+</div>
+<div class="w-24 h-36 bg-white rounded-xl shadow-xl border border-slate-200 z-10 flex flex-col p-2">
+<span class="text-red-600 font-bold text-xl leading-none">K</span>
+<span class="material-symbols-outlined text-red-600 text-sm" style="font-variation-settings: 'FILL' 1;">favorite</span>
+<div class="flex-grow flex items-center justify-center">
+<span class="material-symbols-outlined text-red-600 text-5xl" style="font-variation-settings: 'FILL' 1;">favorite</span>
+</div>
+</div>
+<div class="w-24 h-36 bg-white rounded-xl shadow-xl border border-slate-200 rotate-6 flex flex-col p-2">
+<span class="text-slate-900 font-bold text-xl leading-none">8</span>
+<span class="material-symbols-outlined text-slate-900 text-sm" style="font-variation-settings: 'FILL' 1;">playing_cards</span>
+<div class="flex-grow flex items-center justify-center">
+<span class="material-symbols-outlined text-slate-900 text-5xl" style="font-variation-settings: 'FILL' 1;">playing_cards</span>
+</div>
+</div>
+</div>
+</div>
+</main>
+<!-- BottomNavBar from JSON -->
+<nav class="bg-slate-900/90 backdrop-blur-xl text-amber-600 font-sans text-[10px] uppercase font-bold tracking-tighter fixed bottom-0 w-full rounded-t-3xl z-50 shadow-[0_-10px_30px_rgba(0,0,0,0.8)] flex justify-around items-center h-20 px-4 pb-safe">
+<div class="flex flex-col items-center justify-center bg-amber-600/20 text-amber-400 rounded-xl px-4 py-1 scale-105 transition-transform duration-300">
+<span class="material-symbols-outlined" data-icon="grid_view">grid_view</span>
+<span>Lobby</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:bg-slate-800/50 transition-colors">
+<span class="material-symbols-outlined" data-icon="leaderboard">leaderboard</span>
+<span>Stats</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:bg-slate-800/50 transition-colors">
+<span class="material-symbols-outlined" data-icon="payments">payments</span>
+<span>Shop</span>
+</div>
+<div class="flex flex-col items-center justify-center text-slate-500 hover:bg-slate-800/50 transition-colors">
+<span class="material-symbols-outlined" data-icon="account_balance_wallet">account_balance_wallet</span>
+<span>Profile</span>
+</div>
+</nav>
+<!-- Side Stats/Info Floating Cards -->
+<div class="fixed left-6 top-24 z-20 space-y-4 hidden lg:block">
+<div class="glass-panel p-4 rounded-2xl border border-white/10 shadow-2xl w-48">
+<h3 class="text-on-primary-container text-[10px] uppercase font-bold tracking-widest mb-2">Round 4 Score</h3>
+<div class="space-y-2">
+<div class="flex justify-between items-center">
+<span class="text-slate-300 text-xs">Elena V.</span>
+<span class="text-white font-bold">42</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-amber-400 text-xs font-bold">You</span>
+<span class="text-amber-400 font-bold">68</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-300 text-xs">Marcus III</span>
+<span class="text-white font-bold">15</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="text-slate-300 text-xs">Duke</span>
+<span class="text-white font-bold">31</span>
+</div>
+</div>
+</div>
+</div>
+</body></html>

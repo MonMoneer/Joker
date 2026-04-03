@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+
+<html class="light" lang="en"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Joker: Monarch Suite - Bidding</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif:wght@400;700;900&amp;family=Manrope:wght@400;600;800&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+      tailwind.config = {
+        darkMode: "class",
+        theme: {
+          extend: {
+            "colors": {
+                    "primary-fixed-dim": "#a9c7ff",
+                    "tertiary-fixed-dim": "#ffb4a8",
+                    "surface-container-highest": "#e1e2e4",
+                    "surface": "#f8f9fb",
+                    "tertiary-container": "#5a0000",
+                    "on-surface-variant": "#444650",
+                    "on-secondary": "#ffffff",
+                    "tertiary-fixed": "#ffdad4",
+                    "surface-variant": "#e1e2e4",
+                    "error-container": "#ffdad6",
+                    "tertiary": "#330000",
+                    "surface-container-low": "#f3f4f6",
+                    "secondary-container": "#fdc34d",
+                    "inverse-primary": "#a9c7ff",
+                    "secondary-fixed-dim": "#f7bd48",
+                    "on-tertiary": "#ffffff",
+                    "on-secondary-fixed-variant": "#5d4200",
+                    "outline": "#757682",
+                    "on-primary": "#ffffff",
+                    "primary-fixed": "#d6e3ff",
+                    "on-primary-fixed-variant": "#264778",
+                    "secondary-fixed": "#ffdea6",
+                    "primary-container": "#002855",
+                    "outline-variant": "#c5c6d2",
+                    "inverse-surface": "#2e3132",
+                    "surface-container-high": "#e7e8ea",
+                    "inverse-on-surface": "#f0f1f3",
+                    "surface-container": "#edeef0",
+                    "on-primary-container": "#7290c6",
+                    "on-tertiary-fixed-variant": "#920703",
+                    "on-surface": "#191c1e",
+                    "on-secondary-fixed": "#271900",
+                    "on-tertiary-fixed": "#410000",
+                    "on-primary-fixed": "#001b3d",
+                    "surface-container-lowest": "#ffffff",
+                    "on-error-container": "#93000a",
+                    "error": "#ba1a1a",
+                    "on-error": "#ffffff",
+                    "surface-tint": "#405f91",
+                    "surface-bright": "#f8f9fb",
+                    "surface-dim": "#d9dadc",
+                    "on-secondary-container": "#715000",
+                    "secondary": "#7b5800",
+                    "primary": "#001430",
+                    "background": "#f8f9fb",
+                    "on-tertiary-container": "#fa5844",
+                    "on-background": "#191c1e"
+            },
+            "borderRadius": {
+                    "DEFAULT": "0.125rem",
+                    "lg": "0.25rem",
+                    "xl": "0.5rem",
+                    "full": "0.75rem"
+            },
+            "fontFamily": {
+                    "headline": ["Noto Serif"],
+                    "body": ["Manrope"],
+                    "label": ["Manrope"]
+            }
+          },
+        },
+      }
+    </script>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .royal-gradient {
+            background: linear-gradient(135deg, #001430 0%, #002855 100%);
+        }
+        .gold-shimmer {
+            background: linear-gradient(135deg, #7b5800 0%, #f7bd48 50%, #7b5800 100%);
+        }
+        .glass-panel {
+            backdrop-filter: blur(12px);
+            background-color: rgba(255, 255, 255, 0.85);
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background font-body text-on-background min-h-screen overflow-hidden">
+<!-- Background Environment: Dark Wood Table with Blurred Game State -->
+<div class="fixed inset-0 z-0">
+<div class="absolute inset-0 bg-[#1a0f05] opacity-90" data-alt="Dark polished mahogany wood texture with rich grains and deep shadows, reflecting soft overhead lighting" style="background-image: url('https://lh3.googleusercontent.com/aida-public/AB6AXuC4uS35OTmj6HWFBltRr3fRsQbJC0WX0_frataK2zkIS84QODx_FOSlw7aJIdIM4TN-1oFhWGbKiuA-twisBpu9tBgmgiUjCz3yjNpfjK49t8XjKCt9BocY3eDhZ6Ve0Y2D9XkWcClBfQBYAFwUEVVcKWTzD08MczRpAowoROUSkiH0I4Bbv4ldgs0WhddWXdarhGEZ1jdff4zKfQ49UWM-LmpoglNdklS7P6o6O9Zvaea7rQt1Lk5oQrXLkcMNSSmwpx2cFLaaBO4'); background-size: cover; background-position: center;"></div>
+<!-- Blurred Card Game Environment -->
+<div class="absolute inset-0 flex items-center justify-center blur-md opacity-40">
+<div class="relative w-full max-w-4xl grid grid-cols-4 gap-8 rotate-1">
+<div class="h-64 w-44 bg-primary-container rounded-xl shadow-2xl border-4 border-secondary/30 flex items-center justify-center transform -rotate-6">
+<div class="text-secondary opacity-20 text-6xl font-headline font-black">J</div>
+</div>
+<div class="h-64 w-44 bg-primary-container rounded-xl shadow-2xl border-4 border-secondary/30 flex items-center justify-center transform rotate-3">
+<div class="text-secondary opacity-20 text-6xl font-headline font-black">K</div>
+</div>
+<div class="h-64 w-44 bg-primary-container rounded-xl shadow-2xl border-4 border-secondary/30 flex items-center justify-center transform -rotate-2">
+<div class="text-secondary opacity-20 text-6xl font-headline font-black">Q</div>
+</div>
+<div class="h-64 w-44 bg-primary-container rounded-xl shadow-2xl border-4 border-secondary/30 flex items-center justify-center transform rotate-12">
+<div class="text-secondary opacity-20 text-6xl font-headline font-black">A</div>
+</div>
+</div>
+</div>
+</div>
+<!-- Top Navigation Shell (The Anchor) -->
+<header class="fixed top-0 w-full z-50 flex justify-between items-center px-6 py-3 bg-[#001430]/80 backdrop-blur-md dark:bg-[#001430]/90 border-b border-[#7b5800]/20 shadow-xl shadow-black/20">
+<div class="flex items-center gap-3">
+<div class="h-10 w-10 rounded-full border-2 border-secondary overflow-hidden bg-primary shadow-inner">
+<img class="w-full h-full object-cover" data-alt="Professional avatar portrait of a sophisticated player in a dark suit with soft studio lighting" src="https://lh3.googleusercontent.com/aida-public/AB6AXuB8JY8CNLYFEMNa3-G1G-iGTu1l1RgDUBj8GLHLEJtjgc-CSIfGp2vj3oGCp_w-BV7yqeXB4g5Ae8gLl4rVI1j2s40qVniN6EYh_SohjLW8OQ9DN2hLNGdYQ6Ff4_tU5AvvBtNRLqwKig8euFtgRs1jto8iPgTJSVq4LK3ZTN9TIDr9mF-w8UkArL7gtMs2IJd0dSGZsclRdj7dQelPfMtLeVeWgC9_UKIbixPVVNG7nHYXGfjPDhuMXqKLNL6rOK_wo0v4LcRl2c8"/>
+</div>
+<span class="font-['Noto_Serif'] text-xl font-black text-[#7b5800] dark:text-[#ffd700]">Joker: Monarch Suite</span>
+</div>
+<div class="flex gap-6 items-center">
+<button class="text-white/70 hover:bg-white/10 transition-colors p-2 rounded-lg active:scale-95 duration-150 ease-in-out">
+<span class="material-symbols-outlined">settings</span>
+</button>
+</div>
+</header>
+<!-- Main Content: Bidding Panel Modal -->
+<main class="relative z-10 min-h-screen flex items-center justify-center p-4">
+<div class="w-full max-w-md glass-panel rounded-full p-1 shadow-[0_32px_64px_-12px_rgba(0,0,0,0.6)] animate-in fade-in zoom-in duration-500">
+<div class="bg-surface-container-lowest rounded-full p-8 relative overflow-hidden border border-outline-variant/10">
+<!-- Royal Accent Line -->
+<div class="absolute top-0 left-0 w-full h-1.5 gold-shimmer opacity-80"></div>
+<div class="text-center mb-10">
+<h2 class="font-headline text-3xl font-bold tracking-tight text-primary mb-2">Pick your order:</h2>
+<p class="font-body text-on-surface-variant/70 text-sm font-semibold tracking-wide uppercase">Select your bid for this round</p>
+</div>
+<!-- Bidding Grid -->
+<div class="grid grid-cols-3 gap-4 mb-8">
+<!-- Numbers 1-5 -->
+<button class="h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container text-primary hover:bg-primary-container hover:text-white transition-all active:scale-95 border border-outline-variant/20 shadow-sm">1</button>
+<button class="h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container text-primary hover:bg-primary-container hover:text-white transition-all active:scale-95 border border-outline-variant/20 shadow-sm">2</button>
+<button class="h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container text-primary hover:bg-primary-container hover:text-white transition-all active:scale-95 border border-outline-variant/20 shadow-sm">3</button>
+<button class="h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container text-primary hover:bg-primary-container hover:text-white transition-all active:scale-95 border border-outline-variant/20 shadow-sm">4</button>
+<button class="h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container text-primary hover:bg-primary-container hover:text-white transition-all active:scale-95 border border-outline-variant/20 shadow-sm">5</button>
+<!-- Restricted Bid: 6 -->
+<div class="relative h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container-highest text-outline opacity-50 cursor-not-allowed border border-dashed border-outline-variant">
+                        6
+                        <div class="absolute -top-1 -right-1">
+<span class="material-symbols-outlined text-sm bg-error text-white rounded-full p-0.5" style="font-variation-settings: 'FILL' 1;">block</span>
+</div>
+</div>
+<!-- Numbers 7-9 -->
+<button class="h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container text-primary hover:bg-primary-container hover:text-white transition-all active:scale-95 border border-outline-variant/20 shadow-sm">7</button>
+<button class="h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container text-primary hover:bg-primary-container hover:text-white transition-all active:scale-95 border border-outline-variant/20 shadow-sm">8</button>
+<button class="h-16 rounded-xl flex items-center justify-center font-headline text-2xl font-black bg-surface-container text-primary hover:bg-primary-container hover:text-white transition-all active:scale-95 border border-outline-variant/20 shadow-sm">9</button>
+</div>
+<!-- Pass Button -->
+<div class="flex flex-col gap-4">
+<button class="w-full h-16 rounded-xl bg-[#004d26] text-white flex items-center justify-center gap-3 font-body font-extrabold text-xl tracking-wider transition-all hover:bg-[#006431] active:scale-95 shadow-lg shadow-black/10">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">check_circle</span>
+                        0 - PASS
+                    </button>
+</div>
+<!-- Info Message -->
+<div class="mt-8 p-4 bg-surface-container-low rounded-xl flex items-start gap-3">
+<span class="material-symbols-outlined text-secondary" style="font-variation-settings: 'FILL' 1;">info</span>
+<p class="text-xs font-medium text-on-surface-variant leading-relaxed">
+                        Bid '6' is currently restricted because the total sum of bids must not equal the number of cards in play.
+                    </p>
+</div>
+</div>
+</div>
+</main>
+<!-- Bottom Navigation Shell (The Blueprint) -->
+<nav class="fixed bottom-0 w-full z-50 flex justify-around items-center px-4 pb-6 pt-3 bg-[#001430]/80 backdrop-blur-xl dark:bg-[#001430]/95 no-border shadow-[0_-4px_20px_rgba(0,0,0,0.4)] rounded-t-3xl">
+<a class="flex flex-col items-center justify-center text-[#ffd700] bg-gradient-to-b from-[#7b5800]/20 to-transparent rounded-xl px-4 py-1 active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined" style="font-variation-settings: 'FILL' 1;">style</span>
+<span class="font-['Manrope'] text-xs uppercase tracking-widest font-semibold">Play</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/50 hover:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">history</span>
+<span class="font-['Manrope'] text-xs uppercase tracking-widest font-semibold">History</span>
+</a>
+<a class="flex flex-col items-center justify-center text-white/50 hover:text-white transition-all active:scale-90 duration-200" href="#">
+<span class="material-symbols-outlined">person</span>
+<span class="font-['Manrope'] text-xs uppercase tracking-widest font-semibold">Profile</span>
+</a>
+</nav>
+</body></html>
