@@ -15,7 +15,12 @@ import type {
   GameSettings,
   SetNumber,
 } from "@joker/engine";
-import type { UserProfile } from "@/lib/user-system";
+interface LinkedUser {
+  id: string;
+  nickname: string;
+  name: string;
+  avatar: string;
+}
 
 interface HandEntry {
   bids: number[];
@@ -25,7 +30,7 @@ interface HandEntry {
 
 interface PlayerSlot {
   name: string;
-  linkedUser: UserProfile | null; // null = guest, UserProfile = registered user
+  linkedUser: LinkedUser | null; // null = guest, UserProfile = registered user
 }
 
 export default function CalculatorPage() {
@@ -170,7 +175,7 @@ export default function CalculatorPage() {
     );
   };
 
-  const linkPlayer = (idx: number, user: UserProfile | null) => {
+  const linkPlayer = (idx: number, user: LinkedUser | null) => {
     setPlayers((prev) =>
       prev.map((p, i) =>
         i === idx

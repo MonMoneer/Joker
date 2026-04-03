@@ -451,5 +451,41 @@
   position: relative;
 }
 @media (max-width: 640px) {
-  .trick-zone { width: 240px; height: 180px; }
+  .trick-zone { width: 220px; height: 160px; }
+
+  /* Smaller avatars on mobile */
+  .avatar-ring { width: 48px; height: 48px; }
+}
+
+/* ============================================================
+   MOBILE SAFE AREAS + PWA
+   ============================================================ */
+@supports (padding: env(safe-area-inset-top)) {
+  .safe-top { padding-top: env(safe-area-inset-top); }
+  .safe-bottom { padding-bottom: env(safe-area-inset-bottom); }
+
+  .bottom-nav {
+    padding-bottom: calc(0.75rem + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Prevent pull-to-refresh and overscroll on game board */
+.game-no-scroll {
+  overflow: hidden;
+  position: fixed;
+  inset: 0;
+  overscroll-behavior: none;
+  touch-action: manipulation;
+}
+
+/* Mobile touch targets — minimum 44px */
+@media (max-width: 768px) {
+  .btn-gold, .btn-glass { min-height: 48px; }
+  .bid-number { min-width: 44px; min-height: 44px; }
+  .bottom-nav-item { min-width: 48px; min-height: 48px; }
+}
+
+/* PWA standalone — hide browser-specific UI */
+@media (display-mode: standalone) {
+  body { padding-top: env(safe-area-inset-top, 0px); }
 }

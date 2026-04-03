@@ -2,62 +2,53 @@
 
 import { useState, useEffect, useRef } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { searchUsers, findUserByNickname, getFriends } from "@/lib/user-system";
-import type { UserProfile, Friend } from "@/lib/user-system";
+import { searchGroupFriends, getAllGroupFriends } from "@/lib/groups";
+import type { GroupMember } from "@/lib/groups";
 
 interface PlayerPickerProps {
   value: string;
   onChange: (name: string) => void;
-  onUserLinked: (user: UserProfile | null) => void;
-  linkedUser: UserProfile | null;
+  onUserLinked: (user: { id: string; nickname: string; name: string; avatar: string } | null) => void;
+  linkedUser: { id: string; nickname: string; name: string; avatar: string } | null;
   placeholder?: string;
   label?: string;
   index: number;
 }
 
-/**
- * Input field that lets you type a name OR pick a registered user.
- * Shows friends first, then search results from local user registry.
- * When a user is linked, their nickname is shown and scores count for rankings.
- */
 export function PlayerPicker({
   value,
   onChange,
   onUserLinked,
   linkedUser,
-  placeholder = "Player name or @nickname",
+  placeholder = "Name or @nickname",
   label,
   index,
 }: PlayerPickerProps) {
   const [showDropdown, setShowDropdown] = useState(false);
-  const [friends, setFriends] = useState<Friend[]>([]);
-  const [searchResults, setSearchResults] = useState<UserProfile[]>([]);
+  const [friends, setFriends] = useState<GroupMember[]>([]);
+  const [searchResults, setSearchResults] = useState<GroupMember[]>([]);
   const inputRef = useRef<HTMLInputElement>(null);
   const dropdownRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    setFriends(getFriends());
+    getAllGroupFriends().then(setFriends).catch(() => {});
   }, []);
 
   useEffect(() => {
-    if (value.startsWith("@")) {
-      const query = value.slice(1);
-      setSearchResults(searchUsers(query));
-    } else if (value.length >= 2) {
-      setSearchResults(searchUsers(value));
+    if (value.length >= 2) {
+      searchGroupFriends(value.startsWith("@") ? value.slice(1) : value)
+        .then(setSearchResults)
+        .catch(() => setSearchResults([]));
     } else {
       setSearchResults([]);
     }
   }, [value]);
 
-  // Close dropdown on outside click
   useEffect(() => {
     const handleClick = (e: MouseEvent) => {
       if (
-        dropdownRef.current &&
-        !dropdownRef.current.contains(e.target as Node) &&
-        inputRef.current &&
-        !inputRef.current.contains(e.target as Node)
+        dropdownRef.current && !dropdownRef.current.contains(e.target as Node) &&
+        inputRef.current && !inputRef.current.contains(e.target as Node)
       ) {
         setShowDropdown(false);
       }
@@ -66,20 +57,10 @@ export function PlayerPicker({
     return () => document.removeEventListener("mousedown", handleClick);
   }, []);
 
-  const selectUser = (user: UserProfile) => {
+  const selectUser = (user: GroupMember) => {
     onChange(user.nickname);
-    onUserLinked(user);
+    onUserLinked({ id: user.id, nickname: user.nickname, name: user.name, avatar: user.avatar });
     setShowDropdown(false);
-  };
-
-  const selectFriend = (friend: Friend) => {
-    const user = findUserByNickname(friend.nickname);
-    if (user) {
-      selectUser(user);
-    } else {
-      onChange(friend.name);
-      setShowDropdown(false);
-    }
   };
 
   const clearLinked = () => {
@@ -99,24 +80,15 @@ export function PlayerPicker({
       )}
 
       {linkedUser ? (
-        // Linked user display
         <div className="flex items-center gap-3 input-royal">
           <span className="text-xl">{linkedUser.avatar}</span>
           <div className="flex-1 min-w-0">
-            <div className="text-sm font-semibold text-marble-100 truncate">
-              {linkedUser.name}
-            </div>
+            <div className="text-sm font-semibold text-marble-100 truncate">{linkedUser.name}</div>
             <div className="text-[10px] text-gold-400">@{linkedUser.nickname}</div>
           </div>
-          <button
-            onClick={clearLinked}
-            className="text-marble-400/40 hover:text-error-500 text-sm px-1"
-          >
-            ✕
-          </button>
+          <button onClick={clearLinked} className="text-marble-400/40 hover:text-error-500 text-sm px-1">✕</button>
         </div>
       ) : (
-        // Text input with search
         <div className="relative">
           <input
             ref={inputRef}
@@ -125,18 +97,15 @@ export function PlayerPicker({
             onChange={(e) => onChange(e.target.value)}
             onFocus={() => setShowDropdown(true)}
             placeholder={placeholder}
-            className="input-royal"
+            className="input-royal !pl-10"
             maxLength={20}
           />
-          <div
-            className={`absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full ${colors[index % 4]} flex items-center justify-center text-white text-[10px] font-bold pointer-events-none`}
-          >
+          <div className={`absolute left-3 top-1/2 -translate-y-1/2 w-6 h-6 rounded-full ${colors[index % 4]} flex items-center justify-center text-white text-[10px] font-bold pointer-events-none`}>
             {index + 1}
           </div>
         </div>
       )}
 
-      {/* Dropdown: friends + search results */}
       <AnimatePresence>
         {showDropdown && !linkedUser && (friends.length > 0 || searchResults.length > 0) && (
           <motion.div
@@ -146,44 +115,38 @@ export function PlayerPicker({
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: -5 }}
           >
-            {/* Friends section */}
             {friends.length > 0 && !value && (
               <>
-                <p className="px-3 py-1 text-[9px] text-gold-400/40 uppercase tracking-wider font-bold">
-                  Friends
-                </p>
-                {friends.map((friend) => (
+                <p className="px-3 py-1 text-[9px] text-gold-400/40 uppercase tracking-wider font-bold">Group Friends</p>
+                {friends.slice(0, 6).map((f) => (
                   <button
-                    key={friend.nickname}
+                    key={f.id}
                     className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-white/5 transition-colors text-left"
-                    onClick={() => selectFriend(friend)}
+                    onClick={() => selectUser(f)}
                   >
-                    <span className="text-lg">{friend.avatar}</span>
+                    <span className="text-lg">{f.avatar}</span>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm text-marble-100 truncate">{friend.name}</div>
-                      <div className="text-[10px] text-gold-400/60">@{friend.nickname}</div>
+                      <div className="text-sm text-marble-100 truncate">{f.name}</div>
+                      <div className="text-[10px] text-gold-400/60">@{f.nickname}</div>
                     </div>
                   </button>
                 ))}
               </>
             )}
 
-            {/* Search results */}
             {searchResults.length > 0 && (
               <>
-                <p className="px-3 py-1 text-[9px] text-gold-400/40 uppercase tracking-wider font-bold">
-                  {value.startsWith("@") ? "Users" : "Matches"}
-                </p>
-                {searchResults.map((user) => (
+                <p className="px-3 py-1 text-[9px] text-gold-400/40 uppercase tracking-wider font-bold">Matches</p>
+                {searchResults.map((u) => (
                   <button
-                    key={user.id}
+                    key={u.id}
                     className="w-full flex items-center gap-2.5 px-3 py-2 hover:bg-white/5 transition-colors text-left"
-                    onClick={() => selectUser(user)}
+                    onClick={() => selectUser(u)}
                   >
-                    <span className="text-lg">{user.avatar}</span>
+                    <span className="text-lg">{u.avatar}</span>
                     <div className="flex-1 min-w-0">
-                      <div className="text-sm text-marble-100 truncate">{user.name}</div>
-                      <div className="text-[10px] text-gold-400/60">@{user.nickname}</div>
+                      <div className="text-sm text-marble-100 truncate">{u.name}</div>
+                      <div className="text-[10px] text-gold-400/60">@{u.nickname}</div>
                     </div>
                     <span className="text-[9px] text-gold-400/40 uppercase">Invite</span>
                   </button>
@@ -191,9 +154,9 @@ export function PlayerPicker({
               </>
             )}
 
-            {value.length >= 2 && searchResults.length === 0 && friends.length === 0 && (
+            {value.length >= 2 && searchResults.length === 0 && (
               <p className="px-3 py-2 text-xs text-marble-400/40 text-center">
-                No users found. Type a name to play as guest.
+                No group friends found. Type a name to play as guest.
               </p>
             )}
           </motion.div>

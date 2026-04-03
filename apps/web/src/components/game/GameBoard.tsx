@@ -180,7 +180,7 @@ export function GameBoard({
     gameState.phase === "hand-result" || gameState.phase === "set-result";
 
   return (
-    <div className="relative w-full h-screen flex flex-col overflow-hidden select-none royal-bg">
+    <div className="game-no-scroll royal-bg select-none flex flex-col">
       {/* Header */}
       <header className="relative z-20 px-4 py-2.5 flex items-center justify-between bg-navy-900/80 backdrop-blur-md shadow-2xl">
         <span className="text-gold-300/40 text-lg cursor-pointer">☰</span>

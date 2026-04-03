@@ -1,0 +1,44 @@
+<h2>Mobile Fullscreen Mode</h2>
+<p class="subtitle">How should the game handle mobile orientation and fullscreen?</p>
+
+<div class="options">
+  <div class="option" data-choice="a" onclick="toggleSelect(this)">
+    <div class="letter">A</div>
+    <div class="content">
+      <h3>Auto Fullscreen on Game Start</h3>
+      <p>When a game starts, the app requests fullscreen mode and locks to <strong>portrait (vertical)</strong>. Bottom browser bar hides. User taps "Exit" to leave fullscreen.</p>
+      <div style="margin-top:12px;padding:12px;background:rgba(0,0,0,0.05);border-radius:8px;font-size:13px;">
+        <strong>How it works:</strong> Uses the Fullscreen API + Screen Orientation API.<br>
+        Portrait lock ensures cards are readable.<br>
+        A small "exit fullscreen" button stays in the corner.
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="b" onclick="toggleSelect(this)">
+    <div class="letter">B</div>
+    <div class="content">
+      <h3>PWA Install Prompt + Fullscreen</h3>
+      <p>Show an "Install App" banner on first visit. Once installed as PWA, it <strong>always opens fullscreen in portrait</strong> — no browser chrome, feels native.</p>
+      <div style="margin-top:12px;padding:12px;background:rgba(0,0,0,0.05);border-radius:8px;font-size:13px;">
+        <strong>How it works:</strong> PWA manifest with <code>display: standalone</code> and <code>orientation: portrait</code>.<br>
+        Home screen icon, splash screen, no URL bar.<br>
+        Works offline after install.
+      </div>
+    </div>
+  </div>
+
+  <div class="option" data-choice="c" onclick="toggleSelect(this)">
+    <div class="letter">C</div>
+    <div class="content">
+      <h3>Both: PWA + In-Game Fullscreen Toggle</h3>
+      <p>Install as PWA for the best experience. But also add a fullscreen toggle button for users who play in the browser.</p>
+      <div style="margin-top:12px;padding:12px;background:rgba(0,0,0,0.05);border-radius:8px;font-size:13px;">
+        <strong>Best of both worlds:</strong><br>
+        • PWA users get native-like experience automatically<br>
+        • Browser users can tap "⛶" to go fullscreen during gameplay<br>
+        • Portrait lock on game screens, free rotation on menus
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,5 +1,6 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Noto_Serif, Manrope, Noto_Sans_Georgian } from "next/font/google";
+import { AuthGuard } from "@/components/AuthGuard";
 import "./globals.css";
 
 const notoSerif = Noto_Serif({
@@ -22,8 +23,22 @@ const notoGeorgian = Noto_Sans_Georgian({
 
 export const metadata: Metadata = {
   title: "Royal Joker | ჯოკერი",
-  description:
-    "Play the classic Georgian card game online with friends or against AI",
+  description: "The Classic Georgian Card Game",
+  manifest: "/manifest.json",
+  appleWebApp: {
+    capable: true,
+    statusBarStyle: "black-translucent",
+    title: "Royal Joker",
+  },
+};
+
+export const viewport: Viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
+  viewportFit: "cover",
+  themeColor: "#001430",
 };
 
 export default function RootLayout({
@@ -36,8 +51,8 @@ export default function RootLayout({
       lang="en"
       className={`${notoSerif.variable} ${manrope.variable} ${notoGeorgian.variable} h-full`}
     >
-      <body className="min-h-full flex flex-col font-body antialiased">
-        {children}
+      <body className="min-h-full flex flex-col font-body antialiased overscroll-none">
+        <AuthGuard>{children}</AuthGuard>
       </body>
     </html>
   );

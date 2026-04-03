@@ -77,6 +77,9 @@ export default function Home() {
           <Link href="/play/calculator">
             <button className="btn-glass w-full">Score Calculator</button>
           </Link>
+          <Link href="/groups">
+            <button className="btn-glass w-full">My Groups</button>
+          </Link>
           <div className="flex gap-3 mt-1">
             <Link href="/history" className="flex-1">
               <button className="btn-glass w-full !py-3 !text-sm opacity-60">
