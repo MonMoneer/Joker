@@ -4,6 +4,7 @@ import Link from "next/link";
 import { motion } from "framer-motion";
 import { GameHeader } from "@/components/ui/GameHeader";
 import { BottomNav } from "@/components/ui/BottomNav";
+import { InstallPrompt } from "@/components/ui/InstallPrompt";
 
 export default function Home() {
   return (
@@ -95,6 +96,7 @@ export default function Home() {
         </motion.div>
       </main>
 
+      <InstallPrompt />
       <BottomNav />
     </div>
   );

@@ -478,6 +478,15 @@
   touch-action: manipulation;
 }
 
+/* Safe area padding classes */
+.safe-top { padding-top: env(safe-area-inset-top, 0px); }
+.safe-bottom { padding-bottom: calc(env(safe-area-inset-bottom, 0px) + 4px); }
+
+/* Hand fan mobile — more bottom padding */
+@media (max-width: 768px) {
+  .hand-fan { padding-bottom: 8px; }
+}
+
 /* Mobile touch targets — minimum 44px */
 @media (max-width: 768px) {
   .btn-gold, .btn-glass { min-height: 48px; }

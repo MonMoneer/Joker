@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useCallback, useRef, useEffect, useMemo } from "react";
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import type { GameState, PlayerIndex, Suit, JokerMode, TrickPlay } from "@joker/engine";
 import { getLegalCardIndices, isJokerCard } from "@joker/engine";
 import { PlayerHand, OpponentHand } from "../cards/PlayerHand";
@@ -184,14 +184,24 @@ export function GameBoard({
   return (
     <div className="game-no-scroll royal-bg select-none flex flex-col">
       {/* Header */}
-      <header className="relative z-20 px-4 py-2.5 flex items-center justify-between bg-navy-900/80 backdrop-blur-md shadow-2xl">
+      <header className="relative z-20 px-4 py-2 flex items-center justify-between bg-navy-900/80 backdrop-blur-md shadow-2xl safe-top">
         <span className="text-gold-300/40 text-lg cursor-pointer">☰</span>
-        <h1 className="font-display text-xs font-bold text-gold-300 uppercase tracking-[0.25em]">
+        <h1 className="font-display text-[10px] font-bold text-gold-300 uppercase tracking-[0.25em]">
           The Sovereign Table
         </h1>
-        <div className="w-8 h-8 rounded-full bg-navy-800 border-2 border-gold-600/30 flex items-center justify-center text-sm">
-          👤
-        </div>
+        <button
+          className="text-gold-300/40 text-sm hover:text-gold-300"
+          onClick={() => {
+            if (document.fullscreenElement) {
+              document.exitFullscreen().catch(() => {});
+            } else {
+              document.documentElement.requestFullscreen().catch(() => {});
+            }
+          }}
+          title="Toggle fullscreen"
+        >
+          ⛶
+        </button>
       </header>
 
       {/* Trump info */}
@@ -307,28 +317,15 @@ export function GameBoard({
         onClose={() => setShowLastTrick(false)}
       />
 
-      {/* BOTTOM: My player + hand */}
-      <div className="absolute bottom-0 left-0 right-0 z-10">
-        <div className="flex items-center justify-center gap-3 mb-1">
-          <PlayerSlot
-            name={gameState.players[myPlayerIndex]?.name || "You"}
-            bid={gameState.bidState.bids[myPlayerIndex]}
-            tricksWon={gameState.tricksWon[myPlayerIndex]}
-            score={gameState.scores[myPlayerIndex]}
-            isDealer={gameState.dealerIndex === myPlayerIndex}
-            isCurrentTurn={isMyTurn}
-            isConnected={true} isAI={false} position="bottom"
-          />
-          <div className="text-xs font-body text-marble-400/40">
-            <span>order: <strong className="text-gold-300">{gameState.bidState.bids[myPlayerIndex] ?? "..."}</strong></span>
-            <span className="mx-2 text-marble-500/20">|</span>
-            <span>taken: <strong className="text-gold-300">{gameState.tricksWon[myPlayerIndex]}</strong></span>
-          </div>
-        </div>
-
-        {/* Bidding overlay */}
+      {/* BIDDING MODAL — centered overlay, not blocking cards */}
+      <AnimatePresence>
         {gameState.phase === "bidding" && isMyTurn && (
-          <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2 z-30">
+          <motion.div
+            className="absolute inset-0 z-30 flex items-center justify-center bg-navy-900/40 backdrop-blur-sm"
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
+          >
             <BidPanel
               playerName={gameState.players[myPlayerIndex]?.name || "You"}
               cardsPerPlayer={gameState.currentHandConfig.cardsPerPlayer}
@@ -338,10 +335,30 @@ export function GameBoard({
               playerNames={gameState.players.map((p) => p.name)}
               onBid={onBid}
             />
-          </div>
+          </motion.div>
         )}
+      </AnimatePresence>
 
-        <div className="pb-3">
+      {/* BOTTOM: My player info + hand */}
+      <div className="absolute bottom-0 left-0 right-0 z-10 safe-bottom">
+        {/* Compact player info */}
+        <div className="flex items-center justify-center gap-2 mb-1 px-3">
+          <div className="avatar-ring !w-9 !h-9 !border-2">
+            <span className="text-sm font-bold text-gold-200/60">
+              {gameState.players[myPlayerIndex]?.name?.[0]?.toUpperCase() || "?"}
+            </span>
+          </div>
+          <div className="text-[10px] font-body text-marble-400/50">
+            <span className="text-gold-300 font-bold">{gameState.players[myPlayerIndex]?.name}</span>
+            <span className="mx-1.5 text-marble-500/20">|</span>
+            <span>bid: <strong className="text-gold-300">{gameState.bidState.bids[myPlayerIndex] ?? "-"}</strong></span>
+            <span className="mx-1.5 text-marble-500/20">|</span>
+            <span>won: <strong className="text-gold-300">{gameState.tricksWon[myPlayerIndex]}</strong></span>
+          </div>
+        </div>
+
+        {/* Cards — always visible */}
+        <div className="pb-2">
           <PlayerHand
             cards={myHand}
             legalIndices={legalIndices}
