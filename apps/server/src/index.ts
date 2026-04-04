@@ -18,9 +18,10 @@ app.use(cors());
 app.use(express.json());
 
 const server = createServer(app);
+const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
 const io = new Server(server, {
   cors: {
-    origin: process.env.CLIENT_URL || 'http://localhost:3000',
+    origin: [clientUrl, 'https://royal-joker.vercel.app', 'http://localhost:3000'],
     methods: ['GET', 'POST'],
   },
 });
