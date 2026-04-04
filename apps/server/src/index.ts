@@ -21,8 +21,23 @@ const server = createServer(app);
 const clientUrl = process.env.CLIENT_URL || 'http://localhost:3000';
 const io = new Server(server, {
   cors: {
-    origin: [clientUrl, 'https://royal-joker.vercel.app', 'http://localhost:3000'],
+    origin: (origin, callback) => {
+      // Allow requests with no origin (mobile apps, Postman) and from allowed origins
+      if (!origin) return callback(null, true);
+      const allowed = [
+        clientUrl,
+        'http://localhost:3000',
+        'https://royal-joker.vercel.app',
+        'https://royal-joker-v2.vercel.app',
+      ];
+      // Allow any royal-joker*.vercel.app subdomain (preview deployments)
+      if (allowed.includes(origin) || /^https:\/\/royal-joker.*\.vercel\.app$/.test(origin)) {
+        return callback(null, true);
+      }
+      callback(new Error('Not allowed by CORS'));
+    },
     methods: ['GET', 'POST'],
+    credentials: true,
   },
 });
 

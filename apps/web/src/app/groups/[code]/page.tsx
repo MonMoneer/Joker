@@ -91,29 +91,14 @@ export default function GroupDetailPage() {
     router.push("/groups");
   }
 
-  const [showTableSetup, setShowTableSetup] = useState(false);
-  const [tableMembers, setTableMembers] = useState<GroupMember[]>([]);
-
   const isOwner = (memberId: string) => group?.created_by === memberId;
 
-  function handleInviteMember(member: GroupMember) {
-    if (tableMembers.find((m) => m.id === member.id)) return;
-    if (tableMembers.length >= 3) return; // max 3 invitees (host + 3)
-    setTableMembers([...tableMembers, member]);
+  function handleCreateOnlineTable() {
+    router.push(`/play/online?autocreate=1`);
   }
 
-  function handleRemoveFromTable(memberId: string) {
-    setTableMembers(tableMembers.filter((m) => m.id !== memberId));
-  }
-
-  function handleStartOnline() {
-    const names = tableMembers.map((m) => m.nickname || m.name).join(",");
-    router.push(`/play/online?from=group&friends=${encodeURIComponent(names)}`);
-  }
-
-  function handleStartSolo() {
-    const names = tableMembers.map((m) => m.name).join(",");
-    router.push(`/play/vs-ai?friends=${encodeURIComponent(names)}`);
+  function handlePlayVsAI() {
+    router.push(`/play/vs-ai`);
   }
 
   if (loading) {
@@ -231,76 +216,24 @@ export default function GroupDetailPage() {
           </button>
         </motion.div>
 
-        {/* Create Table Button */}
+        {/* Create Table */}
         <motion.div
           initial={{ opacity: 0, y: 16 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ delay: 0.05, duration: 0.4 }}
           className="mb-5"
         >
-          {!showTableSetup ? (
-            <button
-              className="btn-gold w-full py-4 text-sm font-bold tracking-wider"
-              onClick={() => setShowTableSetup(true)}
-            >
-              + CREATE TABLE
+          <div className="glass-panel p-5 space-y-3">
+            <h3 className="font-display text-lg font-bold text-gold-300 text-center mb-1">Create Table</h3>
+            <button className="btn-gold w-full py-3.5 text-sm font-bold tracking-wider flex items-center justify-center gap-2"
+              onClick={handleCreateOnlineTable}>
+              <span>🔗</span> PLAY ONLINE (SHARE LINK)
             </button>
-          ) : (
-            <div className="glass-panel p-5 space-y-4">
-              <div className="flex items-center justify-between">
-                <h3 className="font-display text-lg font-bold text-gold-300">Your Table</h3>
-                <button className="text-gold-300/40 hover:text-gold-300 text-sm"
-                  onClick={() => { setShowTableSetup(false); setTableMembers([]); }}>
-                  Cancel
-                </button>
-              </div>
-
-              {/* Selected players */}
-              <div className="space-y-2">
-                <p className="text-xs text-gold-400/50 uppercase tracking-wider font-bold">
-                  Players ({1 + tableMembers.length}/4)
-                </p>
-                {/* You (host) */}
-                <div className="flex items-center gap-3 p-3 rounded-xl bg-navy-800/50 border border-gold-400/10">
-                  <div className="w-8 h-8 rounded-full bg-gold-700/30 flex items-center justify-center text-sm text-gold-400">
-                    {session?.name?.[0]?.toUpperCase() || "Y"}
-                  </div>
-                  <span className="text-sm text-marble-100 font-semibold flex-1">You</span>
-                  <span className="text-[10px] text-gold-400 uppercase font-bold">Host</span>
-                </div>
-                {/* Invited members */}
-                {tableMembers.map((m) => (
-                  <div key={m.id} className="flex items-center gap-3 p-3 rounded-xl bg-navy-800/50 border border-gold-400/10">
-                    <div className="w-8 h-8 rounded-full bg-navy-700 flex items-center justify-center text-sm">
-                      {m.avatar || "👤"}
-                    </div>
-                    <span className="text-sm text-marble-100 font-semibold flex-1">{m.name}</span>
-                    <button className="text-red-400/60 hover:text-red-400 text-xs font-bold"
-                      onClick={() => handleRemoveFromTable(m.id)}>
-                      Remove
-                    </button>
-                  </div>
-                ))}
-                {/* Empty slots */}
-                {Array.from({ length: 3 - tableMembers.length }, (_, i) => (
-                  <div key={`slot-${i}`} className="flex items-center gap-3 p-3 rounded-xl border border-dashed border-navy-700/60">
-                    <div className="w-8 h-8 rounded-full bg-navy-800/50 flex items-center justify-center text-ink-600 text-sm">?</div>
-                    <span className="text-ink-600 text-sm">Tap + on a member below</span>
-                  </div>
-                ))}
-              </div>
-
-              {/* Start buttons */}
-              <div className="flex gap-3">
-                <button className="btn-gold flex-1 py-3 text-sm" onClick={handleStartOnline}>
-                  PLAY ONLINE
-                </button>
-                <button className="btn-glass flex-1 py-3 text-sm" onClick={handleStartSolo}>
-                  PLAY VS AI
-                </button>
-              </div>
-            </div>
-          )}
+            <button className="btn-glass w-full py-3.5 text-sm font-bold tracking-wider"
+              onClick={handlePlayVsAI}>
+              PLAY VS AI
+            </button>
+          </div>
         </motion.div>
 
         {/* Members List */}
@@ -355,20 +288,6 @@ export default function GroupDetailPage() {
                   </p>
                 </div>
 
-                {/* Invite to table button */}
-                {showTableSetup && session?.id !== member.id && (
-                  <button
-                    className={`w-8 h-8 rounded-full flex items-center justify-center text-lg transition-all ${
-                      tableMembers.find((m) => m.id === member.id)
-                        ? "bg-success-500/20 text-success-500"
-                        : "bg-gold-400/10 text-gold-400/60 hover:bg-gold-400/20 hover:text-gold-400"
-                    }`}
-                    onClick={() => handleInviteMember(member)}
-                    disabled={!!tableMembers.find((m) => m.id === member.id) || tableMembers.length >= 3}
-                  >
-                    {tableMembers.find((m) => m.id === member.id) ? "✓" : "+"}
-                  </button>
-                )}
               </motion.div>
             ))}
           </div>

@@ -51,15 +51,31 @@ export default function OnlineLobbyPage() {
     if (isLoggedIn && profile) setPlayerName(profile.nickname || profile.name);
   }, [isLoggedIn, profile]);
 
-  // Handle ?join=CODE query param
+  // Handle ?join=CODE and ?autocreate=1 query params
+  const [autoCreatePending, setAutoCreatePending] = useState(false);
   useEffect(() => {
     const params = new URLSearchParams(window.location.search);
     const joinCode = params.get("join");
+    const autoCreate = params.get("autocreate");
     if (joinCode) {
       setRoomCode(joinCode.toUpperCase());
       setJoinMode(true);
     }
+    if (autoCreate === "1") {
+      setAutoCreatePending(true);
+    }
   }, []);
+
+  // Auto-create room when connected + name available + autoCreate flag set
+  useEffect(() => {
+    if (!autoCreatePending) return;
+    if (!socket.isConnected) return;
+    if (!playerName.trim()) return;
+    if (socket.roomCode) return;
+    const settings: GameSettings = { histPenalty, histPenaltyAmount: histAmount, couplesMode };
+    socket.createRoom(playerName, getPlayerId(), settings);
+    setAutoCreatePending(false);
+  }, [autoCreatePending, socket.isConnected, playerName, socket.roomCode, histPenalty, histAmount, couplesMode, socket]);
 
   // Transition to lobby when room is created/joined
   useEffect(() => {
