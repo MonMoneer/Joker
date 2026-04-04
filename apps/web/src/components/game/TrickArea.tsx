@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import type { TrickPlay, PlayerIndex } from "@joker/engine";
-import { Card, CardBack } from "../cards/Card";
+import { Card, CardBack } from "@/components/cards/Card";
 
 interface TrickAreaProps {
   plays: TrickPlay[];

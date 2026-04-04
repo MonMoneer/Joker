@@ -2,7 +2,7 @@
 
 import { motion, AnimatePresence } from "framer-motion";
 import type { TrickPlay, Player } from "@joker/engine";
-import { Card } from "../cards/Card";
+import { Card } from "@/components/cards/Card";
 
 interface LastTrickPopoverProps {
   lastTrick: TrickPlay[] | null;
