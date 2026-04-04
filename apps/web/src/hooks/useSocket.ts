@@ -97,6 +97,14 @@ export function useSocket(): UseSocketReturn {
       );
     });
 
+    socket.on("player:replaced-by-ai", ({ playerId, playerName }) => {
+      setPlayers((prev) =>
+        prev.map((p) =>
+          p.id === playerId ? { ...p, isAI: true, name: playerName } : p
+        )
+      );
+    });
+
     return () => {
       socket.disconnect();
     };

@@ -48,7 +48,7 @@ export function GameBoard({ gameState, myPlayerIndex, onBid, onPlayCard, onJoker
     const c = gameState.handScores.length;
     if (c > prevHC.current && c > 0) {
       const last = gameState.handScores[c - 1];
-      const ba = last.find(s => s.isBidAllWonAll);
+      const ba = gameState.handNumber >= 3 ? last.find(s => s.isBidAllWonAll) : undefined;
       const hs = last.filter(s => s.isHistPenalty);
       if (ba && hs.length) {
         setBidAllEffect({ playerName: gameState.players[ba.playerIndex]?.name || "", score: ba.score });
@@ -148,10 +148,9 @@ export function GameBoard({ gameState, myPlayerIndex, onBid, onPlayCard, onJoker
         {/* TOP ROW: header full width */}
         <header className="flex items-center justify-between px-3 py-1 bg-navy-900/70 safe-top text-[9px] md:text-[11px]"
           style={{ gridColumn: "1 / -1" }}>
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-3">
             <span className="text-gold-300/40 cursor-pointer">☰</span>
-            <button className="text-[8px] text-gold-300/30 hover:text-gold-300" onClick={() => { setShowScoreSheet(!showScoreSheet); setShowLastTrick(false); }}>📋</button>
-            <button className="text-[8px] text-gold-300/30 hover:text-gold-300" onClick={() => { setShowLastTrick(!showLastTrick); setShowScoreSheet(false); }}>👁</button>
+            <button className="text-xl text-gold-300/50 hover:text-gold-300 transition-colors" onClick={() => { setShowScoreSheet(!showScoreSheet); setShowLastTrick(false); }}>📋</button>
           </div>
           <div className="flex items-center gap-2 text-marble-400/50">
             <span className="text-gold-300/40 tracking-widest uppercase font-display text-[8px] md:text-[10px]">Joker</span>
@@ -162,15 +161,18 @@ export function GameBoard({ gameState, myPlayerIndex, onBid, onPlayCard, onJoker
             )}
             {gameState.trump.isNoTrump && <span className="italic text-marble-400/30">NT</span>}
           </div>
-          <button className="text-gold-300/40 hover:text-gold-300" onClick={() => {
-            if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
-            else document.documentElement.requestFullscreen().catch(() => {});
-          }}>⛶</button>
+          <div className="flex items-center gap-3">
+            <button className="text-xl text-gold-300/50 hover:text-gold-300 transition-colors" onClick={() => { setShowLastTrick(!showLastTrick); setShowScoreSheet(false); }}>👁</button>
+            <button className="text-gold-300/40 hover:text-gold-300" onClick={() => {
+              if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+              else document.documentElement.requestFullscreen().catch(() => {});
+            }}>⛶</button>
+          </div>
         </header>
 
         {/* MIDDLE ROW: left player | center table | right player */}
         {/* Left player */}
-        <div className="flex flex-col items-center justify-center px-2 py-1 gap-1">
+        <div className="flex flex-col items-center justify-center px-4 py-1 gap-1">
           {left && renderPlayer(left, "left", true)}
           {left && <OpponentHand cardCount={gameState.hands[left.i]?.length || 0} position="left" />}
         </div>
@@ -222,7 +224,7 @@ export function GameBoard({ gameState, myPlayerIndex, onBid, onPlayCard, onJoker
         </div>
 
         {/* Right player */}
-        <div className="flex flex-col items-center justify-center px-2 py-1 gap-1">
+        <div className="flex flex-col items-center justify-center px-4 py-1 gap-1">
           {right && renderPlayer(right, "right", true)}
           {right && <OpponentHand cardCount={gameState.hands[right.i]?.length || 0} position="right" />}
         </div>

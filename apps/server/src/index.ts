@@ -7,7 +7,7 @@ import {
   updateRoomSettings, disconnectPlayer, cleanupExpiredRooms,
 } from './room-manager';
 import {
-  startNewGame, getGameState, handleBid, handlePlayCard,
+  startNewGame, getGameState, setGameState as setActiveGame, handleBid, handlePlayCard,
   handleJokerChoice, handleNextHand, getFilteredState,
   processAITurns, removeGame,
 } from './game-controller';
@@ -174,10 +174,34 @@ io.on('connection', (socket) => {
         playerId: result.playerId,
         timeout: 120000,
       });
+
+      // Auto-replace with AI after 2 minutes if still disconnected during active game
+      if (result.room.gameStarted) {
+        setTimeout(() => {
+          const room = getRoom(result.room.code);
+          if (!room) return;
+          const player = room.players.find(p => p.id === result.playerId);
+          if (player && !player.isConnected) {
+            player.isAI = true;
+            player.name = `${player.name} (AI)`;
+            io.to(result.room.code).emit('player:replaced-by-ai', {
+              playerId: result.playerId,
+              playerName: player.name,
+            });
+            // Process AI turns if it's now this player's turn
+            const state = getGameState(result.room.code);
+            if (state && state.players[state.currentTurn]?.id === result.playerId) {
+              setTimeout(() => processAndBroadcastAI(result.room.code, room), 800);
+            }
+          }
+        }, 120000);
+      }
     }
     console.log(`Player disconnected: ${socket.id}`);
   });
 });
+
+const trickTimers = new Map<string, ReturnType<typeof setTimeout>>();
 
 function broadcastState(roomCode: string, room: ReturnType<typeof getRoom>, state: any) {
   if (!room) return;
@@ -187,6 +211,27 @@ function broadcastState(roomCode: string, room: ReturnType<typeof getRoom>, stat
       io.to(player.socketId).emit('game:state', filtered);
     }
   });
+
+  // Auto-advance trick-result after delay (server-authoritative)
+  if (state.phase === 'trick-result') {
+    const prev = trickTimers.get(roomCode);
+    if (prev) clearTimeout(prev);
+    trickTimers.set(roomCode, setTimeout(() => {
+      trickTimers.delete(roomCode);
+      const current = getGameState(roomCode);
+      if (!current || current.phase !== 'trick-result') return;
+      const winner = (current as any)._trickWinner ?? current.currentTurn;
+      const advanced = {
+        ...current,
+        phase: 'playing' as const,
+        currentTurn: winner,
+        currentTrick: { plays: [], leadSuit: null },
+      };
+      setActiveGame(roomCode, advanced as any);
+      broadcastState(roomCode, room, advanced);
+      setTimeout(() => processAndBroadcastAI(roomCode, room), 800);
+    }, 2200));
+  }
 }
 
 function processAndBroadcastAI(roomCode: string, room: ReturnType<typeof getRoom>) {

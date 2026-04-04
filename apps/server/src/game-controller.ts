@@ -92,6 +92,7 @@ export function getFilteredState(state: GameState, playerIndex: PlayerIndex): ob
     scores: state.scores,
     handScores: state.handScores,
     settings: state.settings,
+    _trickWinner: (state as any)._trickWinner ?? null,
     players: state.players.map((p, i) => ({
       ...p,
       cardCount: state.hands[i]?.length || 0,
@@ -157,6 +158,10 @@ export function processAITurns(roomCode: string): GameState[] {
   }
 
   return states;
+}
+
+export function setGameState(roomCode: string, state: GameState): void {
+  activeGames.set(roomCode, state);
 }
 
 export function removeGame(roomCode: string): void {
