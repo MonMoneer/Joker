@@ -10,3 +10,7 @@ coverage/
 .vercel
 vid/
 *.MP4
+# Large SVG card originals — use WebP versions in cards-webp/
+apps/web/public/cards/
+CARDS/
+sound effects/
