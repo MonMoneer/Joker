@@ -45,39 +45,56 @@
   --font-georgian: var(--font-georgian);
 }
 
-/* Card sizing tokens */
+/* Card sizing tokens — landscape-first */
 :root {
-  --card-w: 52px;   --card-h: 72px;   --card-r: 6px;
-  --card-sm-w: 16px; --card-sm-h: 22px; --card-sm-r: 2px;
-  --side-col: 52px;
+  --card-w: 56px;   --card-h: 78px;   --card-r: 6px;
+  --card-sm-w: 20px; --card-sm-h: 28px; --card-sm-r: 2px;
 }
-@media (min-width: 768px) {
+@media (min-width: 900px) {
   :root {
-    --card-w: 68px; --card-h: 95px; --card-r: 8px;
+    --card-w: 68px; --card-h: 95px; --card-r: 7px;
     --card-sm-w: 24px; --card-sm-h: 34px; --card-sm-r: 3px;
-    --side-col: 80px;
   }
 }
-@media (min-width: 1280px) {
+@media (min-width: 1400px) {
   :root {
-    --card-w: 80px; --card-h: 112px; --card-r: 9px;
-    --card-sm-w: 26px; --card-sm-h: 36px; --card-sm-r: 3px;
-    --side-col: 90px;
+    --card-w: 80px; --card-h: 112px; --card-r: 8px;
+    --card-sm-w: 28px; --card-sm-h: 39px; --card-sm-r: 3px;
   }
 }
 
 /* ============================================================
-   GAME GRID — 5 rows × 3 columns
+   GAME LAYOUT — Landscape (like JokerStars)
+   3 rows × 5 columns
    ============================================================ */
-.game-grid {
+.game-layout {
   display: grid;
-  grid-template-rows: auto auto 1fr auto auto;
-  grid-template-columns: var(--side-col) 1fr var(--side-col);
+  grid-template-rows: auto 1fr auto;
+  grid-template-columns: auto 1fr auto;
+  width: 100vw;
   height: 100dvh;
-  height: 100vh; /* fallback */
+  height: 100vh;
   overflow: hidden;
   overscroll-behavior: none;
   touch-action: manipulation;
+}
+
+/* Force landscape prompt for portrait mobile */
+.landscape-prompt {
+  display: none;
+}
+@media (orientation: portrait) and (max-width: 900px) {
+  .game-layout { display: none; }
+  .landscape-prompt {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    height: 100dvh;
+    gap: 16px;
+    text-align: center;
+    padding: 24px;
+  }
 }
 
 /* ============================================================

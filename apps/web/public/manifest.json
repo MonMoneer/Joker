@@ -3,7 +3,7 @@
   "short_name": "Joker",
   "description": "The Classic Georgian Card Game",
   "display": "standalone",
-  "orientation": "portrait",
+  "orientation": "any",
   "theme_color": "#001430",
   "background_color": "#001430",
   "start_url": "/",
