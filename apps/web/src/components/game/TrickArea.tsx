@@ -1,5 +1,6 @@
 "use client";
 
+import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { TrickPlay, PlayerIndex } from "@joker/engine";
 import { Card, CardBack } from "../cards/Card";
@@ -35,7 +36,20 @@ const WIN_FLY_TO: Record<string, { x: number; y: number }> = {
 };
 
 export function TrickArea({ plays, playerPositions, trumpCard, trickWinner, phase }: TrickAreaProps) {
-  const isWinning = phase === "trick-result" && trickWinner !== null && trickWinner !== undefined;
+  // Gate: show all 4 cards on the table for 1 second before flying to winner
+  const [showingTrick, setShowingTrick] = useState(false);
+
+  useEffect(() => {
+    if (phase === "trick-result" && trickWinner !== null && trickWinner !== undefined) {
+      setShowingTrick(true);
+      const timer = setTimeout(() => setShowingTrick(false), 1000);
+      return () => clearTimeout(timer);
+    } else {
+      setShowingTrick(false);
+    }
+  }, [phase, trickWinner]);
+
+  const isWinning = phase === "trick-result" && trickWinner !== null && trickWinner !== undefined && !showingTrick;
   const winnerPos = isWinning ? playerPositions[trickWinner] || "bottom" : "bottom";
   const winTarget = WIN_FLY_TO[winnerPos];
 
@@ -43,17 +57,17 @@ export function TrickArea({ plays, playerPositions, trumpCard, trickWinner, phas
     <div className="trick-zone gap-4 md:gap-7">
       {/* Deck pile: card backs + trump face-up on top */}
       {trumpCard && (
-        <div className="relative flex-shrink-0" style={{ width: "var(--card-sm-w)", height: "var(--card-sm-h)" }}>
+        <div className="relative flex-shrink-0" style={{ width: "var(--card-w)", height: "var(--card-h)" }}>
           {/* Stacked backs */}
-          <div className="absolute" style={{ top: 3, left: 0, width: "var(--card-sm-w)", height: "var(--card-sm-h)" }}>
-            <CardBack tiny />
+          <div className="absolute" style={{ top: 6, left: 0, width: "var(--card-w)", height: "var(--card-h)" }}>
+            <CardBack />
           </div>
-          <div className="absolute" style={{ top: 1, left: 1, width: "var(--card-sm-w)", height: "var(--card-sm-h)" }}>
-            <CardBack tiny />
+          <div className="absolute" style={{ top: 3, left: 2, width: "var(--card-w)", height: "var(--card-h)" }}>
+            <CardBack />
           </div>
           {/* Trump face-up on top */}
-          <div className="absolute" style={{ top: -1, left: 2 }}>
-            <Card card={trumpCard} tiny isPlayable={false} />
+          <div className="absolute" style={{ top: 0, left: 4 }}>
+            <Card card={trumpCard} isPlayable={false} />
           </div>
         </div>
       )}
@@ -80,7 +94,7 @@ export function TrickArea({ plays, playerPositions, trumpCard, trickWinner, phas
                 exit={{ opacity: 0, scale: 0.3 }}
                 transition={
                   isWinning
-                    ? { duration: 0.4, ease: "easeIn", delay: 1.2 + i * 0.05 }
+                    ? { duration: 0.4, ease: "easeIn", delay: i * 0.05 }
                     : { type: "spring", stiffness: 350, damping: 24 }
                 }
               >

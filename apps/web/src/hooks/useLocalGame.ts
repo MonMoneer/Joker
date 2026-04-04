@@ -171,7 +171,7 @@ export function useLocalGame() {
             currentTrick: { plays: [], leadSuit: null },
           };
         });
-      }, 1500); // 1.5s to see all 4 cards on table
+      }, 2200); // 1s showing + 0.4s fly animation + buffer
       return () => clearTimer();
     }
 

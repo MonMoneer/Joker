@@ -39,10 +39,10 @@ export function GameBoard({ gameState, myPlayerIndex, onBid, onPlayCard, onJoker
   const myHand = gameState.hands[myPlayerIndex] || [];
 
   // Effects
-  const [histEffect, setHistEffect] = useState<{ playerName: string; amount: number } | null>(null);
+  const [histEffect, setHistEffect] = useState<{ playerName: string; amount: number; penalizedPositions: ("top" | "bottom" | "left" | "right")[] } | null>(null);
   const [bidAllEffect, setBidAllEffect] = useState<{ playerName: string; score: number } | null>(null);
   const prevHC = useRef(0);
-  const pendingHist = useRef<{ playerName: string; amount: number } | null>(null);
+  const pendingHist = useRef<{ playerName: string; amount: number; penalizedPositions: ("top" | "bottom" | "left" | "right")[] } | null>(null);
 
   useEffect(() => {
     const c = gameState.handScores.length;
@@ -52,9 +52,9 @@ export function GameBoard({ gameState, myPlayerIndex, onBid, onPlayCard, onJoker
       const hs = last.filter(s => s.isHistPenalty);
       if (ba && hs.length) {
         setBidAllEffect({ playerName: gameState.players[ba.playerIndex]?.name || "", score: ba.score });
-        pendingHist.current = { playerName: hs.map(h => gameState.players[h.playerIndex]?.name).join(" & "), amount: hs[0].score };
+        pendingHist.current = { playerName: hs.map(h => gameState.players[h.playerIndex]?.name).join(" & "), amount: hs[0].score, penalizedPositions: hs.map(h => positions[h.playerIndex]) };
       } else if (ba) setBidAllEffect({ playerName: gameState.players[ba.playerIndex]?.name || "", score: ba.score });
-      else if (hs.length) setHistEffect({ playerName: hs.map(h => gameState.players[h.playerIndex]?.name).join(" & "), amount: hs[0].score });
+      else if (hs.length) setHistEffect({ playerName: hs.map(h => gameState.players[h.playerIndex]?.name).join(" & "), amount: hs[0].score, penalizedPositions: hs.map(h => positions[h.playerIndex]) });
     }
     prevHC.current = c;
   }, [gameState.handScores.length, gameState.handScores, gameState.players]);
@@ -250,7 +250,8 @@ export function GameBoard({ gameState, myPlayerIndex, onBid, onPlayCard, onJoker
           )}
         </AnimatePresence>
         <HistPenaltyEffect playerName={histEffect?.playerName || ""} amount={histEffect?.amount || -200}
-          isVisible={!!histEffect} onComplete={() => setHistEffect(null)} />
+          isVisible={!!histEffect} onComplete={() => setHistEffect(null)}
+          penalizedPositions={histEffect?.penalizedPositions} />
         <BidAllWonAllEffect playerName={bidAllEffect?.playerName || ""} score={bidAllEffect?.score || 0}
           isVisible={!!bidAllEffect} onComplete={() => {
             setBidAllEffect(null);
