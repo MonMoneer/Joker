@@ -1,0 +1,10 @@
+# Large binary files  
+/CARDS
+/sound effects
+/vid
+/UI UX
+*.eps
+*.MP4
+*.mp4
+/.superpowers
+/apps/web/public/cards
