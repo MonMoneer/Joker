@@ -1,0 +1,137 @@
+<h2>Game Table Layout — Which approach?</h2>
+<p class="subtitle">The current layout uses absolute positioning which breaks on different screen sizes. Here are 3 alternatives.</p>
+
+<div class="cards">
+  <!-- Option A: CSS Grid -->
+  <div class="card" data-choice="grid" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:20px;background:#001430;">
+      <div style="display:grid;grid-template-rows:30px 50px 1fr 40px 60px;grid-template-columns:50px 1fr 50px;gap:4px;height:280px;width:100%;font-size:10px;color:#fdc34d;">
+        <!-- Header -->
+        <div style="grid-column:1/-1;background:#002855;border-radius:4px;display:flex;align-items:center;justify-content:center;color:#fdc34d;font-size:9px;">HEADER</div>
+        <!-- Top player -->
+        <div style="grid-column:1/-1;background:#002855;border-radius:4px;display:flex;align-items:center;justify-content:center;gap:4px;">
+          <div style="width:20px;height:20px;border-radius:50%;background:#7b5800;"></div>
+          <div style="display:flex;gap:2px;">
+            <div style="width:14px;height:20px;background:#cc2222;border-radius:2px;"></div>
+            <div style="width:14px;height:20px;background:#cc2222;border-radius:2px;margin-left:-8px;"></div>
+            <div style="width:14px;height:20px;background:#cc2222;border-radius:2px;margin-left:-8px;"></div>
+          </div>
+        </div>
+        <!-- Left -->
+        <div style="background:#002855;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px;">
+          <div style="width:16px;height:16px;border-radius:50%;background:#7b5800;"></div>
+          <div style="width:12px;height:16px;background:#cc2222;border-radius:2px;"></div>
+        </div>
+        <!-- Center trick -->
+        <div style="background:#001430;border:1px dashed #7b5800;border-radius:8px;display:flex;align-items:center;justify-content:center;font-size:14px;color:#7b5800;">TRICK ZONE</div>
+        <!-- Right -->
+        <div style="background:#002855;border-radius:4px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:4px;">
+          <div style="width:16px;height:16px;border-radius:50%;background:#7b5800;"></div>
+          <div style="width:12px;height:16px;background:#cc2222;border-radius:2px;"></div>
+        </div>
+        <!-- Info + bids -->
+        <div style="grid-column:1/-1;background:#002855;border-radius:4px;display:flex;align-items:center;justify-content:center;gap:6px;font-size:9px;">
+          <span>name</span>
+          <span style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">1</span>
+          <span style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">2</span>
+          <span style="background:rgba(255,255,255,0.15);padding:2px 6px;border-radius:4px;">3</span>
+        </div>
+        <!-- My cards -->
+        <div style="grid-column:1/-1;background:#002855;border-radius:4px;display:flex;align-items:center;justify-content:center;gap:2px;">
+          <div style="width:18px;height:26px;background:#fff;border-radius:2px;border:1px solid #ccc;"></div>
+          <div style="width:18px;height:26px;background:#fff;border-radius:2px;border:1px solid #ccc;margin-left:-6px;"></div>
+          <div style="width:18px;height:26px;background:#fff;border-radius:2px;border:1px solid #ccc;margin-left:-6px;"></div>
+          <div style="width:18px;height:26px;background:#fff;border-radius:2px;border:1px solid #ccc;margin-left:-6px;"></div>
+          <div style="width:18px;height:26px;background:#fff;border-radius:2px;border:1px solid #ccc;margin-left:-6px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>A: CSS Grid (Recommended)</h3>
+      <p>5 rows × 3 columns. Each player gets their own grid zone — <strong>no overlapping ever</strong>. Bid buttons sit in row 4 between info and cards. Scales naturally to any screen size.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Zero overlap guaranteed</li><li>Adapts to any viewport</li><li>Each zone has guaranteed space</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Less "floating table" feel</li><li>Side players get narrow columns on mobile</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option B: Flexbox Zones -->
+  <div class="card" data-choice="flex" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:20px;background:#001430;">
+      <div style="display:flex;flex-direction:column;height:280px;width:100%;font-size:10px;color:#fdc34d;gap:4px;">
+        <div style="background:#002855;border-radius:4px;padding:4px;text-align:center;font-size:9px;">HEADER</div>
+        <div style="background:#002855;border-radius:4px;padding:6px;display:flex;align-items:center;justify-content:center;gap:4px;">
+          <div style="width:16px;height:16px;border-radius:50%;background:#7b5800;"></div>
+          <span style="font-size:8px;">Top Player + cards</span>
+        </div>
+        <div style="flex:1;display:flex;gap:4px;">
+          <div style="width:50px;background:#002855;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;writing-mode:vertical-rl;">Left</div>
+          <div style="flex:1;background:#001430;border:1px dashed #7b5800;border-radius:8px;display:flex;align-items:center;justify-content:center;">TRICK</div>
+          <div style="width:50px;background:#002855;border-radius:4px;display:flex;align-items:center;justify-content:center;font-size:8px;writing-mode:vertical-rl;">Right</div>
+        </div>
+        <div style="background:#002855;border-radius:4px;padding:4px;display:flex;align-items:center;justify-content:center;gap:4px;font-size:8px;">
+          <span>me · bid · won</span>
+          <span style="background:rgba(255,255,255,0.2);padding:1px 4px;border-radius:3px;">1</span>
+          <span style="background:rgba(255,255,255,0.2);padding:1px 4px;border-radius:3px;">2</span>
+        </div>
+        <div style="background:#002855;border-radius:4px;padding:6px;display:flex;align-items:center;justify-content:center;gap:2px;">
+          <div style="width:16px;height:24px;background:#fff;border-radius:2px;"></div>
+          <div style="width:16px;height:24px;background:#fff;border-radius:2px;margin-left:-4px;"></div>
+          <div style="width:16px;height:24px;background:#fff;border-radius:2px;margin-left:-4px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>B: Flexbox Vertical Stack</h3>
+      <p>Stack everything vertically with a horizontal middle row for left/trick/right. Similar to Grid but uses flexbox nesting.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Simple CSS, easy to understand</li><li>Natural document flow</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Middle row height calculation tricky</li><li>Less precise control than Grid</li></ul></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Option C: jok.ge style -->
+  <div class="card" data-choice="jokge" onclick="toggleSelect(this)">
+    <div class="card-image" style="padding:20px;background:#3d2e1a;">
+      <div style="position:relative;height:280px;width:100%;font-size:10px;color:#e8d48a;">
+        <!-- Top -->
+        <div style="position:absolute;top:10px;left:50%;transform:translateX(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:#555;border:2px solid #0dd;"></div>
+          <span style="font-size:7px;">Top</span>
+        </div>
+        <!-- Left -->
+        <div style="position:absolute;left:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:#555;border:2px solid #0dd;"></div>
+          <span style="font-size:7px;">Left</span>
+        </div>
+        <!-- Right -->
+        <div style="position:absolute;right:10px;top:50%;transform:translateY(-50%);display:flex;flex-direction:column;align-items:center;gap:2px;">
+          <div style="width:24px;height:24px;border-radius:50%;background:#555;border:2px solid #0dd;"></div>
+          <span style="font-size:7px;">Right</span>
+        </div>
+        <!-- Center cards -->
+        <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);display:flex;gap:4px;">
+          <div style="width:20px;height:28px;background:#fff;border-radius:2px;transform:rotate(-5deg);"></div>
+          <div style="width:20px;height:28px;background:#fff;border-radius:2px;"></div>
+        </div>
+        <!-- Bottom cards -->
+        <div style="position:absolute;bottom:10px;left:50%;transform:translateX(-50%);display:flex;gap:2px;">
+          <div style="width:22px;height:32px;background:#fff;border-radius:2px;border:1px solid #ccc;"></div>
+          <div style="width:22px;height:32px;background:#fff;border-radius:2px;border:1px solid #ccc;margin-left:-8px;"></div>
+          <div style="width:22px;height:32px;background:#fff;border-radius:2px;border:1px solid #ccc;margin-left:-8px;"></div>
+          <div style="width:22px;height:32px;background:#fff;border-radius:2px;border:1px solid #ccc;margin-left:-8px;"></div>
+        </div>
+      </div>
+    </div>
+    <div class="card-body">
+      <h3>C: Keep Absolute (like jok.ge)</h3>
+      <p>Keep the current approach but fix the specific overlap issues. Reduce opponent card sizes, add percentage-based positioning, clamp elements to stay in bounds.</p>
+      <div class="pros-cons">
+        <div class="pros"><h4>Pros</h4><ul><li>Looks most like a real card table</li><li>Minimal code changes</li></ul></div>
+        <div class="cons"><h4>Cons</h4><ul><li>Same fundamental problem — hard to prevent overlaps</li><li>Needs breakpoint-specific positioning</li><li>Already failed once</li></ul></div>
+      </div>
+    </div>
+  </div>
+</div>

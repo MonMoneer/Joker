@@ -1,65 +1,101 @@
 "use client";
 
 import { motion, AnimatePresence } from "framer-motion";
-import type { TrickPlay } from "@joker/engine";
-import { Card } from "../cards/Card";
+import type { TrickPlay, PlayerIndex } from "@joker/engine";
+import { Card, CardBack } from "../cards/Card";
 
 interface TrickAreaProps {
   plays: TrickPlay[];
   playerPositions: Record<number, "bottom" | "top" | "left" | "right">;
+  trumpCard?: any;
+  trickWinner?: PlayerIndex | null; // When set, cards animate toward this player
+  phase?: string;
 }
 
-const OFFSET: Record<string, { x: number; y: number; rotate: number }> = {
-  bottom: { x: 0, y: 40, rotate: 1 },
-  top: { x: 0, y: -40, rotate: -2 },
-  left: { x: -50, y: 0, rotate: -5 },
-  right: { x: 50, y: 0, rotate: 4 },
+const PLAY_OFFSET: Record<string, { x: number; y: number; rotate: number }> = {
+  bottom: { x: 0, y: 20, rotate: 1 },
+  top: { x: 0, y: -20, rotate: -2 },
+  left: { x: -25, y: 0, rotate: -4 },
+  right: { x: 25, y: 0, rotate: 3 },
 };
 
-const FLY: Record<string, { x: number; y: number }> = {
-  bottom: { x: 0, y: 180 },
-  top: { x: 0, y: -180 },
-  left: { x: -180, y: 0 },
-  right: { x: 180, y: 0 },
+const FLY_FROM: Record<string, { x: number; y: number }> = {
+  bottom: { x: 0, y: 120 },
+  top: { x: 0, y: -120 },
+  left: { x: -120, y: 0 },
+  right: { x: 120, y: 0 },
 };
 
-export function TrickArea({ plays, playerPositions }: TrickAreaProps) {
+// Where cards fly TO when winner takes the trick
+const WIN_FLY_TO: Record<string, { x: number; y: number }> = {
+  bottom: { x: 0, y: 150 },
+  top: { x: 0, y: -150 },
+  left: { x: -150, y: 0 },
+  right: { x: 150, y: 0 },
+};
+
+export function TrickArea({ plays, playerPositions, trumpCard, trickWinner, phase }: TrickAreaProps) {
+  const isWinning = phase === "trick-result" && trickWinner !== null && trickWinner !== undefined;
+  const winnerPos = isWinning ? playerPositions[trickWinner] || "bottom" : "bottom";
+  const winTarget = WIN_FLY_TO[winnerPos];
+
   return (
-    <div className="trick-zone relative flex items-center justify-center">
-      {/* Watermark */}
-      {plays.length === 0 && (
-        <span className="font-display text-5xl font-bold text-gold-600/[0.06] select-none tracking-widest">
-          JOKER
-        </span>
+    <div className="trick-zone gap-4 md:gap-7">
+      {/* Deck pile: card backs + trump face-up on top */}
+      {trumpCard && (
+        <div className="relative flex-shrink-0" style={{ width: "var(--card-sm-w)", height: "var(--card-sm-h)" }}>
+          {/* Stacked backs */}
+          <div className="absolute" style={{ top: 3, left: 0, width: "var(--card-sm-w)", height: "var(--card-sm-h)" }}>
+            <CardBack tiny />
+          </div>
+          <div className="absolute" style={{ top: 1, left: 1, width: "var(--card-sm-w)", height: "var(--card-sm-h)" }}>
+            <CardBack tiny />
+          </div>
+          {/* Trump face-up on top */}
+          <div className="absolute" style={{ top: -1, left: 2 }}>
+            <Card card={trumpCard} tiny isPlayable={false} />
+          </div>
+        </div>
       )}
 
-      <AnimatePresence>
-        {plays.map((play, i) => {
-          const pos = playerPositions[play.playerIndex] || "bottom";
-          const offset = OFFSET[pos];
-          const fly = FLY[pos];
+      {/* Played trick cards */}
+      <div className="relative flex items-center justify-center" style={{ minWidth: 60, minHeight: 50 }}>
+        <AnimatePresence>
+          {plays.map((play, i) => {
+            const pos = playerPositions[play.playerIndex] || "bottom";
+            const offset = PLAY_OFFSET[pos];
+            const from = FLY_FROM[pos];
 
-          return (
-            <motion.div
-              key={`${play.playerIndex}-${i}`}
-              className="absolute"
-              style={{ zIndex: i + 1 }}
-              initial={{ x: fly.x, y: fly.y, opacity: 0, scale: 0.5 }}
-              animate={{
-                x: offset.x,
-                y: offset.y,
-                opacity: 1,
-                scale: 1,
-                rotate: offset.rotate,
-              }}
-              exit={{ opacity: 0, scale: 0.4 }}
-              transition={{ type: "spring", stiffness: 350, damping: 24 }}
-            >
-              <Card card={play.card} small isPlayable={false} />
-            </motion.div>
-          );
-        })}
-      </AnimatePresence>
+            return (
+              <motion.div
+                key={`${play.playerIndex}-${i}`}
+                className="absolute"
+                style={{ zIndex: i + 1 }}
+                initial={{ x: from.x, y: from.y, opacity: 0, scale: 0.5 }}
+                animate={
+                  isWinning
+                    ? { x: winTarget.x, y: winTarget.y, opacity: 0, scale: 0.6 }
+                    : { x: offset.x, y: offset.y, opacity: 1, scale: 1, rotate: offset.rotate }
+                }
+                exit={{ opacity: 0, scale: 0.3 }}
+                transition={
+                  isWinning
+                    ? { duration: 0.4, ease: "easeIn", delay: 1.2 + i * 0.05 }
+                    : { type: "spring", stiffness: 350, damping: 24 }
+                }
+              >
+                <Card card={play.card} small isPlayable={false} />
+              </motion.div>
+            );
+          })}
+        </AnimatePresence>
+
+        {plays.length === 0 && !trumpCard && (
+          <span className="font-display text-xl md:text-3xl font-bold text-gold-600/[0.06] select-none tracking-widest">
+            JOKER
+          </span>
+        )}
+      </div>
     </div>
   );
 }

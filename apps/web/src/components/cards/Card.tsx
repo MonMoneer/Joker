@@ -7,11 +7,12 @@ import { getCardImagePath, getCardBackPath } from "@/lib/card-assets";
 interface CardProps {
   card: CardType;
   isPlayable?: boolean;
-  isDimmed?: boolean; // true = illegal card during your turn (reduced opacity)
+  isDimmed?: boolean;
   isSelected?: boolean;
   onClick?: () => void;
   faceDown?: boolean;
   small?: boolean;
+  tiny?: boolean; // Opponent card backs — smallest size
 }
 
 export function Card({
@@ -22,59 +23,57 @@ export function Card({
   onClick,
   faceDown = false,
   small = false,
+  tiny = false,
 }: CardProps) {
-  if (faceDown) return <CardBack small={small} />;
+  if (faceDown) return <CardBack small={small} tiny={tiny} />;
 
   const imagePath = getCardImagePath(card);
-
-  const cls = [
-    "card-base card-face",
-    isPlayable ? "card-face-playable" : "",
-    isDimmed ? "card-dimmed" : "",
-    !isPlayable && !isDimmed ? "card-waiting" : "",
-    isSelected ? "card-face-selected" : "",
-    small ? "!w-[52px] !h-[73px] !rounded-[6px]" : "",
-  ].filter(Boolean).join(" ");
+  const sizeClass = tiny
+    ? "!w-[var(--card-sm-w)] !h-[var(--card-sm-h)] !rounded-[var(--card-sm-r)]"
+    : small
+      ? "!w-[40px] !h-[56px] !rounded-[4px]"
+      : "";
 
   return (
     <motion.div
-      className={cls}
+      className={[
+        "card-base card-face",
+        isPlayable ? "card-face-playable" : "",
+        isDimmed ? "card-dimmed" : "",
+        !isPlayable && !isDimmed ? "card-waiting" : "",
+        isSelected ? "card-face-selected" : "",
+        sizeClass,
+      ].filter(Boolean).join(" ")}
       onClick={isPlayable ? onClick : undefined}
       whileTap={isPlayable ? { scale: 0.96 } : undefined}
       layout
     >
-      <img
-        src={imagePath}
-        alt=""
-        draggable={false}
-        className="w-full h-full object-contain"
-      />
+      <img src={imagePath} alt="" draggable={false} className="w-full h-full object-contain" />
     </motion.div>
   );
 }
 
 export function CardBack({
   small = false,
+  tiny = false,
   onClick,
 }: {
   small?: boolean;
+  tiny?: boolean;
   onClick?: () => void;
 }) {
+  const sizeClass = tiny
+    ? "!w-[var(--card-sm-w)] !h-[var(--card-sm-h)] !rounded-[var(--card-sm-r)]"
+    : small
+      ? "!w-[40px] !h-[56px] !rounded-[4px]"
+      : "";
+
   return (
     <div
-      className={[
-        "card-base card-back-img",
-        small ? "!w-[52px] !h-[73px] !rounded-[6px]" : "",
-        onClick ? "cursor-pointer" : "",
-      ].join(" ")}
+      className={["card-base card-back-img", sizeClass, onClick ? "cursor-pointer" : ""].filter(Boolean).join(" ")}
       onClick={onClick}
     >
-      <img
-        src={getCardBackPath()}
-        alt=""
-        draggable={false}
-        className="w-full h-full object-cover"
-      />
+      <img src={getCardBackPath()} alt="" draggable={false} className="w-full h-full object-cover" />
     </div>
   );
 }

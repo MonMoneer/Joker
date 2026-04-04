@@ -1,0 +1,251 @@
+<h2>CSS Grid — Updated with bid/won + Score/Last buttons</h2>
+<p class="subtitle">Every player shows bid & won. Score table and Last trick buttons visible.</p>
+
+<div class="split">
+  <!-- Mobile mockup -->
+  <div class="mockup">
+    <div class="mockup-header">iPhone — Portrait (Updated)</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="
+        width:280px;height:540px;margin:0 auto;
+        background:linear-gradient(135deg,#001430,#002855);
+        border-radius:16px;overflow:hidden;
+        display:grid;
+        grid-template-rows:36px 72px 1fr 44px 90px;
+        grid-template-columns:56px 1fr 56px;
+        font-size:9px;color:#fdc34d;
+        border:2px solid #333;
+      ">
+        <!-- Row 1: Header -->
+        <div style="grid-column:1/-1;background:rgba(0,20,48,0.9);display:flex;align-items:center;justify-content:space-between;padding:0 10px;font-size:8px;border-bottom:1px solid rgba(253,195,77,0.1);">
+          <span style="opacity:0.4;">☰</span>
+          <span style="letter-spacing:2px;font-size:7px;color:#fdc34d;">THE SOVEREIGN TABLE</span>
+          <span style="opacity:0.4;font-size:10px;">⛶</span>
+        </div>
+
+        <!-- Row 2: Top player (full width) — with bid/won -->
+        <div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:3px;">
+          <div style="display:flex;align-items:center;gap:6px;">
+            <div style="width:26px;height:26px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;font-size:7px;">B</div>
+            <div style="display:flex;flex-direction:column;">
+              <span style="font-size:8px;color:rgba(255,255,255,0.7);">Bot Beta</span>
+              <span style="font-size:7px;color:rgba(253,195,77,0.5);">bid: <b style="color:#fdc34d;">2</b> · won: <b style="color:#fdc34d;">1</b></span>
+            </div>
+          </div>
+          <div style="display:flex;gap:1px;">
+            <div style="width:20px;height:28px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);"></div>
+            <div style="width:20px;height:28px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-12px;"></div>
+            <div style="width:20px;height:28px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-12px;"></div>
+            <div style="width:20px;height:28px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-12px;"></div>
+            <div style="width:20px;height:28px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-12px;"></div>
+          </div>
+        </div>
+
+        <!-- Row 3 Col 1: Left player — with bid/won -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:2px;">
+          <div style="width:26px;height:26px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;font-size:7px;">B</div>
+          <span style="font-size:6px;color:rgba(255,255,255,0.5);">Alpha</span>
+          <span style="font-size:6px;color:rgba(253,195,77,0.4);">b:<b style="color:#fdc34d;">1</b> w:<b style="color:#fdc34d;">0</b></span>
+          <div style="display:flex;flex-direction:column;gap:0px;margin-top:2px;">
+            <div style="width:18px;height:26px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(90deg);"></div>
+            <div style="width:18px;height:26px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(90deg);margin-top:-18px;"></div>
+            <div style="width:18px;height:26px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(90deg);margin-top:-18px;"></div>
+          </div>
+        </div>
+
+        <!-- Row 3 Col 2: Trick zone -->
+        <div style="display:flex;align-items:center;justify-content:center;position:relative;">
+          <!-- Trump card -->
+          <div style="position:absolute;top:6px;right:6px;width:22px;height:30px;background:#fff;border-radius:2px;border:1px solid #ccc;transform:rotate(5deg);opacity:0.6;display:flex;align-items:center;justify-content:center;">
+            <span style="color:#cc0000;font-size:9px;">♥</span>
+          </div>
+          <!-- dist info -->
+          <div style="position:absolute;top:4px;left:4px;font-size:6px;color:rgba(253,195,77,0.35);">dist: 7 | ♥</div>
+          <!-- Score + Last buttons -->
+          <div style="position:absolute;bottom:6px;right:6px;display:flex;flex-direction:column;gap:3px;">
+            <div style="width:28px;height:28px;background:rgba(0,20,48,0.7);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;border:1px solid rgba(253,195,77,0.15);">📋</div>
+            <div style="width:28px;height:28px;background:rgba(0,20,48,0.7);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:10px;border:1px solid rgba(253,195,77,0.15);">👁</div>
+          </div>
+          <!-- Played cards -->
+          <div style="display:flex;gap:3px;">
+            <div style="width:30px;height:42px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;transform:rotate(-3deg);">
+              <span style="color:#111;font-size:9px;font-weight:bold;">K♠</span>
+            </div>
+            <div style="width:30px;height:42px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;transform:rotate(2deg);">
+              <span style="color:#cc0000;font-size:9px;font-weight:bold;">7♥</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Row 3 Col 3: Right player — with bid/won -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding:2px;">
+          <div style="width:26px;height:26px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;font-size:7px;">B</div>
+          <span style="font-size:6px;color:rgba(255,255,255,0.5);">Gamma</span>
+          <span style="font-size:6px;color:rgba(253,195,77,0.4);">b:<b style="color:#fdc34d;">3</b> w:<b style="color:#fdc34d;">2</b></span>
+          <div style="display:flex;flex-direction:column;gap:0px;margin-top:2px;">
+            <div style="width:18px;height:26px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(-90deg);"></div>
+            <div style="width:18px;height:26px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(-90deg);margin-top:-18px;"></div>
+            <div style="width:18px;height:26px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(-90deg);margin-top:-18px;"></div>
+          </div>
+        </div>
+
+        <!-- Row 4: My info + bid buttons -->
+        <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:4px;padding:0 6px;background:rgba(0,20,48,0.6);">
+          <span style="font-size:8px;color:#fdc34d;font-weight:bold;">bortqala</span>
+          <span style="font-size:7px;color:rgba(255,255,255,0.3);">·</span>
+          <span style="font-size:7px;color:rgba(255,255,255,0.4);">b:<b style="color:#fdc34d;">2</b> w:<b style="color:#fdc34d;">1</b></span>
+          <span style="font-size:7px;color:rgba(255,255,255,0.2);">|</span>
+          <div style="display:flex;gap:3px;">
+            <div style="width:26px;height:26px;background:rgba(255,255,255,0.85);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:10px;">—</div>
+            <div style="width:26px;height:26px;background:rgba(255,255,255,0.85);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:10px;">1</div>
+            <div style="width:26px;height:26px;background:rgba(255,255,255,0.85);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:10px;">2</div>
+            <div style="width:26px;height:26px;background:rgba(255,255,255,0.85);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:10px;">3</div>
+            <div style="width:26px;height:26px;background:rgba(255,255,255,0.85);border-radius:6px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:10px;">4</div>
+          </div>
+        </div>
+
+        <!-- Row 5: My cards -->
+        <div style="grid-column:1/-1;display:flex;align-items:flex-start;justify-content:center;padding:4px 6px;gap:0px;">
+          <div style="width:40px;height:56px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;">
+            <span style="color:#cc0000;font-size:10px;font-weight:bold;">K♥</span>
+          </div>
+          <div style="width:40px;height:56px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:-10px;">
+            <span style="color:#cc0000;font-size:10px;font-weight:bold;">9♥</span>
+          </div>
+          <div style="width:40px;height:56px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:-10px;">
+            <span style="color:#cc0000;font-size:10px;font-weight:bold;">A♦</span>
+          </div>
+          <div style="width:40px;height:56px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:-10px;">
+            <span style="color:#cc0000;font-size:10px;font-weight:bold;">9♦</span>
+          </div>
+          <div style="width:40px;height:56px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:-10px;">
+            <span style="color:#cc0000;font-size:10px;font-weight:bold;">6♦</span>
+          </div>
+          <div style="width:40px;height:56px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:-10px;">
+            <span style="color:#111;font-size:10px;font-weight:bold;">Q♣</span>
+          </div>
+          <div style="width:40px;height:56px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;flex-shrink:0;margin-left:-10px;">
+            <span style="color:#111;font-size:10px;font-weight:bold;">8♠</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop mockup -->
+  <div class="mockup">
+    <div class="mockup-header">Desktop (Updated)</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="
+        width:100%;height:400px;
+        background:linear-gradient(135deg,#001430,#002855);
+        border-radius:12px;overflow:hidden;
+        display:grid;
+        grid-template-rows:36px 72px 1fr 44px 100px;
+        grid-template-columns:80px 1fr 80px;
+        font-size:10px;color:#fdc34d;
+      ">
+        <!-- Header -->
+        <div style="grid-column:1/-1;background:rgba(0,20,48,0.9);display:flex;align-items:center;justify-content:center;font-size:9px;letter-spacing:3px;border-bottom:1px solid rgba(253,195,77,0.1);">THE SOVEREIGN TABLE</div>
+        <!-- Top — with bid/won -->
+        <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;">B</div>
+          <div style="display:flex;flex-direction:column;">
+            <span style="color:rgba(255,255,255,0.6);font-size:10px;">Bot Beta</span>
+            <span style="font-size:8px;color:rgba(253,195,77,0.5);">bid: <b style="color:#fdc34d;">2</b> · won: <b style="color:#fdc34d;">1</b></span>
+          </div>
+          <div style="display:flex;gap:1px;">
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+          </div>
+        </div>
+        <!-- Left — with bid/won -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;">B</div>
+          <span style="font-size:8px;color:rgba(255,255,255,0.5);">Alpha</span>
+          <span style="font-size:7px;color:rgba(253,195,77,0.4);">b:<b style="color:#fdc34d;">1</b> w:<b style="color:#fdc34d;">0</b></span>
+        </div>
+        <!-- Center -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:8px;position:relative;">
+          <div style="position:absolute;top:6px;right:10px;width:28px;height:40px;background:#fff;border-radius:3px;border:1px solid #ccc;transform:rotate(5deg);opacity:0.5;display:flex;align-items:center;justify-content:center;color:#cc0000;">♥</div>
+          <div style="position:absolute;top:6px;left:10px;font-size:8px;color:rgba(253,195,77,0.35);">dist: 7 | ♥</div>
+          <!-- Score + Last -->
+          <div style="position:absolute;bottom:6px;right:10px;display:flex;gap:6px;">
+            <div style="width:34px;height:34px;background:rgba(0,20,48,0.7);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;border:1px solid rgba(253,195,77,0.15);gap:1px;">
+              <span style="font-size:12px;">📋</span>
+              <span style="font-size:5px;color:rgba(253,195,77,0.5);letter-spacing:0.5px;">SCORE</span>
+            </div>
+            <div style="width:34px;height:34px;background:rgba(0,20,48,0.7);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;font-size:8px;border:1px solid rgba(253,195,77,0.15);gap:1px;">
+              <span style="font-size:12px;">👁</span>
+              <span style="font-size:5px;color:rgba(253,195,77,0.5);letter-spacing:0.5px;">LAST</span>
+            </div>
+          </div>
+          <!-- Played cards -->
+          <div style="width:40px;height:56px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;transform:rotate(-3deg);color:#111;font-weight:bold;">K♠</div>
+          <div style="width:40px;height:56px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;transform:rotate(2deg);color:#cc0000;font-weight:bold;">7♥</div>
+        </div>
+        <!-- Right — with bid/won -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:center;gap:3px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;">B</div>
+          <span style="font-size:8px;color:rgba(255,255,255,0.5);">Gamma</span>
+          <span style="font-size:7px;color:rgba(253,195,77,0.4);">b:<b style="color:#fdc34d;">3</b> w:<b style="color:#fdc34d;">2</b></span>
+        </div>
+        <!-- Info + bids -->
+        <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(0,20,48,0.5);">
+          <span style="font-size:10px;color:#fdc34d;font-weight:bold;">bortqala</span>
+          <span style="color:rgba(255,255,255,0.3);">·</span>
+          <span style="color:rgba(255,255,255,0.4);font-size:9px;">bid: <b style="color:#fdc34d;">2</b> · won: <b style="color:#fdc34d;">1</b></span>
+          <span style="color:rgba(255,255,255,0.2);">|</span>
+          <div style="display:flex;gap:4px;">
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">—</div>
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">1</div>
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">2</div>
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">3</div>
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">4</div>
+          </div>
+        </div>
+        <!-- My cards -->
+        <div style="grid-column:1/-1;display:flex;align-items:flex-start;justify-content:center;padding:6px 20px;gap:0;">
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;">K♥</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;margin-left:-14px;">9♥</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;margin-left:-14px;">A♦</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;margin-left:-14px;">9♦</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;margin-left:-14px;">6♦</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#111;font-weight:bold;margin-left:-14px;">Q♣</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#111;font-weight:bold;margin-left:-14px;">8♠</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:20px;">
+  <h3>What changed from v1</h3>
+  <ul style="font-size:13px;line-height:1.8;color:#aaa;">
+    <li><strong>All opponents show bid/won</strong> — Top: "bid: 2 · won: 1", Left/Right: "b:1 w:0" (compact)</li>
+    <li><strong>📋 SCORE + 👁 LAST buttons</strong> — bottom-right of trick zone, always visible</li>
+    <li><strong>My info row</strong> — also shows "bid: 2 · won: 1" with gold numbers</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:16px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>This looks right, let's build it</h3>
+      <p>Write the spec and start implementation</p>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust2" onclick="toggleSelect(this)">
+    <div class="letter">~</div>
+    <div class="content">
+      <h3>Still needs changes</h3>
+      <p>I want to adjust something else</p>
+    </div>
+  </div>
+</div>

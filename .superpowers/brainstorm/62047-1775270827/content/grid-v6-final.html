@@ -1,0 +1,261 @@
+<h2>CSS Grid — v6: Desktop trump fix + Mobile left/right with cards</h2>
+<p class="subtitle">Desktop: trump card full opacity near center. Mobile: left/right players in middle row with card backs.</p>
+
+<div class="split">
+  <!-- Mobile -->
+  <div class="mockup">
+    <div class="mockup-header">iPhone — Left & Right in middle with cards</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="
+        width:280px;height:540px;margin:0 auto;
+        background:linear-gradient(135deg,#001430,#002855);
+        border-radius:16px;overflow:hidden;
+        display:grid;
+        grid-template-rows:28px 60px 1fr 36px 80px;
+        grid-template-columns:52px 1fr 52px;
+        font-size:8px;color:#fdc34d;
+        border:2px solid #333;
+      ">
+        <!-- Header -->
+        <div style="grid-column:1/-1;background:rgba(0,20,48,0.9);display:flex;align-items:center;justify-content:center;gap:4px;font-size:6px;border-bottom:1px solid rgba(253,195,77,0.1);">
+          <span style="opacity:0.4;">☰</span>
+          <span style="color:rgba(253,195,77,0.5);letter-spacing:0.5px;">TABLE</span>
+          <span style="color:rgba(253,195,77,0.2);">|</span>
+          <span style="color:rgba(255,255,255,0.4);">d:<b style="color:#fdc34d;">7</b></span>
+          <span style="color:#cc0000;font-size:8px;">♥</span>
+          <span style="opacity:0.4;">⛶</span>
+        </div>
+
+        <!-- Top player -->
+        <div style="grid-column:1/-1;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:1px;padding:2px;">
+          <div style="display:flex;align-items:center;gap:4px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;font-size:6px;">B</div>
+            <div><span style="font-size:7px;color:rgba(255,255,255,0.6);">Beta</span> <span style="font-size:6px;color:rgba(253,195,77,0.4);">b:<b style="color:#fdc34d;">2</b> w:<b style="color:#fdc34d;">1</b></span></div>
+          </div>
+          <div style="display:flex;">
+            <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);"></div>
+            <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);margin-left:-10px;"></div>
+            <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);margin-left:-10px;"></div>
+            <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);margin-left:-10px;"></div>
+            <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);margin-left:-10px;"></div>
+          </div>
+        </div>
+
+        <!-- LEFT: avatar + info + vertical cards + SCORE (middle row) -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:3px 1px 4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;font-size:6px;">B</div>
+            <span style="font-size:5px;color:rgba(255,255,255,0.4);">Alpha</span>
+            <span style="font-size:5px;color:rgba(253,195,77,0.3);">b:<b style="color:#fdc34d;">1</b> w:<b style="color:#fdc34d;">0</b></span>
+            <!-- Card backs vertical -->
+            <div style="display:flex;flex-direction:column;margin-top:2px;">
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(90deg);"></div>
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(90deg);margin-top:-16px;"></div>
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(90deg);margin-top:-16px;"></div>
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(90deg);margin-top:-16px;"></div>
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(90deg);margin-top:-16px;"></div>
+            </div>
+          </div>
+          <div style="width:30px;height:24px;background:rgba(0,20,48,0.7);border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(253,195,77,0.12);">
+            <span style="font-size:9px;">📋</span>
+          </div>
+        </div>
+
+        <!-- CENTER: trick zone + trump card near center -->
+        <div style="display:flex;align-items:center;justify-content:center;position:relative;">
+          <!-- Trump card — close to played cards, full opacity -->
+          <div style="position:absolute;top:50%;right:calc(50% - 70px);transform:translateY(-50%) rotate(5deg);width:22px;height:30px;background:#fff;border-radius:2px;border:1px solid #ccc;display:flex;align-items:center;justify-content:center;">
+            <span style="color:#cc0000;font-size:10px;">♥</span>
+          </div>
+          <!-- Played cards -->
+          <div style="display:flex;gap:3px;">
+            <div style="width:28px;height:38px;background:#fff;border-radius:2px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;transform:rotate(-2deg);"><span style="color:#111;font-size:8px;font-weight:bold;">K♠</span></div>
+            <div style="width:28px;height:38px;background:#fff;border-radius:2px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;transform:rotate(2deg);"><span style="color:#cc0000;font-size:8px;font-weight:bold;">7♥</span></div>
+          </div>
+        </div>
+
+        <!-- RIGHT: avatar + info + vertical cards + LAST (middle row) -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:3px 1px 4px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:1px;">
+            <div style="width:22px;height:22px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;font-size:6px;">B</div>
+            <span style="font-size:5px;color:rgba(255,255,255,0.4);">Gamma</span>
+            <span style="font-size:5px;color:rgba(253,195,77,0.3);">b:<b style="color:#fdc34d;">3</b> w:<b style="color:#fdc34d;">2</b></span>
+            <!-- Card backs vertical -->
+            <div style="display:flex;flex-direction:column;margin-top:2px;">
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(-90deg);"></div>
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(-90deg);margin-top:-16px;"></div>
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(-90deg);margin-top:-16px;"></div>
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(-90deg);margin-top:-16px;"></div>
+              <div style="width:16px;height:22px;background:#cc2222;border-radius:1px;border:1px solid rgba(255,255,255,0.1);transform:rotate(-90deg);margin-top:-16px;"></div>
+            </div>
+          </div>
+          <div style="width:30px;height:24px;background:rgba(0,20,48,0.7);border-radius:5px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(253,195,77,0.12);">
+            <span style="font-size:9px;">👁</span>
+          </div>
+        </div>
+
+        <!-- Info + bids -->
+        <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:3px;background:rgba(0,20,48,0.6);font-size:7px;">
+          <span style="color:#fdc34d;font-weight:bold;">me</span>
+          <span style="color:rgba(255,255,255,0.2);">·</span>
+          <span style="color:rgba(255,255,255,0.3);">b:<b style="color:#fdc34d;">2</b> w:<b style="color:#fdc34d;">1</b></span>
+          <span style="color:rgba(255,255,255,0.15);">|</span>
+          <div style="display:flex;gap:2px;">
+            <div style="width:24px;height:24px;background:rgba(255,255,255,0.8);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:9px;">—</div>
+            <div style="width:24px;height:24px;background:rgba(255,255,255,0.8);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:9px;">1</div>
+            <div style="width:24px;height:24px;background:rgba(255,255,255,0.8);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:9px;">2</div>
+            <div style="width:24px;height:24px;background:rgba(255,255,255,0.8);border-radius:5px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:9px;">3</div>
+          </div>
+        </div>
+
+        <!-- My cards -->
+        <div style="grid-column:1/-1;display:flex;align-items:flex-start;justify-content:center;padding:4px 4px;">
+          <div style="width:36px;height:50px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;"><span style="color:#cc0000;font-size:9px;font-weight:bold;">K♥</span></div>
+          <div style="width:36px;height:50px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;margin-left:-8px;"><span style="color:#cc0000;font-size:9px;font-weight:bold;">9♥</span></div>
+          <div style="width:36px;height:50px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;margin-left:-8px;"><span style="color:#cc0000;font-size:9px;font-weight:bold;">A♦</span></div>
+          <div style="width:36px;height:50px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;margin-left:-8px;"><span style="color:#cc0000;font-size:9px;font-weight:bold;">9♦</span></div>
+          <div style="width:36px;height:50px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;margin-left:-8px;"><span style="color:#cc0000;font-size:9px;font-weight:bold;">6♦</span></div>
+          <div style="width:36px;height:50px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;margin-left:-8px;"><span style="color:#111;font-size:9px;font-weight:bold;">Q♣</span></div>
+          <div style="width:36px;height:50px;background:#fff;border-radius:3px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;margin-left:-8px;"><span style="color:#111;font-size:9px;font-weight:bold;">8♠</span></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Desktop -->
+  <div class="mockup">
+    <div class="mockup-header">Desktop — Trump card full opacity near center</div>
+    <div class="mockup-body" style="padding:0;">
+      <div style="
+        width:100%;height:420px;
+        background:linear-gradient(135deg,#001430,#002855);
+        border-radius:12px;overflow:hidden;
+        display:grid;
+        grid-template-rows:36px 72px 1fr 44px 100px;
+        grid-template-columns:90px 1fr 90px;
+        font-size:10px;color:#fdc34d;
+      ">
+        <!-- Header -->
+        <div style="grid-column:1/-1;background:rgba(0,20,48,0.9);display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(253,195,77,0.1);">
+          <span style="opacity:0.4;">☰</span>
+          <div style="display:flex;align-items:center;gap:8px;">
+            <span style="letter-spacing:2px;font-size:8px;color:rgba(253,195,77,0.6);">THE SOVEREIGN TABLE</span>
+            <span style="color:rgba(253,195,77,0.2);">|</span>
+            <span style="font-size:8px;color:rgba(255,255,255,0.5);">dist: <b style="color:#fdc34d;">7</b> · stuffing:</span>
+            <span style="color:#cc0000;font-size:12px;">♥</span>
+          </div>
+          <span style="opacity:0.4;font-size:12px;">⛶</span>
+        </div>
+        <!-- Top -->
+        <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:10px;">
+          <div style="width:34px;height:34px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;">B</div>
+          <div><span style="color:rgba(255,255,255,0.6);font-size:10px;">Bot Beta</span><br><span style="font-size:8px;color:rgba(253,195,77,0.5);">bid: <b style="color:#fdc34d;">2</b> · won: <b style="color:#fdc34d;">1</b></span></div>
+          <div style="display:flex;gap:1px;">
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+            <div style="width:26px;height:36px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.15);margin-left:-14px;"></div>
+          </div>
+        </div>
+        <!-- Left + cards + SCORE -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px 2px 8px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="width:34px;height:34px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;">B</div>
+            <span style="font-size:8px;color:rgba(255,255,255,0.5);">Alpha</span>
+            <span style="font-size:7px;color:rgba(253,195,77,0.4);">b:<b style="color:#fdc34d;">1</b> w:<b style="color:#fdc34d;">0</b></span>
+            <div style="display:flex;flex-direction:column;margin-top:4px;">
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(90deg);"></div>
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(90deg);margin-top:-24px;"></div>
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(90deg);margin-top:-24px;"></div>
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(90deg);margin-top:-24px;"></div>
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(90deg);margin-top:-24px;"></div>
+            </div>
+          </div>
+          <div style="width:48px;height:34px;background:rgba(0,20,48,0.7);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(253,195,77,0.15);cursor:pointer;">
+            <span style="font-size:13px;">📋</span>
+            <span style="font-size:6px;color:rgba(253,195,77,0.5);">SCORE</span>
+          </div>
+        </div>
+        <!-- CENTER: trick + trump card CLOSE to center, full opacity -->
+        <div style="display:flex;align-items:center;justify-content:center;gap:6px;position:relative;">
+          <!-- Trump card — right next to played cards, full opacity -->
+          <div style="width:34px;height:48px;background:#fff;border-radius:3px;border:1px solid #ccc;transform:rotate(6deg);display:flex;align-items:center;justify-content:center;margin-right:8px;">
+            <span style="color:#cc0000;font-size:16px;font-weight:bold;">♥</span>
+          </div>
+          <!-- Played cards -->
+          <div style="width:40px;height:56px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;transform:rotate(-3deg);color:#111;font-weight:bold;">K♠</div>
+          <div style="width:40px;height:56px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;transform:rotate(2deg);color:#cc0000;font-weight:bold;">7♥</div>
+        </div>
+        <!-- Right + cards + LAST -->
+        <div style="display:flex;flex-direction:column;align-items:center;justify-content:space-between;padding:6px 2px 8px;">
+          <div style="display:flex;flex-direction:column;align-items:center;gap:2px;">
+            <div style="width:34px;height:34px;border-radius:50%;background:#002855;border:2px solid rgba(253,195,77,0.3);display:flex;align-items:center;justify-content:center;">B</div>
+            <span style="font-size:8px;color:rgba(255,255,255,0.5);">Gamma</span>
+            <span style="font-size:7px;color:rgba(253,195,77,0.4);">b:<b style="color:#fdc34d;">3</b> w:<b style="color:#fdc34d;">2</b></span>
+            <div style="display:flex;flex-direction:column;margin-top:4px;">
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(-90deg);"></div>
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(-90deg);margin-top:-24px;"></div>
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(-90deg);margin-top:-24px;"></div>
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(-90deg);margin-top:-24px;"></div>
+              <div style="width:24px;height:34px;background:#cc2222;border-radius:2px;border:1px solid rgba(255,255,255,0.12);transform:rotate(-90deg);margin-top:-24px;"></div>
+            </div>
+          </div>
+          <div style="width:48px;height:34px;background:rgba(0,20,48,0.7);border-radius:8px;display:flex;flex-direction:column;align-items:center;justify-content:center;border:1px solid rgba(253,195,77,0.15);cursor:pointer;">
+            <span style="font-size:13px;">👁</span>
+            <span style="font-size:6px;color:rgba(253,195,77,0.5);">LAST</span>
+          </div>
+        </div>
+        <!-- Info + bids -->
+        <div style="grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:8px;background:rgba(0,20,48,0.5);">
+          <span style="font-size:10px;color:#fdc34d;font-weight:bold;">bortqala</span>
+          <span style="color:rgba(255,255,255,0.3);">·</span>
+          <span style="color:rgba(255,255,255,0.4);font-size:9px;">bid: <b style="color:#fdc34d;">2</b> · won: <b style="color:#fdc34d;">1</b></span>
+          <span style="color:rgba(255,255,255,0.2);">|</span>
+          <div style="display:flex;gap:4px;">
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">—</div>
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">1</div>
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">2</div>
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">3</div>
+            <div style="width:32px;height:32px;background:rgba(255,255,255,0.85);border-radius:8px;display:flex;align-items:center;justify-content:center;color:#001430;font-weight:bold;font-size:12px;">4</div>
+          </div>
+        </div>
+        <!-- My cards -->
+        <div style="grid-column:1/-1;display:flex;align-items:flex-start;justify-content:center;padding:6px 20px;">
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;">K♥</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;margin-left:-14px;">9♥</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;margin-left:-14px;">A♦</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;margin-left:-14px;">9♦</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#cc0000;font-weight:bold;margin-left:-14px;">6♦</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#111;font-weight:bold;margin-left:-14px;">Q♣</div>
+          <div style="width:54px;height:76px;background:#fff;border-radius:4px;border:1px solid #ddd;display:flex;align-items:center;justify-content:center;color:#111;font-weight:bold;margin-left:-14px;">8♠</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="section" style="margin-top:20px;">
+  <h3>v6 Changes</h3>
+  <ul style="font-size:13px;line-height:1.8;color:#aaa;">
+    <li><strong>Desktop trump card</strong> — <strong>100% opacity</strong>, placed right next to played cards in center, slightly rotated</li>
+    <li><strong>Mobile left/right</strong> — now in <strong>middle row</strong> with <strong>vertical card backs</strong> (tiny, heavy overlap to fit)</li>
+    <li><strong>Both platforms</strong> — left/right players show avatar + name + bid/won + card backs + action button</li>
+  </ul>
+</div>
+
+<div class="options" style="margin-top:16px;">
+  <div class="option" data-choice="approve" onclick="toggleSelect(this)">
+    <div class="letter">✓</div>
+    <div class="content">
+      <h3>Perfect — let's build this</h3>
+      <p>Write the spec and implement</p>
+    </div>
+  </div>
+  <div class="option" data-choice="adjust6" onclick="toggleSelect(this)">
+    <div class="letter">~</div>
+    <div class="content">
+      <h3>Needs more tweaks</h3>
+    </div>
+  </div>
+</div>

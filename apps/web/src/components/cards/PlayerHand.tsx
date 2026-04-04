@@ -25,15 +25,14 @@ export function PlayerHand({
         {cards.map((card, index) => {
           const isLegal = legalIndices.includes(index);
           const isPlayable = isCurrentPlayer && isLegal;
-          // Only dim cards that are illegal during your active turn
           const isDimmed = isCurrentPlayer && !isLegal;
           return (
             <motion.div
               key={`${card.type}-${card.type === "joker" ? card.id : `${card.suit}-${card.rank}`}`}
-              initial={{ opacity: 0, y: 50 }}
+              initial={{ opacity: 0, y: 30 }}
               animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: -30, scale: 0.7 }}
-              transition={{ type: "spring", stiffness: 300, damping: 24, delay: index * 0.03 }}
+              exit={{ opacity: 0, y: -20, scale: 0.7 }}
+              transition={{ type: "spring", stiffness: 300, damping: 24, delay: index * 0.02 }}
               style={{ zIndex: index }}
             >
               <Card
@@ -57,24 +56,34 @@ interface OpponentHandProps {
 }
 
 export function OpponentHand({ cardCount, position }: OpponentHandProps) {
-  const isVertical = position === "left" || position === "right";
-  const overlap = isVertical ? -48 : -14;
+  const isHorizontal = position === "top";
 
+  if (isHorizontal) {
+    return (
+      <div className="flex items-center justify-center">
+        {Array.from({ length: cardCount }, (_, i) => (
+          <div key={i} style={{ marginLeft: i > 0 ? "-10px" : 0, zIndex: i }}>
+            <CardBack tiny />
+          </div>
+        ))}
+      </div>
+    );
+  }
+
+  // Vertical (left/right)
+  const rotation = position === "left" ? 90 : -90;
   return (
-    <div className={`flex ${isVertical ? "flex-col" : "flex-row"} items-center`}>
+    <div className="flex flex-col items-center">
       {Array.from({ length: cardCount }, (_, i) => (
         <div
           key={i}
           style={{
-            marginLeft: !isVertical && i > 0 ? `${overlap}px` : undefined,
-            marginTop: isVertical && i > 0 ? `${overlap}px` : undefined,
-            transform: isVertical
-              ? `rotate(${position === "left" ? 90 : -90}deg)`
-              : `rotate(${(i - cardCount / 2) * 2}deg)`,
+            marginTop: i > 0 ? "calc(var(--card-sm-h) * -0.7)" : 0,
+            transform: `rotate(${rotation}deg)`,
             zIndex: i,
           }}
         >
-          <CardBack small />
+          <CardBack tiny />
         </div>
       ))}
     </div>

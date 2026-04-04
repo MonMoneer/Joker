@@ -8,7 +8,6 @@ import { PlayerHand, OpponentHand } from "../cards/PlayerHand";
 import { Card } from "../cards/Card";
 import { TrickArea } from "./TrickArea";
 import { PlayerSlot } from "./PlayerSlot";
-import { TrumpIndicator } from "./TrumpIndicator";
 import { BidPanel } from "./BidPanel";
 import { JokerDialog } from "./JokerDialog";
 import { ScoreBoard } from "./ScoreBoard";
@@ -30,12 +29,7 @@ interface GameBoardProps {
 }
 
 export function GameBoard({
-  gameState,
-  myPlayerIndex,
-  onBid,
-  onPlayCard,
-  onJokerChoice,
-  onNextHand,
+  gameState, myPlayerIndex, onBid, onPlayCard, onJokerChoice, onNextHand,
 }: GameBoardProps) {
   const [showJokerDialog, setShowJokerDialog] = useState(false);
   const [pendingCardIndex, setPendingCardIndex] = useState<number | null>(null);
@@ -47,300 +41,218 @@ export function GameBoard({
   const isMyTurn = gameState.currentTurn === myPlayerIndex;
   const myHand = gameState.hands[myPlayerIndex] || [];
 
-  // Special effects state
-  const [histPenaltyEffect, setHistPenaltyEffect] = useState<{
-    playerName: string;
-    amount: number;
-  } | null>(null);
-  const [bidAllEffect, setBidAllEffect] = useState<{
-    playerName: string;
-    score: number;
-  } | null>(null);
+  // Special effects
+  const [histPenaltyEffect, setHistPenaltyEffect] = useState<{ playerName: string; amount: number } | null>(null);
+  const [bidAllEffect, setBidAllEffect] = useState<{ playerName: string; score: number } | null>(null);
   const prevHandCountRef = useRef(0);
-
-  // Queued hist penalty (waits for bid-all video to finish)
   const pendingHistRef = useRef<{ playerName: string; amount: number } | null>(null);
 
-  // Detect special scoring events when hand results appear
   useEffect(() => {
-    const currentHandCount = gameState.handScores.length;
-    if (currentHandCount > prevHandCountRef.current && currentHandCount > 0) {
-      const lastScores = gameState.handScores[currentHandCount - 1];
-
-      const bidAllPlayer = lastScores.find((s) => s.isBidAllWonAll);
-      // Find ALL players who got hist penalty (could be multiple)
-      const histPlayers = lastScores.filter((s) => s.isHistPenalty);
-
-      if (bidAllPlayer && histPlayers.length > 0) {
-        // BOTH happened: play video FIRST, queue hist penalty for after
-        const bidName = gameState.players[bidAllPlayer.playerIndex]?.name || "Player";
-        setBidAllEffect({ playerName: bidName, score: bidAllPlayer.score });
-        const names = histPlayers.map((h) => gameState.players[h.playerIndex]?.name || "Player").join(" & ");
-        pendingHistRef.current = { playerName: names, amount: histPlayers[0].score };
-      } else if (bidAllPlayer) {
-        const name = gameState.players[bidAllPlayer.playerIndex]?.name || "Player";
-        setBidAllEffect({ playerName: name, score: bidAllPlayer.score });
-      } else if (histPlayers.length > 0) {
-        // Show effect for all penalized players
-        const names = histPlayers.map((h) => gameState.players[h.playerIndex]?.name || "Player").join(" & ");
-        setHistPenaltyEffect({ playerName: names, amount: histPlayers[0].score });
+    const c = gameState.handScores.length;
+    if (c > prevHandCountRef.current && c > 0) {
+      const last = gameState.handScores[c - 1];
+      const bidAll = last.find((s) => s.isBidAllWonAll);
+      const hists = last.filter((s) => s.isHistPenalty);
+      if (bidAll && hists.length > 0) {
+        setBidAllEffect({ playerName: gameState.players[bidAll.playerIndex]?.name || "Player", score: bidAll.score });
+        pendingHistRef.current = { playerName: hists.map((h) => gameState.players[h.playerIndex]?.name).join(" & "), amount: hists[0].score };
+      } else if (bidAll) {
+        setBidAllEffect({ playerName: gameState.players[bidAll.playerIndex]?.name || "Player", score: bidAll.score });
+      } else if (hists.length > 0) {
+        setHistPenaltyEffect({ playerName: hists.map((h) => gameState.players[h.playerIndex]?.name).join(" & "), amount: hists[0].score });
       }
     }
-    prevHandCountRef.current = currentHandCount;
+    prevHandCountRef.current = c;
   }, [gameState.handScores.length, gameState.handScores, gameState.players]);
 
-  // Play sounds for game events
   useEffect(() => {
-    if (gameState.phase === "playing" && isMyTurn) {
-      playSound("yourTurn", 0.4);
-    }
+    if (gameState.phase === "playing" && isMyTurn) playSound("yourTurn", 0.4);
   }, [gameState.phase, isMyTurn, gameState.currentTurn]);
 
-  const legalIndices =
-    gameState.phase === "playing" && isMyTurn
-      ? getLegalCardIndices(myHand, gameState.currentTrick, gameState.trump)
-      : [];
+  const legalIndices = gameState.phase === "playing" && isMyTurn
+    ? getLegalCardIndices(myHand, gameState.currentTrick, gameState.trump) : [];
 
   const getPosition = (idx: number): "bottom" | "top" | "left" | "right" => {
-    const relative = (idx - myPlayerIndex + 4) % 4;
-    return (["bottom", "left", "top", "right"] as const)[relative];
+    const r = (idx - myPlayerIndex + 4) % 4;
+    return (["bottom", "left", "top", "right"] as const)[r];
   };
-
   const playerPositions: Record<number, "bottom" | "top" | "left" | "right"> = {};
   for (let i = 0; i < 4; i++) playerPositions[i] = getPosition(i);
 
-  // Save completed trick for "Last Trick" popover
-  if (
-    gameState.phase === "trick-result" &&
-    gameState.currentTrick.plays.length === 4
-  ) {
+  // Save trick for Last Trick popover
+  if (gameState.phase === "trick-result" && gameState.currentTrick.plays.length === 4) {
     lastCompletedTrickRef.current = [...gameState.currentTrick.plays];
-    const trickState = gameState as GameState & { _trickWinner?: PlayerIndex };
-    const w = trickState._trickWinner ?? gameState.currentTurn;
-    lastTrickWinnerRef.current = gameState.players[w]?.name || "?";
+    const ts = gameState as GameState & { _trickWinner?: PlayerIndex };
+    lastTrickWinnerRef.current = gameState.players[ts._trickWinner ?? gameState.currentTurn]?.name || "?";
   }
 
-  const handleCardClick = useCallback(
-    (cardIndex: number) => {
-      if (!isMyTurn || gameState.phase !== "playing") return;
-      if (!legalIndices.includes(cardIndex)) return;
-      const card = myHand[cardIndex];
-      if (isJokerCard(card)) {
-        setPendingCardIndex(cardIndex);
-        setShowJokerDialog(true);
-        return;
-      }
-      playSound("cardPlay", 0.5);
-      onPlayCard(cardIndex);
-    },
-    [isMyTurn, gameState.phase, legalIndices, myHand, onPlayCard]
-  );
+  const trickWinner = gameState.phase === "trick-result"
+    ? ((gameState as any)._trickWinner ?? gameState.currentTurn) as PlayerIndex
+    : null;
 
-  const handleJokerConfirm = useCallback(
-    (mode: JokerMode, suit?: Suit) => {
-      setShowJokerDialog(false);
-      if (pendingCardIndex !== null) {
-        onPlayCard(pendingCardIndex);
-        onJokerChoice(mode, suit);
-      }
-      setPendingCardIndex(null);
-    },
-    [pendingCardIndex, onPlayCard, onJokerChoice]
-  );
+  const handleCardClick = useCallback((cardIndex: number) => {
+    if (!isMyTurn || gameState.phase !== "playing" || !legalIndices.includes(cardIndex)) return;
+    const card = myHand[cardIndex];
+    if (isJokerCard(card)) { setPendingCardIndex(cardIndex); setShowJokerDialog(true); return; }
+    playSound("cardPlay", 0.5);
+    onPlayCard(cardIndex);
+  }, [isMyTurn, gameState.phase, legalIndices, myHand, onPlayCard]);
 
-  // Get the last hand scores for overlay
-  const lastHandScores =
-    gameState.handScores.length > 0
-      ? gameState.handScores[gameState.handScores.length - 1]
-      : null;
+  const handleJokerConfirm = useCallback((mode: JokerMode, suit?: Suit) => {
+    setShowJokerDialog(false);
+    if (pendingCardIndex !== null) { onPlayCard(pendingCardIndex); onJokerChoice(mode, suit); }
+    setPendingCardIndex(null);
+  }, [pendingCardIndex, onPlayCard, onJokerChoice]);
 
-  // Compute kings by set for score table crown icons
+  const lastHandScores = gameState.handScores.length > 0 ? gameState.handScores[gameState.handScores.length - 1] : null;
+  const isResultPhase = gameState.phase === "hand-result" || gameState.phase === "set-result";
+
   const kingsBySet = useMemo(() => {
     const result: Record<number, number[]> = {};
-    // Check each completed set for kings (players who succeeded ALL bids)
-    const handSeq = gameState.handScores;
-    const setBounds = [
-      { set: 1, start: 0, end: 8 },
-      { set: 2, start: 8, end: 12 },
-      { set: 3, start: 12, end: 20 },
-      { set: 4, start: 20, end: 24 },
-    ];
-    for (const { set, start, end } of setBounds) {
-      if (handSeq.length < end) continue; // Set not complete
-      const setHands = handSeq.slice(start, end);
+    const h = gameState.handScores;
+    const bounds = [{ set: 1, s: 0, e: 8 }, { set: 2, s: 8, e: 12 }, { set: 3, s: 12, e: 20 }, { set: 4, s: 20, e: 24 }];
+    for (const { set, s, e } of bounds) {
+      if (h.length < e) continue;
+      const sh = h.slice(s, e);
       const kings: number[] = [];
-      for (let p = 0; p < 4; p++) {
-        const allSuccess = setHands.every((hand) => hand[p]?.isSuccess);
-        if (allSuccess) kings.push(p);
-      }
+      for (let p = 0; p < 4; p++) { if (sh.every((hand) => hand[p]?.isSuccess)) kings.push(p); }
       if (kings.length > 0) result[set] = kings;
     }
     return result;
   }, [gameState.handScores]);
 
-  const isResultPhase =
-    gameState.phase === "hand-result" || gameState.phase === "set-result";
+  // Helper to render a side player (left or right column)
+  const renderSidePlayer = (pos: "left" | "right") => {
+    const idx = Object.entries(playerPositions).find(([, v]) => v === pos)?.[0];
+    if (!idx) return null;
+    const i = Number(idx);
+    const p = gameState.players[i];
+    if (!p) return null;
+
+    return (
+      <div className="flex flex-col items-center justify-between h-full py-1 md:py-2">
+        <div className="flex flex-col items-center gap-0.5">
+          <PlayerSlot
+            name={p.name} bid={gameState.bidState.bids[i]} tricksWon={gameState.tricksWon[i]}
+            score={gameState.scores[i]} isDealer={gameState.dealerIndex === i}
+            isCurrentTurn={gameState.currentTurn === i} isConnected={true} isAI={p.isAI}
+            position={pos} compact
+          />
+          <OpponentHand cardCount={gameState.hands[i]?.length || 0} position={pos} />
+        </div>
+        {/* Action button */}
+        <button
+          className="w-8 h-7 md:w-10 md:h-9 bg-navy-800/70 rounded-md flex flex-col items-center justify-center border border-gold-400/10 text-[8px] md:text-[10px]"
+          onClick={() => {
+            if (pos === "left") { setShowScoreSheet(!showScoreSheet); setShowLastTrick(false); }
+            else { setShowLastTrick(!showLastTrick); setShowScoreSheet(false); }
+          }}
+        >
+          <span className="text-xs md:text-sm">{pos === "left" ? "📋" : "👁"}</span>
+        </button>
+      </div>
+    );
+  };
+
+  // Get top player
+  const topIdx = Object.entries(playerPositions).find(([, v]) => v === "top")?.[0];
+  const topPlayer = topIdx ? gameState.players[Number(topIdx)] : null;
+  const ti = topIdx ? Number(topIdx) : 0;
+
+  // Trump suit info for header
+  const trumpSuit = gameState.trump.suit;
+  const trumpSymbols: Record<string, { sym: string; cls: string }> = {
+    hearts: { sym: "♥", cls: "text-red-500" }, diamonds: { sym: "♦", cls: "text-red-500" },
+    clubs: { sym: "♣", cls: "text-marble-200" }, spades: { sym: "♠", cls: "text-marble-200" },
+  };
 
   return (
-    <div className="game-no-scroll royal-bg select-none flex flex-col">
-      {/* Header */}
-      <header className="relative z-20 px-4 py-2 flex items-center justify-between bg-navy-900/80 backdrop-blur-md shadow-2xl safe-top">
-        <span className="text-gold-300/40 text-lg cursor-pointer">☰</span>
-        <h1 className="font-display text-[10px] font-bold text-gold-300 uppercase tracking-[0.25em]">
-          The Sovereign Table
-        </h1>
-        <button
-          className="text-gold-300/40 text-sm hover:text-gold-300"
-          onClick={() => {
-            if (document.fullscreenElement) {
-              document.exitFullscreen().catch(() => {});
-            } else {
-              document.documentElement.requestFullscreen().catch(() => {});
-            }
-          }}
-          title="Toggle fullscreen"
-        >
-          ⛶
-        </button>
+    <div className="game-grid royal-bg select-none">
+      {/* ROW 1: Header (full width) */}
+      <header className="col-span-3 flex items-center justify-between px-3 py-1.5 md:px-4 md:py-2 bg-navy-900/80 backdrop-blur-md safe-top" style={{ gridColumn: "1 / -1" }}>
+        <span className="text-gold-300/40 text-sm cursor-pointer">☰</span>
+        <div className="flex items-center gap-2 md:gap-3 text-[8px] md:text-[10px]">
+          <span className="text-gold-300/50 tracking-widest uppercase hidden md:inline">The Sovereign Table</span>
+          <span className="text-gold-300/50 tracking-wider uppercase md:hidden">Table</span>
+          <span className="text-gold-300/20">|</span>
+          <span className="text-marble-400/50">d:<b className="text-gold-300">{gameState.currentHandConfig.cardsPerPlayer}</b></span>
+          {trumpSuit && trumpSymbols[trumpSuit] && (
+            <span className={`text-sm md:text-base ${trumpSymbols[trumpSuit].cls}`}>{trumpSymbols[trumpSuit].sym}</span>
+          )}
+          {gameState.trump.isNoTrump && <span className="text-marble-400/30 italic">no trump</span>}
+        </div>
+        <button className="text-gold-300/40 text-sm" onClick={() => {
+          if (document.fullscreenElement) document.exitFullscreen().catch(() => {});
+          else document.documentElement.requestFullscreen().catch(() => {});
+        }}>⛶</button>
       </header>
 
-      {/* Trump info */}
-      <div className="absolute top-14 left-1/2 -translate-x-1/2 z-20">
-        <TrumpIndicator
-          trump={gameState.trump}
-          handNumber={gameState.handNumber}
-          setNumber={gameState.currentSet}
-          cardsPerPlayer={gameState.currentHandConfig.cardsPerPlayer}
+      {/* ROW 2: Top player (full width) */}
+      <div className="flex flex-col items-center justify-center gap-0.5 py-1 md:py-2" style={{ gridColumn: "1 / -1" }}>
+        {topPlayer && (
+          <>
+            <div className="flex items-center gap-2 md:gap-3">
+              <PlayerSlot
+                name={topPlayer.name} bid={gameState.bidState.bids[ti]} tricksWon={gameState.tricksWon[ti]}
+                score={gameState.scores[ti]} isDealer={gameState.dealerIndex === ti}
+                isCurrentTurn={gameState.currentTurn === ti} isConnected={true} isAI={topPlayer.isAI}
+                position="top"
+              />
+            </div>
+            <OpponentHand cardCount={gameState.hands[ti]?.length || 0} position="top" />
+          </>
+        )}
+      </div>
+
+      {/* ROW 3 COL 1: Left player */}
+      <div className="overflow-hidden">{renderSidePlayer("left")}</div>
+
+      {/* ROW 3 COL 2: Trick zone (center) */}
+      <div className="flex items-center justify-center overflow-hidden relative">
+        <TrickArea
+          plays={gameState.currentTrick.plays}
+          playerPositions={playerPositions}
+          trumpCard={gameState.trump.card}
+          trickWinner={trickWinner}
+          phase={gameState.phase}
+        />
+
+        {/* Score sheet overlay */}
+        {showScoreSheet && (
+          <div className="absolute inset-0 z-20 flex items-start justify-center pt-2 overflow-auto">
+            <ScoreBoard players={gameState.players} scores={gameState.scores} handScores={gameState.handScores} currentHand={gameState.handNumber} kingsBySet={kingsBySet} />
+          </div>
+        )}
+
+        {/* Last trick popover */}
+        <LastTrickPopover
+          lastTrick={lastCompletedTrickRef.current}
+          winnerName={lastTrickWinnerRef.current}
+          isOpen={showLastTrick}
+          onClose={() => setShowLastTrick(false)}
         />
       </div>
 
-      {/* TOP PLAYER */}
-      <div className="absolute top-16 left-1/2 -translate-x-1/2 z-10 flex flex-col items-center gap-1">
-        {gameState.players.map((p, i) =>
-          getPosition(i) === "top" ? (
-            <div key={i} className="flex flex-col items-center gap-1">
-              <PlayerSlot
-                name={p.name} bid={gameState.bidState.bids[i]}
-                tricksWon={gameState.tricksWon[i]} score={gameState.scores[i]}
-                isDealer={gameState.dealerIndex === i} isCurrentTurn={gameState.currentTurn === i}
-                isConnected={true} isAI={p.isAI} position="top"
-              />
-              <OpponentHand cardCount={gameState.hands[i]?.length || 0} position="top" />
-            </div>
-          ) : null
-        )}
-      </div>
+      {/* ROW 3 COL 3: Right player */}
+      <div className="overflow-hidden">{renderSidePlayer("right")}</div>
 
-      {/* LEFT PLAYER */}
-      <div className="absolute left-2 top-1/2 -translate-y-1/2 z-10 flex items-center gap-1">
-        {gameState.players.map((p, i) =>
-          getPosition(i) === "left" ? (
-            <div key={i} className="flex items-center gap-1">
-              <PlayerSlot
-                name={p.name} bid={gameState.bidState.bids[i]}
-                tricksWon={gameState.tricksWon[i]} score={gameState.scores[i]}
-                isDealer={gameState.dealerIndex === i} isCurrentTurn={gameState.currentTurn === i}
-                isConnected={true} isAI={p.isAI} position="left"
-              />
-              <OpponentHand cardCount={gameState.hands[i]?.length || 0} position="left" />
-            </div>
-          ) : null
-        )}
-      </div>
+      {/* ROW 4: My info + bid buttons (full width) */}
+      <div className="flex items-center justify-center gap-2 md:gap-3 px-2 py-1 bg-navy-900/40" style={{ gridColumn: "1 / -1" }}>
+        <span className="text-[9px] md:text-[11px] text-gold-300 font-bold truncate max-w-[60px] md:max-w-[100px]">
+          {gameState.players[myPlayerIndex]?.name}
+        </span>
+        <span className="text-[8px] md:text-[10px] text-marble-400/40">
+          b:<b className="text-gold-300">{gameState.bidState.bids[myPlayerIndex] ?? "-"}</b>
+          <span className="mx-0.5 text-marble-500/20">·</span>
+          w:<b className="text-gold-300">{gameState.tricksWon[myPlayerIndex]}</b>
+        </span>
 
-      {/* RIGHT PLAYER */}
-      <div className="absolute right-2 top-1/2 -translate-y-1/2 z-10 flex items-center gap-1">
-        {gameState.players.map((p, i) =>
-          getPosition(i) === "right" ? (
-            <div key={i} className="flex items-center gap-1">
-              <OpponentHand cardCount={gameState.hands[i]?.length || 0} position="right" />
-              <PlayerSlot
-                name={p.name} bid={gameState.bidState.bids[i]}
-                tricksWon={gameState.tricksWon[i]} score={gameState.scores[i]}
-                isDealer={gameState.dealerIndex === i} isCurrentTurn={gameState.currentTurn === i}
-                isConnected={true} isAI={p.isAI} position="right"
-              />
-            </div>
-          ) : null
-        )}
-      </div>
-
-      {/* CENTER: Trick Area + Trump card on table */}
-      <div className="absolute inset-0 flex items-center justify-center">
-        <TrickArea plays={gameState.currentTrick.plays} playerPositions={playerPositions} />
-
-        {/* Trump (stuffing) card shown face-up on the table */}
-        {gameState.trump.card && (
-          <div className="absolute top-1/2 right-[calc(50%-180px)] -translate-y-1/2 opacity-90 rotate-3">
-            <Card card={gameState.trump.card} small isPlayable={false} />
-          </div>
-        )}
-      </div>
-
-      {/* Tavern Chatter */}
-      <TavernChatter gameState={gameState} />
-
-      {/* SIDE BUTTONS */}
-      <div className="absolute right-3 bottom-[140px] z-20 flex flex-col gap-2">
-        <button
-          className="flex flex-col items-center gap-1 px-3 py-2 rounded-xl bg-navy-800/60 backdrop-blur-sm text-marble-400/60 hover:text-gold-300 transition-colors text-[9px] font-body font-semibold uppercase"
-          onClick={() => { setShowScoreSheet(!showScoreSheet); setShowLastTrick(false); }}
-        >
-          <span className="text-base">📋</span>Score
-        </button>
-        <button
-          className="flex flex-col items-center gap-1 px-3 py-2 rounded-xl bg-navy-800/60 backdrop-blur-sm text-marble-400/60 hover:text-gold-300 transition-colors text-[9px] font-body font-semibold uppercase"
-          onClick={() => { setShowLastTrick(!showLastTrick); setShowScoreSheet(false); }}
-        >
-          <span className="text-base">👁</span>Last
-        </button>
-      </div>
-
-      {/* Score sheet overlay */}
-      {showScoreSheet && (
-        <div className="absolute right-3 top-14 z-30">
-          <ScoreBoard
-            players={gameState.players}
-            scores={gameState.scores}
-            handScores={gameState.handScores}
-            currentHand={gameState.handNumber}
-            kingsBySet={kingsBySet}
-          />
-        </div>
-      )}
-
-      {/* Last trick popover */}
-      <LastTrickPopover
-        lastTrick={lastCompletedTrickRef.current}
-        winnerName={lastTrickWinnerRef.current}
-        isOpen={showLastTrick}
-        onClose={() => setShowLastTrick(false)}
-      />
-
-      {/* BOTTOM: player info + bid strip + cards */}
-      <div className="absolute bottom-0 left-0 right-0 z-10 safe-bottom">
-        {/* Compact player info */}
-        <div className="flex items-center justify-center gap-2 px-3">
-          <div className="text-[10px] font-body text-marble-400/50">
-            <span className="text-gold-300 font-bold">{gameState.players[myPlayerIndex]?.name}</span>
-            <span className="mx-1 text-marble-500/20">·</span>
-            <span>bid: <strong className="text-gold-300">{gameState.bidState.bids[myPlayerIndex] ?? "-"}</strong></span>
-            <span className="mx-1 text-marble-500/20">·</span>
-            <span>won: <strong className="text-gold-300">{gameState.tricksWon[myPlayerIndex]}</strong></span>
-          </div>
-        </div>
-
-        {/* BID STRIP — small buttons right above cards */}
+        {/* Bid buttons inline */}
         <AnimatePresence>
           {gameState.phase === "bidding" && isMyTurn && (
-            <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              exit={{ opacity: 0, y: 10 }}
-            >
+            <motion.div initial={{ opacity: 0, x: 10 }} animate={{ opacity: 1, x: 0 }} exit={{ opacity: 0, x: 10 }}>
               <BidPanel
-                playerName={gameState.players[myPlayerIndex]?.name || "You"}
-                cardsPerPlayer={gameState.currentHandConfig.cardsPerPlayer}
+                playerName="" cardsPerPlayer={gameState.currentHandConfig.cardsPerPlayer}
                 restrictedBid={gameState.bidState.restrictedBid}
                 isDealer={gameState.dealerIndex === myPlayerIndex}
                 existingBids={gameState.bidState.bids}
@@ -350,76 +262,43 @@ export function GameBoard({
             </motion.div>
           )}
         </AnimatePresence>
-
-        {/* Cards — always visible */}
-        <div className="pb-2">
-          <PlayerHand
-            cards={myHand}
-            legalIndices={legalIndices}
-            onCardClick={handleCardClick}
-            isCurrentPlayer={isMyTurn && gameState.phase === "playing"}
-          />
-        </div>
       </div>
 
-      {/* ── RESULT OVERLAYS ── */}
+      {/* ROW 5: My cards (full width) */}
+      <div className="safe-bottom" style={{ gridColumn: "1 / -1" }}>
+        <PlayerHand cards={myHand} legalIndices={legalIndices} onCardClick={handleCardClick} isCurrentPlayer={isMyTurn && gameState.phase === "playing"} />
+      </div>
+
+      {/* Tavern Chatter */}
+      <TavernChatter gameState={gameState} />
+
+      {/* Result overlays */}
       <AnimatePresence>
         {isResultPhase && lastHandScores && (
-          <HandResultOverlay
-            handNumber={gameState.handNumber}
-            handScores={lastHandScores}
-            players={gameState.players}
-            cumulativeScores={gameState.scores}
-            isSetEnd={gameState.phase === "set-result"}
-            onNext={() => onNextHand?.()}
-          />
+          <HandResultOverlay handNumber={gameState.handNumber} handScores={lastHandScores} players={gameState.players}
+            cumulativeScores={gameState.scores} isSetEnd={gameState.phase === "set-result"} onNext={() => onNextHand?.()} />
         )}
       </AnimatePresence>
 
       <AnimatePresence>
-        {gameState.phase === "game-over" && (
-          <GameOverOverlay
-            players={gameState.players}
-            scores={gameState.scores}
-          />
-        )}
+        {gameState.phase === "game-over" && <GameOverOverlay players={gameState.players} scores={gameState.scores} />}
       </AnimatePresence>
 
-      {/* Joker dialog */}
       <AnimatePresence>
         {showJokerDialog && (
-          <JokerDialog
-            isLeading={gameState.currentTrick.plays.length === 0}
-            onConfirm={handleJokerConfirm}
-            onCancel={() => { setShowJokerDialog(false); setPendingCardIndex(null); }}
-          />
+          <JokerDialog isLeading={gameState.currentTrick.plays.length === 0} onConfirm={handleJokerConfirm}
+            onCancel={() => { setShowJokerDialog(false); setPendingCardIndex(null); }} />
         )}
       </AnimatePresence>
 
-      {/* Hist Penalty Effect — sad emoji rain */}
-      <HistPenaltyEffect
-        playerName={histPenaltyEffect?.playerName || ""}
-        amount={histPenaltyEffect?.amount || -200}
-        isVisible={!!histPenaltyEffect}
-        onComplete={() => setHistPenaltyEffect(null)}
-      />
+      <HistPenaltyEffect playerName={histPenaltyEffect?.playerName || ""} amount={histPenaltyEffect?.amount || -200}
+        isVisible={!!histPenaltyEffect} onComplete={() => setHistPenaltyEffect(null)} />
 
-      {/* Bid All Won All Effect — winner video */}
-      <BidAllWonAllEffect
-        playerName={bidAllEffect?.playerName || ""}
-        score={bidAllEffect?.score || 0}
-        isVisible={!!bidAllEffect}
-        onComplete={() => {
+      <BidAllWonAllEffect playerName={bidAllEffect?.playerName || ""} score={bidAllEffect?.score || 0}
+        isVisible={!!bidAllEffect} onComplete={() => {
           setBidAllEffect(null);
-          // If there's a queued hist penalty, play it now
-          if (pendingHistRef.current) {
-            setTimeout(() => {
-              setHistPenaltyEffect(pendingHistRef.current);
-              pendingHistRef.current = null;
-            }, 500);
-          }
-        }}
-      />
+          if (pendingHistRef.current) { setTimeout(() => { setHistPenaltyEffect(pendingHistRef.current); pendingHistRef.current = null; }, 500); }
+        }} />
     </div>
   );
 }

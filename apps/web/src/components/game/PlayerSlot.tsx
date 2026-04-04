@@ -2,7 +2,7 @@
 
 interface PlayerSlotProps {
   name: string;
-  nickname?: string; // If registered user, show @nickname
+  nickname?: string;
   avatar?: string;
   bid: number | null;
   tricksWon: number;
@@ -12,6 +12,7 @@ interface PlayerSlotProps {
   isConnected: boolean;
   isAI: boolean;
   position: "top" | "bottom" | "left" | "right";
+  compact?: boolean; // For left/right columns
 }
 
 export function PlayerSlot({
@@ -24,60 +25,46 @@ export function PlayerSlot({
   isCurrentTurn,
   isConnected,
   isAI,
+  compact = false,
 }: PlayerSlotProps) {
-  // Always show nickname on the table if available
   const displayName = nickname || name;
 
   return (
-    <div className="flex flex-col items-center gap-1">
-      {/* Avatar */}
+    <div className="flex flex-col items-center gap-0.5">
       <div className="relative">
-        <div
-          className={`avatar-ring ${isCurrentTurn ? "avatar-ring-active" : ""}`}
-        >
+        <div className={`avatar-ring ${isCurrentTurn ? "avatar-ring-active" : ""}`}>
           {avatar ? (
-            <span className="text-2xl">{avatar}</span>
+            <span className="text-sm md:text-base">{avatar}</span>
           ) : (
-            <span className="text-lg font-bold text-gold-200/60">
+            <span className="text-[10px] md:text-sm font-bold text-gold-200/60">
               {displayName.charAt(0).toUpperCase()}
             </span>
           )}
         </div>
-
         {isDealer && (
-          <div className="absolute -top-0.5 -right-0.5 w-5 h-5 bg-gold-400 rounded-full flex items-center justify-center text-[9px] font-black text-navy-900 shadow">
-            D
-          </div>
+          <div className="absolute -top-0.5 -right-0.5 w-4 h-4 md:w-5 md:h-5 bg-gold-400 rounded-full flex items-center justify-center text-[7px] md:text-[9px] font-black text-navy-900 shadow">D</div>
         )}
-
         {isAI && (
-          <div className="absolute -bottom-0.5 -left-0.5 w-5 h-5 bg-navy-700 rounded-full flex items-center justify-center text-[8px] text-gold-300">
-            AI
-          </div>
+          <div className="absolute -bottom-0.5 -left-0.5 w-4 h-4 bg-navy-700 rounded-full flex items-center justify-center text-[6px] text-gold-300">AI</div>
         )}
-
         {!isConnected && (
           <div className="absolute inset-0 rounded-full bg-black/60 flex items-center justify-center">
-            <span className="text-xs text-error-500">⚡</span>
+            <span className="text-[8px] text-error-500">⚡</span>
           </div>
         )}
       </div>
 
-      {/* Nickname always shown on table */}
-      <span className="text-xs font-body font-semibold text-marble-100 max-w-[80px] truncate text-center">
-        {nickname ? (
-          <span className="text-gold-300">@{nickname}</span>
-        ) : (
-          displayName
-        )}
+      <span className={`font-body font-semibold text-center truncate ${compact ? "text-[7px] max-w-[48px] md:text-[9px] md:max-w-[70px]" : "text-[9px] max-w-[70px] md:text-xs md:max-w-[90px]"}`}>
+        {nickname ? <span className="text-gold-300">@{nickname}</span> : <span className="text-marble-100">{displayName}</span>}
       </span>
 
-      {/* Bid & tricks compact */}
       {bid !== null && (
-        <div className="flex items-center gap-1.5 text-[10px] font-body">
-          <span className="text-gold-300 font-bold">{bid}</span>
-          <span className="text-marble-400/30">·</span>
-          <span className="text-marble-400/60">{tricksWon}</span>
+        <div className={`font-body font-bold ${compact ? "text-[8px] md:text-[10px]" : "text-[10px] md:text-xs"}`}>
+          <span className="text-marble-400/50">b:</span>
+          <span className="text-gold-300">{bid}</span>
+          <span className="text-marble-400/30 mx-0.5">·</span>
+          <span className="text-marble-400/50">w:</span>
+          <span className="text-gold-300">{tricksWon}</span>
         </div>
       )}
     </div>
