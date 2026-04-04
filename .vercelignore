@@ -1,0 +1,11 @@
+CARDS/
+sound effects/
+vid/
+UI UX/
+apps/web/public/cards/
+*.eps
+*.MP4
+*.mp4
+.superpowers/
+WhatsApp*
+shutterstock*
